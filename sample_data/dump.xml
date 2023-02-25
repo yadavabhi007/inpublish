@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="utf-8"?>
+<django-objects version="1.0">
+  <object model="builder.interactiveflyer" pk="4">
+    <field name="name" type="CharField">Test</field>
+    <field name="status" type="IntegerField">0</field>
+    <field name="seller_id" type="IntegerField">4</field>
+    <field name="affiliate" rel="ManyToOneRel" to="builder.affiliate"><None></None></field>
+    <field name="flyer_pdf_file" type="FileField">wOUtxJUGhK/pdf/Demo_bozza_automatica_copia.pdf</field>
+    <field name="flyer_json_file" type="FileField">wOUtxJUGhK/json/Test.json</field>
+    <field name="flyer_zip_file" type="FileField"></field>
+    <field name="initialization_in_progress" type="BooleanField">False</field>
+    <field name="zip_generation_in_progress" type="BooleanField">False</field>
+    <field name="zip_last_generation" type="DateTimeField"><None></None></field>
+    <field name="assets_token" type="CharField">wOUtxJUGhK</field>
+    <field name="products_import_in_progress" type="BooleanField">False</field>
+    <field name="products_imported" type="IntegerField">0</field>
+    <field name="initialization_error" type="BooleanField">False</field>
+    <field name="initialization_error_message" type="TextField"><None></None></field>
+  </object>
+  <object model="builder.interactiveflyer" pk="5">
+    <field name="name" type="CharField">Test2</field>
+    <field name="status" type="IntegerField">0</field>
+    <field name="seller_id" type="IntegerField">4</field>
+    <field name="affiliate" rel="ManyToOneRel" to="builder.affiliate"><None></None></field>
+    <field name="flyer_pdf_file" type="FileField"></field>
+    <field name="flyer_json_file" type="FileField"></field>
+    <field name="flyer_zip_file" type="FileField"></field>
+    <field name="initialization_in_progress" type="BooleanField">False</field>
+    <field name="zip_generation_in_progress" type="BooleanField">False</field>
+    <field name="zip_last_generation" type="DateTimeField"><None></None></field>
+    <field name="assets_token" type="CharField">wAxqtJtwlk</field>
+    <field name="products_import_in_progress" type="BooleanField">False</field>
+    <field name="products_imported" type="IntegerField">0</field>
+    <field name="initialization_error" type="BooleanField">False</field>
+    <field name="initialization_error_message" type="TextField"><None></None></field>
+  </object>
+  <object model="builder.interactiveflyerproject" pk="1">
+    <field name="interactive_flyer" rel="ManyToOneRel" to="builder.interactiveflyer">4</field>
+    <field name="project_id" type="IntegerField">6341</field>
+  </object>
+  <object model="builder.interactiveflyerproject" pk="37">
+    <field name="interactive_flyer" rel="ManyToOneRel" to="builder.interactiveflyer">5</field>
+    <field name="project_id" type="IntegerField">6341</field>
+  </object>
+  <object model="builder.interactiveflyerpage" pk="1">
+    <field name="interactive_flyer" rel="ManyToOneRel" to="builder.interactiveflyer">4</field>
+    <field name="number" type="IntegerField">1</field>
+    <field name="image_file" type="FileField">wOUtxJUGhK/pages/page_1_YYeQKuZ.jpg</field>
+    <field name="image_file_local" type="FileField">wOUtxJUGhK/pages/page_1.jpg</field>
+  </object>
+  <object model="builder.interactiveflyerpage" pk="2">
+    <field name="interactive_flyer" rel="ManyToOneRel" to="builder.interactiveflyer">4</field>
+    <field name="number" type="IntegerField">2</field>
+    <field name="image_file" type="FileField">wOUtxJUGhK/pages/page_2_pIPmv1P.jpg</field>
+    <field name="image_file_local" type="FileField">wOUtxJUGhK/pages/page_2.jpg</field>
+  </object>
+  <object model="builder.interactiveflyerpage" pk="3">
+    <field name="interactive_flyer" rel="ManyToOneRel" to="builder.interactiveflyer">4</field>
+    <field name="number" type="IntegerField">3</field>
+    <field name="image_file" type="FileField">wOUtxJUGhK/pages/page_3_tB9uYAE.jpg</field>
+    <field name="image_file_local" type="FileField">wOUtxJUGhK/pages/page_3.jpg</field>
+  </object>
+  <object model="builder.interactiveflyerpage" pk="4">
+    <field name="interactive_flyer" rel="ManyToOneRel" to="builder.interactiveflyer">5</field>
+    <field name="number" type="IntegerField">1</field>
+    <field name="image_file" type="FileField">wAxqtJtwlk/pages/page_1_YYeQKuZ.jpg</field>
+    <field name="image_file_local" type="FileField">wAxqtJtwlk/pages/page_1_YYeQKuZ.jpg</field>
+  </object>
+  <object model="builder.interactiveflyerpage" pk="5">
+    <field name="interactive_flyer" rel="ManyToOneRel" to="builder.interactiveflyer">5</field>
+    <field name="number" type="IntegerField">2</field>
+    <field name="image_file" type="FileField">wAxqtJtwlk/pages/page_2_pIPmv1P.jpg</field>
+    <field name="image_file_local" type="FileField">wAxqtJtwlk/pages/page_2_pIPmv1P.jpg</field>
+  </object>
+  <object model="builder.interactiveflyerpage" pk="6">
+    <field name="interactive_flyer" rel="ManyToOneRel" to="builder.interactiveflyer">5</field>
+    <field name="number" type="IntegerField">3</field>
+    <field name="image_file" type="FileField">wAxqtJtwlk/pages/page_3_tB9uYAE.jpg</field>
+    <field name="image_file_local" type="FileField">wAxqtJtwlk/pages/page_3_tB9uYAE.jpg</field>
+  </object>
+  <object model="builder.interactiveflyerproduct" pk="3">
+    <field name="interactive_flyer" rel="ManyToOneRel" to="builder.interactiveflyer">4</field>
+    <field name="interactive_flyer_page" rel="ManyToOneRel" to="builder.interactiveflyerpage">2</field>
+    <field name="item_id" type="IntegerField"><None></None></field>
+    <field name="product_uid" type="CharField">cstm62510810</field>
+    <field name="field1" type="CharField">Nutella</field>
+    <field name="field2" type="CharField"></field>
+    <field name="field3" type="CharField"></field>
+    <field name="field4" type="CharField"></field>
+    <field name="grammage" type="PositiveIntegerField"><None></None></field>
+    <field name="price_with_iva" type="DecimalField">0.0000</field>
+    <field name="price_for_kg" type="DecimalField"><None></None></field>
+    <field name="available_pieces" type="PositiveIntegerField"><None></None></field>
+    <field name="max_purchasable_pieces" type="PositiveSmallIntegerField"><None></None></field>
+    <field name="punti" type="CharField"></field>
+    <field name="fidelity_product" type="BooleanField">False</field>
+    <field name="focus" type="BooleanField">False</field>
+    <field name="pam" type="BooleanField">False</field>
+    <field name="three_for_two" type="BooleanField">False</field>
+    <field name="one_and_one_gratis" type="BooleanField">False</field>
+    <field name="underpriced_product" type="BooleanField">False</field>
+    <field name="category" type="CharField">Abbigliamento</field>
+    <field name="subcategory" type="CharField">Abbigliamento</field>
+    <field name="equivalence" type="PositiveIntegerField"><None></None></field>
+    <field name="quantity_step" type="PositiveIntegerField"><None></None></field>
+    <field name="price_label" type="CharField"></field>
+    <field name="grocery_label" type="CharField"></field>
+  </object>
+  <object model="builder.interactiveflyerproduct" pk="4">
+    <field name="interactive_flyer" rel="ManyToOneRel" to="builder.interactiveflyer">4</field>
+    <field name="interactive_flyer_page" rel="ManyToOneRel" to="builder.interactiveflyerpage">2</field>
+    <field name="item_id" type="IntegerField"><None></None></field>
+    <field name="product_uid" type="CharField">cstm26850827</field>
+    <field name="field1" type="CharField">Gorgonzola DOP</field>
+    <field name="field2" type="CharField"></field>
+    <field name="field3" type="CharField"></field>
+    <field name="field4" type="CharField"></field>
+    <field name="grammage" type="PositiveIntegerField"><None></None></field>
+    <field name="price_with_iva" type="DecimalField">0.0000</field>
+    <field name="price_for_kg" type="DecimalField"><None></None></field>
+    <field name="available_pieces" type="PositiveIntegerField"><None></None></field>
+    <field name="max_purchasable_pieces" type="PositiveSmallIntegerField"><None></None></field>
+    <field name="punti" type="CharField"></field>
+    <field name="fidelity_product" type="BooleanField">False</field>
+    <field name="focus" type="BooleanField">False</field>
+    <field name="pam" type="BooleanField">False</field>
+    <field name="three_for_two" type="BooleanField">False</field>
+    <field name="one_and_one_gratis" type="BooleanField">False</field>
+    <field name="underpriced_product" type="BooleanField">False</field>
+    <field name="category" type="CharField"><None></None></field>
+    <field name="subcategory" type="CharField"><None></None></field>
+    <field name="equivalence" type="PositiveIntegerField"><None></None></field>
+    <field name="quantity_step" type="PositiveIntegerField"><None></None></field>
+    <field name="price_label" type="CharField"></field>
+    <field name="grocery_label" type="CharField"></field>
+  </object>
+  <object model="builder.interactiveflyerproduct" pk="5">
+    <field name="interactive_flyer" rel="ManyToOneRel" to="builder.interactiveflyer">4</field>
+    <field name="interactive_flyer_page" rel="ManyToOneRel" to="builder.interactiveflyerpage">2</field>
+    <field name="item_id" type="IntegerField"><None></None></field>
+    <field name="product_uid" type="CharField">cstm55382189</field>
+    <field name="field1" type="CharField">Test</field>
+    <field name="field2" type="CharField"></field>
+    <field name="field3" type="CharField"></field>
+    <field name="field4" type="CharField"></field>
+    <field name="grammage" type="PositiveIntegerField"><None></None></field>
+    <field name="price_with_iva" type="DecimalField">0.0000</field>
+    <field name="price_for_kg" type="DecimalField"><None></None></field>
+    <field name="available_pieces" type="PositiveIntegerField"><None></None></field>
+    <field name="max_purchasable_pieces" type="PositiveSmallIntegerField"><None></None></field>
+    <field name="punti" type="CharField"></field>
+    <field name="fidelity_product" type="BooleanField">False</field>
+    <field name="focus" type="BooleanField">False</field>
+    <field name="pam" type="BooleanField">False</field>
+    <field name="three_for_two" type="BooleanField">False</field>
+    <field name="one_and_one_gratis" type="BooleanField">False</field>
+    <field name="underpriced_product" type="BooleanField">False</field>
+    <field name="category" type="CharField">Abbigliamento</field>
+    <field name="subcategory" type="CharField">Abbigliamento</field>
+    <field name="equivalence" type="PositiveIntegerField"><None></None></field>
+    <field name="quantity_step" type="PositiveIntegerField"><None></None></field>
+    <field name="price_label" type="CharField"></field>
+    <field name="grocery_label" type="CharField"></field>
+  </object>
+  <object model="builder.interactiveflyerproduct" pk="6">
+    <field name="interactive_flyer" rel="ManyToOneRel" to="builder.interactiveflyer"><None></None></field>
+    <field name="interactive_flyer_page" rel="ManyToOneRel" to="builder.interactiveflyerpage">5</field>
+    <field name="item_id" type="IntegerField"><None></None></field>
+    <field name="product_uid" type="CharField">cstm62510810</field>
+    <field name="field1" type="CharField">Nutella</field>
+    <field name="field2" type="CharField"></field>
+    <field name="field3" type="CharField"></field>
+    <field name="field4" type="CharField"></field>
+    <field name="grammage" type="PositiveIntegerField"><None></None></field>
+    <field name="price_with_iva" type="DecimalField">0.0000</field>
+    <field name="price_for_kg" type="DecimalField"><None></None></field>
+    <field name="available_pieces" type="PositiveIntegerField"><None></None></field>
+    <field name="max_purchasable_pieces" type="PositiveSmallIntegerField"><None></None></field>
+    <field name="punti" type="CharField"></field>
+    <field name="fidelity_product" type="BooleanField">False</field>
+    <field name="focus" type="BooleanField">False</field>
+    <field name="pam" type="BooleanField">False</field>
+    <field name="three_for_two" type="BooleanField">False</field>
+    <field name="one_and_one_gratis" type="BooleanField">False</field>
+    <field name="underpriced_product" type="BooleanField">False</field>
+    <field name="category" type="CharField">Abbigliamento</field>
+    <field name="subcategory" type="CharField">Abbigliamento</field>
+    <field name="equivalence" type="PositiveIntegerField"><None></None></field>
+    <field name="quantity_step" type="PositiveIntegerField"><None></None></field>
+    <field name="price_label" type="CharField"></field>
+    <field name="grocery_label" type="CharField"></field>
+  </object>
+  <object model="builder.interactiveflyerproduct" pk="7">
+    <field name="interactive_flyer" rel="ManyToOneRel" to="builder.interactiveflyer"><None></None></field>
+    <field name="interactive_flyer_page" rel="ManyToOneRel" to="builder.interactiveflyerpage">5</field>
+    <field name="item_id" type="IntegerField"><None></None></field>
+    <field name="product_uid" type="CharField">cstm26850827</field>
+    <field name="field1" type="CharField">Gorgonzola DOP</field>
+    <field name="field2" type="CharField"></field>
+    <field name="field3" type="CharField"></field>
+    <field name="field4" type="CharField"></field>
+    <field name="grammage" type="PositiveIntegerField"><None></None></field>
+    <field name="price_with_iva" type="DecimalField">0.0000</field>
+    <field name="price_for_kg" type="DecimalField"><None></None></field>
+    <field name="available_pieces" type="PositiveIntegerField"><None></None></field>
+    <field name="max_purchasable_pieces" type="PositiveSmallIntegerField"><None></None></field>
+    <field name="punti" type="CharField"></field>
+    <field name="fidelity_product" type="BooleanField">False</field>
+    <field name="focus" type="BooleanField">False</field>
+    <field name="pam" type="BooleanField">False</field>
+    <field name="three_for_two" type="BooleanField">False</field>
+    <field name="one_and_one_gratis" type="BooleanField">False</field>
+    <field name="underpriced_product" type="BooleanField">False</field>
+    <field name="category" type="CharField"><None></None></field>
+    <field name="subcategory" type="CharField"><None></None></field>
+    <field name="equivalence" type="PositiveIntegerField"><None></None></field>
+    <field name="quantity_step" type="PositiveIntegerField"><None></None></field>
+    <field name="price_label" type="CharField"></field>
+    <field name="grocery_label" type="CharField"></field>
+  </object>
+  <object model="builder.interactiveflyerproduct" pk="8">
+    <field name="interactive_flyer" rel="ManyToOneRel" to="builder.interactiveflyer"><None></None></field>
+    <field name="interactive_flyer_page" rel="ManyToOneRel" to="builder.interactiveflyerpage">5</field>
+    <field name="item_id" type="IntegerField"><None></None></field>
+    <field name="product_uid" type="CharField">cstm55382189</field>
+    <field name="field1" type="CharField">Test</field>
+    <field name="field2" type="CharField"></field>
+    <field name="field3" type="CharField"></field>
+    <field name="field4" type="CharField"></field>
+    <field name="grammage" type="PositiveIntegerField"><None></None></field>
+    <field name="price_with_iva" type="DecimalField">0.0000</field>
+    <field name="price_for_kg" type="DecimalField"><None></None></field>
+    <field name="available_pieces" type="PositiveIntegerField"><None></None></field>
+    <field name="max_purchasable_pieces" type="PositiveSmallIntegerField"><None></None></field>
+    <field name="punti" type="CharField"></field>
+    <field name="fidelity_product" type="BooleanField">False</field>
+    <field name="focus" type="BooleanField">False</field>
+    <field name="pam" type="BooleanField">False</field>
+    <field name="three_for_two" type="BooleanField">False</field>
+    <field name="one_and_one_gratis" type="BooleanField">False</field>
+    <field name="underpriced_product" type="BooleanField">False</field>
+    <field name="category" type="CharField">Abbigliamento</field>
+    <field name="subcategory" type="CharField">Abbigliamento</field>
+    <field name="equivalence" type="PositiveIntegerField"><None></None></field>
+    <field name="quantity_step" type="PositiveIntegerField"><None></None></field>
+    <field name="price_label" type="CharField"></field>
+    <field name="grocery_label" type="CharField"></field>
+  </object>
+  <object model="builder.productblueprint" pk="1">
+    <field name="interactive_flyer_product" rel="OneToOneRel" to="builder.interactiveflyerproduct">3</field>
+    <field name="top" type="FloatField">36.87112980655694</field>
+    <field name="left" type="FloatField">63.39001992883271</field>
+    <field name="width" type="FloatField">25.556482213144083</field>
+    <field name="height" type="FloatField">18.290928602535008</field>
+  </object>
+  <object model="builder.productblueprint" pk="2">
+    <field name="interactive_flyer_product" rel="OneToOneRel" to="builder.interactiveflyerproduct">4</field>
+    <field name="top" type="FloatField">18.443621140771356</field>
+    <field name="left" type="FloatField">10.998721631974561</field>
+    <field name="width" type="FloatField">25.837050707845478</field>
+    <field name="height" type="FloatField">18.27117597517889</field>
+  </object>
+  <object model="builder.productblueprint" pk="3">
+    <field name="interactive_flyer_product" rel="OneToOneRel" to="builder.interactiveflyerproduct">5</field>
+    <field name="top" type="FloatField">18.183833500916716</field>
+    <field name="left" type="FloatField">36.764315419065895</field>
+    <field name="width" type="FloatField">51.98608445297505</field>
+    <field name="height" type="FloatField">18.62273606918385</field>
+  </object>
+  <object model="builder.productblueprint" pk="4">
+    <field name="interactive_flyer_product" rel="OneToOneRel" to="builder.interactiveflyerproduct">6</field>
+    <field name="top" type="FloatField">36.87112980655694</field>
+    <field name="left" type="FloatField">63.39001992883271</field>
+    <field name="width" type="FloatField">25.556482213144083</field>
+    <field name="height" type="FloatField">18.290928602535008</field>
+  </object>
+  <object model="builder.productblueprint" pk="5">
+    <field name="interactive_flyer_product" rel="OneToOneRel" to="builder.interactiveflyerproduct">7</field>
+    <field name="top" type="FloatField">18.443621140771356</field>
+    <field name="left" type="FloatField">10.998721631974561</field>
+    <field name="width" type="FloatField">25.837050707845478</field>
+    <field name="height" type="FloatField">18.27117597517889</field>
+  </object>
+  <object model="builder.productblueprint" pk="6">
+    <field name="interactive_flyer_product" rel="OneToOneRel" to="builder.interactiveflyerproduct">8</field>
+    <field name="top" type="FloatField">18.183833500916716</field>
+    <field name="left" type="FloatField">36.764315419065895</field>
+    <field name="width" type="FloatField">51.98608445297505</field>
+    <field name="height" type="FloatField">18.62273606918385</field>
+  </object>
+  <object model="builder.productmarker" pk="1">
+    <field name="interactive_flyer_product" rel="ManyToOneRel" to="builder.interactiveflyerproduct">3</field>
+    <field name="type" type="CharField">plus</field>
+    <field name="data" type="CharField"></field>
+    <field name="title" type="CharField"><None></None></field>
+    <field name="link" type="CharField"><None></None></field>
+    <field name="ingredients" type="TextField"><None></None></field>
+    <field name="recipe" type="TextField"><None></None></field>
+    <field name="content_title" type="CharField"><None></None></field>
+    <field name="content_text" type="TextField"><None></None></field>
+    <field name="specifications" type="TextField"><None></None></field>
+    <field name="active" type="BooleanField">True</field>
+    <field name="video_file" type="FileField"></field>
+  </object>
+  <object model="builder.productmarker" pk="2">
+    <field name="interactive_flyer_product" rel="ManyToOneRel" to="builder.interactiveflyerproduct">4</field>
+    <field name="type" type="CharField">plus</field>
+    <field name="data" type="CharField"></field>
+    <field name="title" type="CharField"><None></None></field>
+    <field name="link" type="CharField"><None></None></field>
+    <field name="ingredients" type="TextField"><None></None></field>
+    <field name="recipe" type="TextField"><None></None></field>
+    <field name="content_title" type="CharField"><None></None></field>
+    <field name="content_text" type="TextField"><None></None></field>
+    <field name="specifications" type="TextField"><None></None></field>
+    <field name="active" type="BooleanField">True</field>
+    <field name="video_file" type="FileField"></field>
+  </object>
+  <object model="builder.productmarker" pk="3">
+    <field name="interactive_flyer_product" rel="ManyToOneRel" to="builder.interactiveflyerproduct">4</field>
+    <field name="type" type="CharField">hat-chef</field>
+    <field name="data" type="CharField"><None></None></field>
+    <field name="title" type="CharField"><None></None></field>
+    <field name="link" type="CharField"><None></None></field>
+    <field name="ingredients" type="TextField"><None></None></field>
+    <field name="recipe" type="TextField"><None></None></field>
+    <field name="content_title" type="CharField"><None></None></field>
+    <field name="content_text" type="TextField"><None></None></field>
+    <field name="specifications" type="TextField"><None></None></field>
+    <field name="active" type="BooleanField">False</field>
+    <field name="video_file" type="FileField"></field>
+  </object>
+  <object model="builder.productmarker" pk="4">
+    <field name="interactive_flyer_product" rel="ManyToOneRel" to="builder.interactiveflyerproduct">5</field>
+    <field name="type" type="CharField">plus</field>
+    <field name="data" type="CharField"></field>
+    <field name="title" type="CharField"><None></None></field>
+    <field name="link" type="CharField"><None></None></field>
+    <field name="ingredients" type="TextField"><None></None></field>
+    <field name="recipe" type="TextField"><None></None></field>
+    <field name="content_title" type="CharField"><None></None></field>
+    <field name="content_text" type="TextField"><None></None></field>
+    <field name="specifications" type="TextField"><None></None></field>
+    <field name="active" type="BooleanField">True</field>
+    <field name="video_file" type="FileField"></field>
+  </object>
+  <object model="builder.productmarker" pk="5">
+    <field name="interactive_flyer_product" rel="ManyToOneRel" to="builder.interactiveflyerproduct">5</field>
+    <field name="type" type="CharField">info</field>
+    <field name="data" type="CharField"><None></None></field>
+    <field name="title" type="CharField">Test</field>
+    <field name="link" type="CharField"><None></None></field>
+    <field name="ingredients" type="TextField"><None></None></field>
+    <field name="recipe" type="TextField"><None></None></field>
+    <field name="content_title" type="CharField">Test</field>
+    <field name="content_text" type="TextField"></field>
+    <field name="specifications" type="TextField"><None></None></field>
+    <field name="active" type="BooleanField">True</field>
+    <field name="video_file" type="FileField"></field>
+  </object>
+  <object model="builder.productmarker" pk="6">
+    <field name="interactive_flyer_product" rel="ManyToOneRel" to="builder.interactiveflyerproduct">6</field>
+    <field name="type" type="CharField">plus</field>
+    <field name="data" type="CharField"></field>
+    <field name="title" type="CharField"><None></None></field>
+    <field name="link" type="CharField"><None></None></field>
+    <field name="ingredients" type="TextField"><None></None></field>
+    <field name="recipe" type="TextField"><None></None></field>
+    <field name="content_title" type="CharField"><None></None></field>
+    <field name="content_text" type="TextField"><None></None></field>
+    <field name="specifications" type="TextField"><None></None></field>
+    <field name="active" type="BooleanField">True</field>
+    <field name="video_file" type="FileField"></field>
+  </object>
+  <object model="builder.productmarker" pk="7">
+    <field name="interactive_flyer_product" rel="ManyToOneRel" to="builder.interactiveflyerproduct">7</field>
+    <field name="type" type="CharField">plus</field>
+    <field name="data" type="CharField"></field>
+    <field name="title" type="CharField"><None></None></field>
+    <field name="link" type="CharField"><None></None></field>
+    <field name="ingredients" type="TextField"><None></None></field>
+    <field name="recipe" type="TextField"><None></None></field>
+    <field name="content_title" type="CharField"><None></None></field>
+    <field name="content_text" type="TextField"><None></None></field>
+    <field name="specifications" type="TextField"><None></None></field>
+    <field name="active" type="BooleanField">True</field>
+    <field name="video_file" type="FileField"></field>
+  </object>
+  <object model="builder.productmarker" pk="8">
+    <field name="interactive_flyer_product" rel="ManyToOneRel" to="builder.interactiveflyerproduct">7</field>
+    <field name="type" type="CharField">hat-chef</field>
+    <field name="data" type="CharField"><None></None></field>
+    <field name="title" type="CharField"><None></None></field>
+    <field name="link" type="CharField"><None></None></field>
+    <field name="ingredients" type="TextField"><None></None></field>
+    <field name="recipe" type="TextField"><None></None></field>
+    <field name="content_title" type="CharField"><None></None></field>
+    <field name="content_text" type="TextField"><None></None></field>
+    <field name="specifications" type="TextField"><None></None></field>
+    <field name="active" type="BooleanField">False</field>
+    <field name="video_file" type="FileField"></field>
+  </object>
+  <object model="builder.productmarker" pk="9">
+    <field name="interactive_flyer_product" rel="ManyToOneRel" to="builder.interactiveflyerproduct">8</field>
+    <field name="type" type="CharField">plus</field>
+    <field name="data" type="CharField"></field>
+    <field name="title" type="CharField"><None></None></field>
+    <field name="link" type="CharField"><None></None></field>
+    <field name="ingredients" type="TextField"><None></None></field>
+    <field name="recipe" type="TextField"><None></None></field>
+    <field name="content_title" type="CharField"><None></None></field>
+    <field name="content_text" type="TextField"><None></None></field>
+    <field name="specifications" type="TextField"><None></None></field>
+    <field name="active" type="BooleanField">True</field>
+    <field name="video_file" type="FileField"></field>
+  </object>
+  <object model="builder.productmarker" pk="10">
+    <field name="interactive_flyer_product" rel="ManyToOneRel" to="builder.interactiveflyerproduct">8</field>
+    <field name="type" type="CharField">info</field>
+    <field name="data" type="CharField"><None></None></field>
+    <field name="title" type="CharField">Test</field>
+    <field name="link" type="CharField"><None></None></field>
+    <field name="ingredients" type="TextField"><None></None></field>
+    <field name="recipe" type="TextField"><None></None></field>
+    <field name="content_title" type="CharField">Test</field>
+    <field name="content_text" type="TextField"></field>
+    <field name="specifications" type="TextField"><None></None></field>
+    <field name="active" type="BooleanField">True</field>
+    <field name="video_file" type="FileField"></field>
+  </object>
+  <object model="builder.productmarkerimage" pk="1">
+    <field name="product_marker" rel="ManyToOneRel" to="builder.productmarker">5</field>
+    <field name="image_file" type="FileField">wOUtxJUGhK/images/04-Iperbimbo-whatsapp.jpeg</field>
+  </object>
+  <object model="builder.productmarkerimage" pk="2">
+    <field name="product_marker" rel="ManyToOneRel" to="builder.productmarker">10</field>
+    <field name="image_file" type="FileField">wAxqtJtwlk/images/04-Iperbimbo-whatsapp.jpeg</field>
+  </object>
+  <object model="builder.productimage" pk="1">
+    <field name="interactive_flyer_product" rel="ManyToOneRel" to="builder.interactiveflyerproduct">3</field>
+    <field name="image_file" type="FileField">wOUtxJUGhK/products/cropped_image_C9C9SuT.png</field>
+    <field name="cropped" type="BooleanField">True</field>
+  </object>
+  <object model="builder.productimage" pk="2">
+    <field name="interactive_flyer_product" rel="ManyToOneRel" to="builder.interactiveflyerproduct">4</field>
+    <field name="image_file" type="FileField">wOUtxJUGhK/products/cropped_image_JuI10qq_yBnCRjD.png</field>
+    <field name="cropped" type="BooleanField">True</field>
+  </object>
+  <object model="builder.productimage" pk="3">
+    <field name="interactive_flyer_product" rel="ManyToOneRel" to="builder.interactiveflyerproduct">5</field>
+    <field name="image_file" type="FileField">wOUtxJUGhK/products/cropped_image_UB7UFa9_DlJGrAu.png</field>
+    <field name="cropped" type="BooleanField">True</field>
+  </object>
+  <object model="builder.productimage" pk="4">
+    <field name="interactive_flyer_product" rel="ManyToOneRel" to="builder.interactiveflyerproduct">5</field>
+    <field name="image_file" type="FileField">wOUtxJUGhK/products/08-adhoc-whatsapp_pEDDh7S.jpeg</field>
+    <field name="cropped" type="BooleanField">False</field>
+  </object>
+  <object model="builder.productimage" pk="5">
+    <field name="interactive_flyer_product" rel="ManyToOneRel" to="builder.interactiveflyerproduct">6</field>
+    <field name="image_file" type="FileField">wAxqtJtwlk/products/cropped_image_C9C9SuT.png</field>
+    <field name="cropped" type="BooleanField">True</field>
+  </object>
+  <object model="builder.productimage" pk="6">
+    <field name="interactive_flyer_product" rel="ManyToOneRel" to="builder.interactiveflyerproduct">7</field>
+    <field name="image_file" type="FileField">wAxqtJtwlk/products/cropped_image_JuI10qq_yBnCRjD.png</field>
+    <field name="cropped" type="BooleanField">True</field>
+  </object>
+  <object model="builder.productimage" pk="7">
+    <field name="interactive_flyer_product" rel="ManyToOneRel" to="builder.interactiveflyerproduct">8</field>
+    <field name="image_file" type="FileField">wAxqtJtwlk/products/08-adhoc-whatsapp_pEDDh7S.jpeg</field>
+    <field name="cropped" type="BooleanField">False</field>
+  </object>
+  <object model="builder.productimage" pk="8">
+    <field name="interactive_flyer_product" rel="ManyToOneRel" to="builder.interactiveflyerproduct">8</field>
+    <field name="image_file" type="FileField">wAxqtJtwlk/products/cropped_image_UB7UFa9_DlJGrAu.png</field>
+    <field name="cropped" type="BooleanField">True</field>
+  </object>
+  <object model="builder.projectsetting" pk="1">
+    <field name="interactive_flyer" rel="OneToOneRel" to="builder.interactiveflyer">5</field>
+    <field name="send_grocery_list_to_market" type="BooleanField">False</field>
+    <field name="grocery_list_min_value" type="BooleanField">True</field>
+    <field name="has_pages" type="BooleanField">True</field>
+    <field name="hide_grocery_list" type="BooleanField">True</field>
+    <field name="hide_searchbar" type="BooleanField">True</field>
+    <field name="line_through" type="BooleanField">True</field>
+    <field name="category_banner" type="FileField">settings/TicTac_RefreshYourBackground_007.jpg</field>
+    <field name="category_banner_mobile" type="FileField">settings/TicTac_RefreshYourBackground_009.jpg</field>
+    <field name="hide_plus_product" type="BooleanField">True</field>
+    <field name="hide_plus_product_price" type="BooleanField">True</field>
+    <field name="hide_listPages" type="BooleanField">True</field>
+    <field name="type" type="CharField">leaflet</field>
+    <field name="pdfPath" type="FileField">settings/pdf/TicTac_RefreshYourBackground_004.jpg</field>
+    <field name="no_link_to_site" type="BooleanField">True</field>
+    <field name="noIconAnimated" type="BooleanField">True</field>
+    <field name="largeIcon" type="BooleanField">True</field>
+    <field name="hide_logo" type="BooleanField">True</field>
+    <field name="small_logo" type="BooleanField">True</field>
+    <field name="only_browsable" type="BooleanField">True</field>
+    <field name="show_one_page" type="BooleanField">True</field>
+    <field name="version" type="IntegerField">2</field>
+    <field name="filterBrand" type="IntegerField">0</field>
+    <field name="filterUnderprice" type="IntegerField">1</field>
+    <field name="client_id" type="IntegerField">1111</field>
+    <field name="signboard_id" type="IntegerField">1234</field>
+    <field name="release_id" type="IntegerField">1212</field>
+    <field name="primary_color" type="CharField">#e11414</field>
+    <field name="secondary_color" type="CharField">#111fdf</field>
+    <field name="tertiary_color" type="CharField">#ccd912</field>
+    <field name="hover_color" type="CharField">#1bc5c3</field>
+    <field name="clientIcon" type="FileField">settings/TicTac_RefreshYourBackground_001_fpZoQZ4.jpg</field>
+    <field name="videoInPage" type="FileField">settings/video/TicTac_RefreshYourBackground_002_FnGzlBy.jpg</field>
+    <field name="brandImage" type="FileField">settings/TicTac_RefreshYourBackground_003_AJZajYt.jpg</field>
+    <field name="underPriceImage" type="FileField">settings/TicTac_RefreshYourBackground_005_rMm8ygx.jpg</field>
+    <field name="shareFlyerTitle" type="CharField">asdsad</field>
+    <field name="shareFlyerURL" type="CharField">sadcasdv</field>
+    <field name="shareProductSentence" type="CharField">qwfasdc</field>
+    <field name="ogTitleMeta" type="CharField">metatitolo</field>
+    <field name="ogDescriptionMeta" type="CharField">metadesc</field>
+    <field name="ogImageMeta" type="FileField">settings/TicTac_RefreshYourBackground_006_E3QK5Ut.jpg</field>
+    <field name="ga_active" type="BooleanField">False</field>
+    <field name="ga_tracking_id" type="CharField">12341234</field>
+    <field name="internal_banner_click" type="BooleanField">True</field>
+    <field name="external_banner_click" type="BooleanField">True</field>
+    <field name="product_banner" type="CharField">asdcasdc</field>
+    <field name="href_banner" type="CharField"></field>
+  </object>
+</django-objects>

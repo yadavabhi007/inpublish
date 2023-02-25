@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>jQuery Beautify-json Plugin Examples</title>
+    <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="beautify-json.css">
+	<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+	<script src="jquery.beautify-json.js"></script>
+	<script>
+		$(document).ready(function(){
+			$('.one').beautifyJSON({
+                type: "plain"
+            });
+            $('.two').beautifyJSON({
+                type: "strict"
+            });
+            $('.three').beautifyJSON({
+                type: "flexible"
+            });
+		});
+	</script>
+</head>
+<body>
+<div id="jquery-script-menu">
+<div class="jquery-script-center">
+<ul>
+<li><a href="http://www.jqueryscript.net/text/Simple-JSON-Beautifier-With-jQuery-CSS-CSS3-Beautify-json.html">Download This Plugin</a></li>
+<li><a href="http://www.jqueryscript.net/">Back To jQueryScript</a></li>
+</ul>
+<div class="jquery-script-ads"><script type="text/javascript"><!--
+google_ad_client = "ca-pub-2783044520727903";
+/* jQuery_demo */
+google_ad_slot = "2780937993";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+<div class="jquery-script-clear"></div>
+</div>
+</div>
+<div class="container">
+<h1>jQuery Beautify-json Plugin Examples</h1>
+<h2>Plain Mode</h2>
+	<div class="one">
+	{
+"problems": [{
+    "Diabetes":[{
+        "medications":[{
+            "medicationsClasses":[{
+                "className":[{
+                    "associatedDrug":[{
+                        "name":"asprin",
+                        "dose":"",
+                        "strength":"500 mg"
+                    }],
+                    "associatedDrug#2":[{
+                        "name":"somethingElse",
+                        "dose":"",
+                        "strength":"500 mg"
+                    }]
+                }],
+            }]
+        }],
+        "labs":[{
+            "missing_field": "missing_value"
+        }]
+    }],
+    "Asthma":[{}]
+}]}
+	</div>
+    <h2>Strict Mode</h2>
+    <div class="two">
+        {"total":3,"per_page":20,"current_page":1,"last_page":1,"next_page_url":null,"prev_page_url":null,"from":1,"to":3,"data":[{"id":"0ecfe87f4e04425f87cf9336be50ed55","title":"Test","slug":"test","content":"Test 12356788<\/p>\n","created_at":"2016-02-06 05:36:48","updated_at":"2016-02-06 05:36:48","published_at":"2016-02-06 05:36:48","user_id":"7","proposal_id":null,"content_brief":"Test 12356788\n","is_published":true,"tagged":[]},{"id":"864b671611684f0091119d1d2a1071a3","title":"Testing Post","slug":"testing-post","content":"This is for testing purpose only. Please ignore!<\/p>\n\n\u00a0<\/p>\n\n\u00a0<\/p>\n","created_at":"2016-01-31 21:53:48","updated_at":"2016-01-31 21:53:48","published_at":"2016-01-31 21:53:48","user_id":"2","proposal_id":null,"content_brief":"This is for testing purpose only. Please ignore!\n\n\u00a0\n\n\u00a0\n","is_published":true,"tagged":[]},{"id":"feb01474019e44c3a0273058dba8f1ce","title":"First Post!","slug":"first-post","content":"Just wanted to try this out and post my first post! Welcome to Protege! More features are coming out soon!<\/p>\n","created_at":"2016-02-19 16:36:30","updated_at":"2016-02-19 16:36:55","published_at":"2016-02-19 16:36:55","user_id":"4","proposal_id":null,"content_brief":"Just wanted to try this out and post my first post! Welcome to Protege! More features are coming out soon!\n","is_published":true,"tagged":[]}]}
+    </div>
+    <h2>Flexible Mode</h2>
+    <div class="three">
+        {"total":3,"per_page":20,"current_page":1,"last_page":1,"next_page_url":null,"prev_page_url":null,"from":1,"to":3,"data":[{"id":"0ecfe87f4e04425f87cf9336be50ed55","title":"Test","slug":"test","content":"Test 12356788<\/p>\n","created_at":"2016-02-06 05:36:48","updated_at":"2016-02-06 05:36:48","published_at":"2016-02-06 05:36:48","user_id":"7","proposal_id":null,"content_brief":"Test 12356788\n","is_published":true,"tagged":[]},{"id":"864b671611684f0091119d1d2a1071a3","title":"Testing Post","slug":"testing-post","content":"This is for testing purpose only. Please ignore!<\/p>\n\n\u00a0<\/p>\n\n\u00a0<\/p>\n","created_at":"2016-01-31 21:53:48","updated_at":"2016-01-31 21:53:48","published_at":"2016-01-31 21:53:48","user_id":"2","proposal_id":null,"content_brief":"This is for testing purpose only. Please ignore!\n\n\u00a0\n\n\u00a0\n","is_published":true,"tagged":[]},{"id":"feb01474019e44c3a0273058dba8f1ce","title":"First Post!","slug":"first-post","content":"Just wanted to try this out and post my first post! Welcome to Protege! More features are coming out soon!<\/p>\n","created_at":"2016-02-19 16:36:30","updated_at":"2016-02-19 16:36:55","published_at":"2016-02-19 16:36:55","user_id":"4","proposal_id":null,"content_brief":"Just wanted to try this out and post my first post! Welcome to Protege! More features are coming out soon!\n","is_published":true,"tagged":[]}]}
+    </div>
+</div>
+</body>
+</html>

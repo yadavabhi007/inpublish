@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+
+  imagor_server:
+    image: shumc/imagor:latest
+    volumes:
+      - ./imagor:/mnt/data
+    environment:
+      PORT: 8000
+      IMAGOR_UNSAFE: 1 # unsafe URL
+      FILE_LOADER_BASE_DIR: /mnt/data # enable file loader by specifying base dir
+      FILE_STORAGE_BASE_DIR: /mnt/data # enable file storage by specifying base dir
+    ports:
+      - "8000:8000"
+
+  thumbor_server:
+    image: minimalcompact/thumbor
+    ports:
+      - "8081:80"

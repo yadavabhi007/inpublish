@@ -1,0 +1,2485 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-08 17:45+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: builder/menus.py:9
+#: builder/templates/builder/new/edit_interactive_flyer.html:75
+#: builder/utils/base_class/interattivo_base_views.py:38
+msgid "Dashboard"
+msgstr ""
+
+#: builder/menus.py:22
+#: builder/templates/builder/new/new_interactive_flyer_internal.html:34
+msgid "Nuovo"
+msgstr ""
+
+#: builder/menus.py:37 builder/templates/builder/layout.html:76
+msgid "Impostazioni cliente"
+msgstr ""
+
+#: builder/menus.py:45
+msgid "Database admin"
+msgstr ""
+
+#: builder/menus.py:54 builder/templates/builder/layout.html:77
+msgid "Esci"
+msgstr ""
+
+#: builder/menus.py:65 builder/models.py:711
+#: builder/templates/builder/edit_interactive_flyer/_index_links.html:7
+#: builder/templates/builder/edit_interactive_flyer/_left_bar.html:10
+#: builder/templates/builder/modals/edit_interactive_flyer/_add_index_modal.html:11
+#: builder/templates/builder/new/edit_interactive_flyer.html:897
+#: builder/templates/builder/new/interactive_flyer_settings.html:205
+msgid "Indice"
+msgstr ""
+
+#: builder/menus.py:79
+msgid "Prodotto"
+msgstr ""
+
+#: builder/menus.py:93
+#: builder/templates/builder/edit_interactive_flyer/_video_interactivity_modal.html:48
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:59
+#: builder/templates/builder/modals/edit_interactive_flyer/_play_interactivity_modal.html:73
+#: builder/templates/builder/new/edit_interactive_flyer.html:134
+#: builder/templates/builder/new/edit_interactive_flyer.html:404
+#: builder/templates/builder/page/_edit_product.html:77
+msgid "Video"
+msgstr ""
+
+#: builder/menus.py:107 builder/menus.py:122
+msgid "Link esterno"
+msgstr ""
+
+#: builder/menus.py:136 builder/menus.py:150
+msgid "Link interno"
+msgstr ""
+
+#: builder/models.py:120 builder/templates/builder/new/dashboard.html:36
+msgid "Bozza"
+msgstr ""
+
+#: builder/models.py:121 builder/templates/builder/new/dashboard.html:34
+msgid "Pubblicato"
+msgstr ""
+
+#: builder/models.py:122 builder/templates/builder/new/dashboard.html:32
+msgid "Pianificato"
+msgstr ""
+
+#: builder/models.py:123 builder/templates/builder/new/dashboard.html:42
+msgid "Da correggere"
+msgstr ""
+
+#: builder/models.py:124 builder/templates/builder/new/dashboard.html:30
+msgid "Scaduto"
+msgstr ""
+
+#: builder/models.py:125 builder/templates/builder/new/dashboard.html:38
+msgid "Errore"
+msgstr ""
+
+#: builder/models.py:126 builder/templates/builder/new/dashboard.html:40
+msgid "Chiusura forzata"
+msgstr ""
+
+#: builder/models.py:127
+msgid "Cestinato"
+msgstr ""
+
+#: builder/models.py:709
+#: builder/templates/builder/new/interactive_flyer_settings.html:197
+msgid "Bottoni"
+msgstr ""
+
+#: builder/models.py:710
+#: builder/templates/builder/new/interactive_flyer_settings.html:201
+msgid "Slider"
+msgstr ""
+
+#: builder/templates/builder/_sidebar.html:4
+#, fuzzy
+#| msgid "English"
+msgid "InPublish"
+msgstr "Inglese"
+
+#: builder/templates/builder/_sidebar.html:12
+msgid "Nuovo volantino"
+msgstr ""
+
+#: builder/templates/builder/_sidebar.html:23
+msgid "Volantini"
+msgstr ""
+
+#: builder/templates/builder/edit.html:15
+#: builder/templates/builder/interactive_flyer_settings.html:31
+msgid "Modifica Impostazioni"
+msgstr ""
+
+#: builder/templates/builder/edit.html:24
+#: builder/templates/builder/interactive_flyer_settings.html:44
+#: builder/templates/builder/new/dashboard.html:17
+#: builder/templates/builder/new/edit_interactive_flyer.html:143
+#: builder/templates/builder/new/new_interactive_flyer_aeb.html:15
+#: builder/templates/builder/new_interactive_flyer.html:20
+msgid "Nome"
+msgstr "Nome"
+
+#: builder/templates/builder/edit.html:30
+#: builder/templates/builder/interactive_flyer_settings.html:54
+msgid "Progetto collegato A&B"
+msgstr ""
+
+#: builder/templates/builder/edit.html:32
+#: builder/templates/builder/interactive_flyer_settings.html:59
+#: builder/templates/builder/new/interactive_flyer_settings.html:49
+#: builder/templates/builder/new/new_interactive_flyer_aeb.html:22
+#: builder/templates/builder/new_interactive_flyer.html:26
+msgid "Cliente"
+msgstr ""
+
+#: builder/templates/builder/edit.html:45
+#: builder/templates/builder/interactive_flyer_settings.html:85
+#: builder/templates/builder/new/new_interactive_flyer_aeb.html:41
+#: builder/templates/builder/new_interactive_flyer.html:45
+msgid "Seleziona progetto collegato"
+msgstr ""
+
+#: builder/templates/builder/edit.html:59
+#: builder/templates/builder/interactive_flyer_settings.html:101
+msgid "CONFIGURAZIONE"
+msgstr ""
+
+#: builder/templates/builder/edit.html:61
+msgid "send_grocery_list_to_market"
+msgstr ""
+
+#: builder/templates/builder/edit.html:67
+msgid "grocery_list_min_value"
+msgstr ""
+
+#: builder/templates/builder/edit.html:73
+msgid "has_pages"
+msgstr ""
+
+#: builder/templates/builder/edit.html:79
+msgid "hide_grocery_list"
+msgstr ""
+
+#: builder/templates/builder/edit.html:85
+msgid "hide_searchbar"
+msgstr ""
+
+#: builder/templates/builder/edit.html:91
+msgid "line_through"
+msgstr ""
+
+#: builder/templates/builder/edit.html:97
+msgid "category_banner"
+msgstr ""
+
+#: builder/templates/builder/edit.html:103
+msgid "category_banner_mobile"
+msgstr ""
+
+#: builder/templates/builder/edit.html:109
+msgid "hide_plus_product"
+msgstr ""
+
+#: builder/templates/builder/edit.html:115
+msgid "hide_plus_product_price"
+msgstr ""
+
+#: builder/templates/builder/edit.html:121
+msgid "hide_listPages"
+msgstr ""
+
+#: builder/templates/builder/edit.html:127
+msgid "type"
+msgstr ""
+
+#: builder/templates/builder/edit.html:130
+#: builder/templates/builder/interactive_flyer_settings.html:256
+msgid "Leaflet"
+msgstr ""
+
+#: builder/templates/builder/edit.html:131
+#: builder/templates/builder/interactive_flyer_settings.html:257
+msgid "Menu"
+msgstr ""
+
+#: builder/templates/builder/edit.html:132
+#: builder/templates/builder/interactive_flyer_settings.html:258
+msgid "Catalog"
+msgstr ""
+
+#: builder/templates/builder/edit.html:137
+msgid "product_banner"
+msgstr ""
+
+#: builder/templates/builder/edit.html:143
+msgid "pdfPath"
+msgstr ""
+
+#: builder/templates/builder/edit.html:149
+msgid "internal_banner_click"
+msgstr ""
+
+#: builder/templates/builder/edit.html:155
+msgid "external_banner_click"
+msgstr ""
+
+#: builder/templates/builder/edit.html:161
+msgid "no_link_to_site"
+msgstr ""
+
+#: builder/templates/builder/edit.html:167
+msgid "noIconAnimated"
+msgstr ""
+
+#: builder/templates/builder/edit.html:173
+msgid "largeIcon"
+msgstr ""
+
+#: builder/templates/builder/edit.html:179
+msgid "hide_logo"
+msgstr ""
+
+#: builder/templates/builder/edit.html:185
+msgid "small_logo"
+msgstr ""
+
+#: builder/templates/builder/edit.html:191
+msgid "only_browsable"
+msgstr ""
+
+#: builder/templates/builder/edit.html:197
+msgid "show_one_page"
+msgstr ""
+
+#: builder/templates/builder/edit.html:203
+msgid "version"
+msgstr ""
+
+#: builder/templates/builder/edit.html:209
+msgid "filterBrand"
+msgstr ""
+
+#: builder/templates/builder/edit.html:215
+msgid "filterUnderprice"
+msgstr ""
+
+#: builder/templates/builder/edit.html:222
+msgid "DATI CLIENTE"
+msgstr ""
+
+#: builder/templates/builder/edit.html:224
+msgid "client_id"
+msgstr ""
+
+#: builder/templates/builder/edit.html:230
+msgid "signboard_id"
+msgstr ""
+
+#: builder/templates/builder/edit.html:236
+msgid "release_id"
+msgstr ""
+
+#: builder/templates/builder/edit.html:243
+msgid "GRAFICA"
+msgstr ""
+
+#: builder/templates/builder/edit.html:245
+#: builder/templates/builder/interactive_flyer_settings.html:486
+#: builder/templates/builder/new/clientsetting_form.html:100
+msgid "Colore primario"
+msgstr ""
+
+#: builder/templates/builder/edit.html:252
+#: builder/templates/builder/interactive_flyer_settings.html:497
+#: builder/templates/builder/new/clientsetting_form.html:104
+msgid "Colore secondario"
+msgstr ""
+
+#: builder/templates/builder/edit.html:259
+#: builder/templates/builder/interactive_flyer_settings.html:508
+#: builder/templates/builder/new/clientsetting_form.html:114
+msgid "Colore terziario"
+msgstr ""
+
+#: builder/templates/builder/edit.html:267
+#: builder/templates/builder/interactive_flyer_settings.html:519
+msgid "Colore in hover"
+msgstr ""
+
+#: builder/templates/builder/edit.html:274
+msgid "clientIcon"
+msgstr ""
+
+#: builder/templates/builder/edit.html:281
+msgid "videoInPage"
+msgstr ""
+
+#: builder/templates/builder/edit.html:288
+msgid "brandImage"
+msgstr ""
+
+#: builder/templates/builder/edit.html:295
+msgid "underPriceImage"
+msgstr ""
+
+#: builder/templates/builder/edit.html:303
+#: builder/templates/builder/new/interactive_flyer_settings.html:579
+msgid "SEO"
+msgstr ""
+
+#: builder/templates/builder/edit.html:305
+msgid "shareFlyerTitle"
+msgstr ""
+
+#: builder/templates/builder/edit.html:311
+msgid "shareFlyerURL"
+msgstr ""
+
+#: builder/templates/builder/edit.html:317
+#: builder/templates/builder/interactive_flyer_settings.html:614
+msgid "shareProductSentence"
+msgstr ""
+
+#: builder/templates/builder/edit.html:323
+msgid "ogTitleMeta"
+msgstr ""
+
+#: builder/templates/builder/edit.html:329
+msgid "ogDescriptionMeta"
+msgstr ""
+
+#: builder/templates/builder/edit.html:335
+msgid "ogImageMeta"
+msgstr ""
+
+#: builder/templates/builder/edit.html:341
+msgid "ga_active"
+msgstr ""
+
+#: builder/templates/builder/edit.html:347
+msgid "ga_tracking_id"
+msgstr ""
+
+#: builder/templates/builder/edit.html:388
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:367
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:447
+#: builder/templates/builder/edit_interactive_flyer/_edit_link.html:42
+#: builder/templates/builder/edit_interactive_flyer/_info_interactivity_modal.html:70
+#: builder/templates/builder/edit_interactive_flyer/_link_interactivity_modal.html:39
+#: builder/templates/builder/edit_interactive_flyer/_recipe_interactivity_modal.html:68
+#: builder/templates/builder/edit_interactive_flyer/_specs_interactivity_modal.html:64
+#: builder/templates/builder/edit_interactive_flyer/_video_interactivity_modal.html:63
+#: builder/templates/builder/interactive_flyer_settings.html:687
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:418
+#: builder/templates/builder/modals/edit_interactive_flyer/_change_page_image_modal.html:32
+#: builder/templates/builder/modals/edit_interactive_flyer/_hat_chef_interactivity_modal.html:72
+#: builder/templates/builder/modals/edit_interactive_flyer/_info_interactivity_modal.html:70
+#: builder/templates/builder/modals/edit_interactive_flyer/_play_interactivity_modal.html:92
+#: builder/templates/builder/modals/edit_interactive_flyer/_specs_interactivity_modal.html:66
+#: builder/templates/builder/modals/edit_interactive_flyer/_world_interactivity_modal.html:38
+#: builder/templates/builder/new/clientsetting_form.html:206
+#: builder/templates/builder/new/edit_interactive_flyer.html:263
+#: builder/templates/builder/new/edit_interactive_flyer.html:354
+#: builder/templates/builder/new/edit_interactive_flyer.html:768
+#: builder/templates/builder/new/edit_interactive_flyer.html:889
+#: builder/templates/builder/new/edit_interactive_flyer.html:961
+#: builder/templates/builder/new/edit_interactive_flyer.html:1015
+#: builder/templates/builder/new/interactive_flyer_settings.html:712
+msgid "Salva"
+msgstr ""
+
+#: builder/templates/builder/edit.html:390
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:371
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:451
+#: builder/templates/builder/edit_interactive_flyer/_edit_link.html:45
+#: builder/templates/builder/interactive_flyer_settings.html:689
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:422
+#: builder/templates/builder/modals/edit_interactive_flyer/_add_index_modal.html:72
+#: builder/templates/builder/modals/edit_interactive_flyer/_polotno_integration_modal.html:34
+#: builder/templates/builder/new/edit_interactive_flyer.html:264
+#: builder/templates/builder/new/edit_interactive_flyer.html:355
+#: builder/templates/builder/new/edit_interactive_flyer.html:770
+#: builder/templates/builder/new/edit_interactive_flyer.html:890
+#: builder/templates/builder/new/edit_interactive_flyer.html:962
+#: builder/templates/builder/new/edit_interactive_flyer.html:1016
+#: builder/templates/builder/new/new_interactive_flyer_aeb.html:59
+#: builder/templates/builder/new/new_interactive_flyer_internal.html:88
+#: builder/templates/builder/new_interactive_flyer.html:61
+msgid "Annulla"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer.html:28
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:30
+#, fuzzy
+#| msgid "inizializzazione in corso..."
+msgid "Generazione ZIP pubblicazione in corso..."
+msgstr "inizializzazione in corso..."
+
+#: builder/templates/builder/edit_interactive_flyer.html:33
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:35
+msgid "Scarica ZIP"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer.html:36
+msgid "Generato:"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:6
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:414
+#: builder/templates/builder/edit_interactive_flyer/_edit_link.html:10
+#: builder/templates/builder/edit_interactive_flyer/_index_links.html:14
+#: builder/templates/builder/new/edit_interactive_flyer.html:37
+#: builder/templates/builder/new/edit_interactive_flyer.html:165
+msgid "Pagina"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:14
+msgid "Crea prodotto"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:21
+#, fuzzy
+#| msgid "Lista Volantini interattivi"
+msgid "Aggiungi interattività"
+msgstr "Lista Volantini interattivi"
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:30
+msgid "Impostazioni pagina"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:36
+#, fuzzy
+#| msgid "Elimina"
+msgid "Elimina pagina"
+msgstr "Elimina"
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:41
+msgid "Cambia immagine sfondo pagina"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:52
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:114
+msgid "Nuovo prodotto interattivo"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:60
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:122
+msgid "Seleziona prodotto da progetto correlato"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:76
+msgid "Blueprint top</label>"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:80
+msgid "Blueprint left</label>"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:84
+msgid "Blueprint width</label>"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:88
+msgid "Blueprint height</label>"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:100
+msgid "ITEM ID</label>"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:108
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:117
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:126
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:135
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:165
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:173
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:181
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:189
+#: builder/templates/builder/interactive_flyer_without_pages/_products.html:14
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:161
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:169
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:177
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:185
+#: builder/templates/builder/new/edit_interactive_flyer.html:117
+#: builder/templates/builder/page/_edit_product.html:183
+#: builder/templates/builder/page/_edit_product.html:190
+#: builder/templates/builder/page/_edit_product.html:197
+#: builder/templates/builder/page/_edit_product.html:204
+#: builder/templates/builder/page/_products.html:13
+msgid "Descrizione"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:145
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:198
+#: builder/templates/builder/interactive_flyer_without_pages/_products.html:16
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:195
+#: builder/templates/builder/new/edit_interactive_flyer.html:118
+#: builder/templates/builder/page/_edit_product.html:217
+#: builder/templates/builder/page/_products.html:15
+msgid "Categoria"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:158
+#: builder/templates/builder/interactive_flyer_without_pages/_products.html:16
+#: builder/templates/builder/page/_edit_product.html:231
+#: builder/templates/builder/page/_products.html:15
+msgid "Sottocategoria"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:173
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:223
+#: builder/templates/builder/page/_edit_product.html:247
+msgid "Salva categoria e sottocategoria nel catalogo A&B"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:181
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:231
+#: builder/templates/builder/page/_edit_product.html:256
+msgid "CALCOLO PREZZO"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:185
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:240
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:235
+#: builder/templates/builder/new/edit_interactive_flyer.html:669
+#: builder/templates/builder/page/_edit_product.html:260
+msgid "Prezzo al pezzo"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:186
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:187
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:188
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:255
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:242
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:246
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:247
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:236
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:237
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:238
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:305
+#: builder/templates/builder/page/_edit_product.html:262
+#: builder/templates/builder/page/_edit_product.html:266
+#: builder/templates/builder/page/_edit_product.html:267
+#: builder/templates/builder/page/_edit_product.html:336
+msgid "Prezzo al Kg"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:186
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:243
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:236
+#: builder/templates/builder/page/_edit_product.html:263
+msgid "Calcolo al kg"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:187
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:189
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:246
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:251
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:237
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:239
+#: builder/templates/builder/page/_edit_product.html:266
+#: builder/templates/builder/page/_edit_product.html:271
+msgid "Calcolo in etto"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:188
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:248
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:238
+#: builder/templates/builder/page/_edit_product.html:268
+msgid "Calcolo in grammi"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:189
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:251
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:239
+#: builder/templates/builder/page/_edit_product.html:271
+msgid "Prezzo all'etto"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:195
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:256
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:245
+#: builder/templates/builder/page/_edit_product.html:276
+msgid "Etichetta prezzo"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:203
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:264
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:253
+#: builder/templates/builder/page/_edit_product.html:284
+msgid "Etichetta quantità"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:211
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:273
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:261
+#: builder/templates/builder/page/_edit_product.html:293
+msgid "Equivalenza"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:219
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:269
+#: builder/templates/builder/page/_edit_product.html:301
+msgid "Misura quantità"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:228
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:278
+#: builder/templates/builder/page/_edit_product.html:310
+msgid "Varietà"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:233
+msgid "Virgola o invio per separare le varietà"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:239
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:289
+#: builder/templates/builder/page/_edit_product.html:321
+msgid "Grammatura"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:247
+#: builder/templates/builder/interactive_flyer_without_pages/_products.html:17
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:297
+#: builder/templates/builder/new/edit_interactive_flyer.html:119
+#: builder/templates/builder/page/_edit_product.html:328
+#: builder/templates/builder/page/_products.html:16
+msgid "Prezzo"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:263
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:313
+#: builder/templates/builder/page/_edit_product.html:344
+msgid "Pezzi disponibili"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:271
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:321
+#: builder/templates/builder/page/_edit_product.html:353
+msgid "Massimo pezzi acquistabili"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:279
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:341
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:329
+#: builder/templates/builder/page/_edit_product.html:361
+msgid "Punti"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:293
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:356
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:344
+#: builder/templates/builder/new/edit_interactive_flyer.html:713
+#: builder/templates/builder/page/_edit_product.html:376
+msgid "Prodotto fedeltà"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:305
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:368
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:356
+#: builder/templates/builder/new/edit_interactive_flyer.html:718
+#: builder/templates/builder/page/_edit_product.html:388
+msgid "Focus"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:317
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:380
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:368
+#: builder/templates/builder/new/edit_interactive_flyer.html:723
+#: builder/templates/builder/page/_edit_product.html:400
+msgid "Pam"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:330
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:392
+#: builder/templates/builder/new/edit_interactive_flyer.html:728
+msgid "3x2"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:344
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:405
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:395
+#: builder/templates/builder/new/edit_interactive_flyer.html:733
+#: builder/templates/builder/page/_edit_product.html:425
+msgid "1+1 gratis"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:358
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:418
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:409
+#: builder/templates/builder/new/edit_interactive_flyer.html:738
+#: builder/templates/builder/page/_edit_product.html:438
+msgid "Sottocosto"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:391
+msgid "Crea link"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:398
+#, fuzzy
+#| msgid "Elimina"
+msgid "Elimina Indice"
+msgstr "Elimina"
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:408
+msgid "Nuovo link sull'indice"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:426
+#: builder/templates/builder/edit_interactive_flyer/_edit_link.html:22
+#: builder/templates/builder/page/_edit_product.html:153
+msgid "Blueprint top"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:430
+#: builder/templates/builder/edit_interactive_flyer/_edit_link.html:26
+#: builder/templates/builder/page/_edit_product.html:158
+msgid "Blueprint left"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:434
+#: builder/templates/builder/edit_interactive_flyer/_edit_link.html:30
+#: builder/templates/builder/page/_edit_product.html:162
+msgid "Blueprint width"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:438
+#: builder/templates/builder/edit_interactive_flyer/_edit_link.html:34
+#: builder/templates/builder/page/_edit_product.html:166
+msgid "Blueprint height"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:480
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:485
+msgid "Prodotto interattivo creato!"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:500
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:504
+msgid "Prodotto interattivo cancellato!"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:519
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:523
+msgid "Prodotto interattivo aggiornato!"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_actions_panel.html:532
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:452
+#: builder/templates/builder/modals/edit_interactive_flyer/_project_items_modal.html:7
+#: builder/templates/builder/new/edit_interactive_flyer.html:368
+msgid "Seleziona prodotto"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_add_index_modal.html:7
+#: builder/templates/builder/edit_interactive_flyer/_add_index_modal.html:30
+#: builder/templates/builder/modals/edit_interactive_flyer/_add_page_modal.html:46
+msgid "Aggiungi"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_add_index_modal.html:16
+#: builder/templates/builder/modals/edit_interactive_flyer/_add_index_modal.html:15
+#: builder/templates/builder/modals/edit_interactive_flyer/_add_index_modal.html:52
+#: builder/templates/builder/modals/edit_interactive_flyer/_add_page_modal.html:16
+#: builder/templates/builder/modals/edit_interactive_flyer/_change_page_image_modal.html:18
+msgid "Dimensioni"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_add_index_modal.html:18
+#: builder/templates/builder/modals/edit_interactive_flyer/_add_index_modal.html:17
+#: builder/templates/builder/modals/edit_interactive_flyer/_add_index_modal.html:54
+#: builder/templates/builder/modals/edit_interactive_flyer/_add_page_modal.html:18
+#: builder/templates/builder/modals/edit_interactive_flyer/_change_page_image_modal.html:20
+msgid "Lunghezza"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_add_index_modal.html:20
+#: builder/templates/builder/modals/edit_interactive_flyer/_add_index_modal.html:17
+#: builder/templates/builder/modals/edit_interactive_flyer/_add_index_modal.html:56
+#: builder/templates/builder/modals/edit_interactive_flyer/_add_page_modal.html:20
+#: builder/templates/builder/modals/edit_interactive_flyer/_change_page_image_modal.html:22
+msgid "Altezza"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_add_index_modal.html:24
+#: builder/templates/builder/edit_interactive_flyer/_info_interactivity_modal.html:57
+#: builder/templates/builder/edit_interactive_flyer/_recipe_interactivity_modal.html:55
+#: builder/templates/builder/edit_interactive_flyer/_specs_interactivity_modal.html:51
+#: builder/templates/builder/modals/edit_interactive_flyer/_add_page_modal.html:27
+#: builder/templates/builder/modals/edit_interactive_flyer/_change_page_image_modal.html:26
+#: builder/templates/builder/modals/edit_interactive_flyer/_hat_chef_interactivity_modal.html:53
+#: builder/templates/builder/modals/edit_interactive_flyer/_info_interactivity_modal.html:52
+#: builder/templates/builder/modals/edit_interactive_flyer/_specs_interactivity_modal.html:47
+msgid "Immagine"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_add_index_modal.html:29
+#: builder/templates/builder/edit_interactive_flyer/_info_interactivity_modal.html:71
+#: builder/templates/builder/edit_interactive_flyer/_link_interactivity_modal.html:40
+#: builder/templates/builder/edit_interactive_flyer/_product_images_modal.html:70
+#: builder/templates/builder/edit_interactive_flyer/_recipe_interactivity_modal.html:69
+#: builder/templates/builder/edit_interactive_flyer/_specs_interactivity_modal.html:65
+#: builder/templates/builder/edit_interactive_flyer/_video_interactivity_modal.html:64
+#: builder/templates/builder/modals/_clone_interactive_flyer_modal.html:25
+#: builder/templates/builder/modals/edit_interactive_flyer/_add_page_modal.html:45
+#: builder/templates/builder/modals/edit_interactive_flyer/_change_page_image_modal.html:31
+#: builder/templates/builder/modals/edit_interactive_flyer/_hat_chef_interactivity_modal.html:73
+#: builder/templates/builder/modals/edit_interactive_flyer/_info_interactivity_modal.html:71
+#: builder/templates/builder/modals/edit_interactive_flyer/_play_interactivity_modal.html:93
+#: builder/templates/builder/modals/edit_interactive_flyer/_product_images_modal.html:54
+#: builder/templates/builder/modals/edit_interactive_flyer/_specs_interactivity_modal.html:67
+#: builder/templates/builder/modals/edit_interactive_flyer/_world_interactivity_modal.html:39
+#: builder/templates/builder/new/dashboard.html:70
+msgid "Chiudi"
+msgstr "Chiudi"
+
+#: builder/templates/builder/edit_interactive_flyer/_edit_link.html:5
+#, fuzzy
+#| msgid "Modifica"
+msgid "Modifica link"
+msgstr "Modifica"
+
+#: builder/templates/builder/edit_interactive_flyer/_header.html:10
+msgid "Aggiungi indice"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_header.html:17
+#: builder/templates/builder/modals/edit_interactive_flyer/_add_page_modal.html:7
+#: builder/templates/builder/new/edit_interactive_flyer.html:40
+msgid "Aggiungi pagina"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_header.html:26
+#: builder/templates/builder/new/edit_interactive_flyer.html:81
+msgid "Anteprima"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_header.html:38
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:14
+#: builder/templates/builder/new/dashboard.html:95
+#: builder/templates/builder/new/edit_interactive_flyer.html:78
+msgid "Impostazioni"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_index_links.html:33
+msgid "Nessun link"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_info_interactivity_modal.html:9
+#: builder/templates/builder/modals/edit_interactive_flyer/_info_interactivity_modal.html:7
+msgid "Interattività: info"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_info_interactivity_modal.html:45
+#: builder/templates/builder/edit_interactive_flyer/_recipe_interactivity_modal.html:43
+#: builder/templates/builder/edit_interactive_flyer/_specs_interactivity_modal.html:39
+#: builder/templates/builder/modals/edit_interactive_flyer/_hat_chef_interactivity_modal.html:44
+#: builder/templates/builder/modals/edit_interactive_flyer/_info_interactivity_modal.html:43
+#: builder/templates/builder/modals/edit_interactive_flyer/_specs_interactivity_modal.html:38
+msgid "Immagine attuale"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_info_interactivity_modal.html:55
+#: builder/templates/builder/edit_interactive_flyer/_product_images_modal.html:49
+#: builder/templates/builder/edit_interactive_flyer/_recipe_interactivity_modal.html:53
+#: builder/templates/builder/edit_interactive_flyer/_specs_interactivity_modal.html:49
+#: builder/templates/builder/modals/edit_interactive_flyer/_product_images_modal.html:15
+msgid "Nuova immagine"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_info_interactivity_modal.html:63
+#: builder/templates/builder/edit_interactive_flyer/_product_images_modal.html:56
+#: builder/templates/builder/modals/edit_interactive_flyer/_add_index_modal.html:65
+#: builder/templates/builder/modals/edit_interactive_flyer/_hat_chef_interactivity_modal.html:63
+#: builder/templates/builder/modals/edit_interactive_flyer/_info_interactivity_modal.html:62
+#: builder/templates/builder/modals/edit_interactive_flyer/_play_interactivity_modal.html:83
+#: builder/templates/builder/modals/edit_interactive_flyer/_product_images_modal.html:26
+#: builder/templates/builder/modals/edit_interactive_flyer/_specs_interactivity_modal.html:57
+msgid "Scegli file"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_link_interactivity_modal.html:9
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:31
+#: builder/templates/builder/interactive_flyer_without_pages/_products.html:15
+#: builder/templates/builder/modals/edit_interactive_flyer/_world_interactivity_modal.html:7
+#: builder/templates/builder/new/edit_interactive_flyer.html:383
+#: builder/templates/builder/page/_edit_product.html:48
+#: builder/templates/builder/page/_products.html:14
+msgid "Interattività"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_link_interactivity_modal.html:20
+#: builder/templates/builder/edit_interactive_flyer/_specs_interactivity_modal.html:20
+#: builder/templates/builder/edit_interactive_flyer/_video_interactivity_modal.html:20
+#: builder/templates/builder/modals/edit_interactive_flyer/_hat_chef_interactivity_modal.html:18
+#: builder/templates/builder/modals/edit_interactive_flyer/_info_interactivity_modal.html:17
+#: builder/templates/builder/modals/edit_interactive_flyer/_play_interactivity_modal.html:18
+#: builder/templates/builder/modals/edit_interactive_flyer/_specs_interactivity_modal.html:18
+#: builder/templates/builder/modals/edit_interactive_flyer/_world_interactivity_modal.html:18
+#: builder/templates/builder/new/edit_interactive_flyer.html:394
+#: builder/templates/builder/new/edit_interactive_flyer.html:409
+#: builder/templates/builder/new/edit_interactive_flyer.html:425
+#: builder/templates/builder/new/edit_interactive_flyer.html:441
+#: builder/templates/builder/new/edit_interactive_flyer.html:457
+msgid "Attivo"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_link_interactivity_modal.html:25
+#: builder/templates/builder/edit_interactive_flyer/_specs_interactivity_modal.html:25
+#: builder/templates/builder/edit_interactive_flyer/_video_interactivity_modal.html:25
+#: builder/templates/builder/modals/edit_interactive_flyer/_hat_chef_interactivity_modal.html:24
+#: builder/templates/builder/modals/edit_interactive_flyer/_info_interactivity_modal.html:23
+#: builder/templates/builder/modals/edit_interactive_flyer/_play_interactivity_modal.html:24
+#: builder/templates/builder/modals/edit_interactive_flyer/_specs_interactivity_modal.html:24
+#: builder/templates/builder/modals/edit_interactive_flyer/_world_interactivity_modal.html:24
+msgid "Titolo"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_link_interactivity_modal.html:31
+#: builder/templates/builder/modals/edit_interactive_flyer/_play_interactivity_modal.html:67
+#: builder/templates/builder/modals/edit_interactive_flyer/_world_interactivity_modal.html:30
+#: builder/templates/builder/new/edit_interactive_flyer.html:187
+#: builder/templates/builder/new/edit_interactive_flyer.html:325
+#: builder/templates/builder/new/edit_interactive_flyer.html:389
+#: builder/templates/builder/new/edit_interactive_flyer.html:845
+#: builder/templates/builder/page/_edit_product.html:57
+msgid "Link"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_product_images_modal.html:9
+#: builder/templates/builder/modals/edit_interactive_flyer/_product_images_modal.html:7
+msgid "Gestisci immagini prodotto"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_product_images_modal.html:18
+msgid "Immagine ritagliata"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_product_images_modal.html:32
+#: builder/templates/builder/modals/edit_interactive_flyer/_product_images_modal.html:45
+msgid "Altre immagini"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_product_images_modal.html:42
+msgid "Cancella"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_product_images_modal.html:65
+#: builder/templates/builder/modals/edit_interactive_flyer/_add_index_modal.html:26
+#: builder/templates/builder/modals/edit_interactive_flyer/_add_index_modal.html:73
+#: builder/templates/builder/modals/edit_interactive_flyer/_product_images_modal.html:38
+#: builder/templates/builder/new/clientsetting_form.html:129
+#: builder/templates/builder/new/clientsetting_form.html:145
+#: builder/templates/builder/new/clientsetting_form.html:158
+msgid "Carica"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_recipe_interactivity_modal.html:61
+#: builder/templates/builder/edit_interactive_flyer/_video_interactivity_modal.html:55
+#: builder/templates/builder/new/clientsetting_form.html:21
+#: builder/templates/builder/new/clientsetting_form.html:22
+#: builder/templates/builder/new/interactive_flyer_settings.html:78
+#: builder/templates/builder/new/interactive_flyer_settings.html:229
+#: builder/templates/builder/new/interactive_flyer_settings.html:326
+#: builder/templates/builder/new/interactive_flyer_settings.html:327
+#: builder/templates/builder/new/interactive_flyer_settings.html:355
+#: builder/templates/builder/new/interactive_flyer_settings.html:356
+#: builder/templates/builder/new/interactive_flyer_settings.html:375
+#: builder/templates/builder/new/interactive_flyer_settings.html:376
+#: builder/templates/builder/new/interactive_flyer_settings.html:421
+#: builder/templates/builder/new/interactive_flyer_settings.html:422
+#: builder/templates/builder/new/interactive_flyer_settings.html:656
+#: builder/templates/builder/new/interactive_flyer_settings.html:657
+#: builder/templates/builder/new/interactive_flyer_settings.html:686
+#: builder/templates/builder/new/interactive_flyer_settings.html:687
+#: builder/templates/builder/new/new_interactive_flyer_internal.html:77
+msgid "Scegli"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_specs_interactivity_modal.html:9
+#: builder/templates/builder/modals/edit_interactive_flyer/_specs_interactivity_modal.html:7
+msgid "Interattività: specifiche"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_specs_interactivity_modal.html:31
+msgid "Specifiche (separate da virgola)"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_video_interactivity_modal.html:9
+#: builder/templates/builder/modals/edit_interactive_flyer/_play_interactivity_modal.html:7
+msgid "Interattività: video"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_video_interactivity_modal.html:34
+#: builder/templates/builder/modals/edit_interactive_flyer/_play_interactivity_modal.html:42
+#: builder/templates/builder/modals/edit_interactive_flyer/_play_interactivity_modal.html:52
+#: builder/templates/builder/new/edit_interactive_flyer.html:813
+msgid "Video attuale"
+msgstr ""
+
+#: builder/templates/builder/edit_interactive_flyer/_video_interactivity_modal.html:46
+msgid "Nuovo video"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_settings.html:18
+msgid "Impostazioni "
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_settings.html:22
+#, fuzzy
+#| msgid "Vuoi cancellare il volantino?"
+msgid "Torna al volantino"
+msgstr "Vuoi cancellare il volantino?"
+
+#: builder/templates/builder/interactive_flyer_settings.html:106
+msgid "Invia la lista della spesa allo store"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_settings.html:119
+#: builder/templates/builder/new/interactive_flyer_settings.html:561
+msgid "Valore minimo lista della spesa"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_settings.html:132
+msgid "Paginazione"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_settings.html:145
+msgid "Nascondi lista della spesa"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_settings.html:158
+msgid "Nascondi barra di ricerca"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_settings.html:171
+msgid "Sottolineatura"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_settings.html:184
+msgid "Banner categoria"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_settings.html:189
+#: builder/templates/builder/interactive_flyer_settings.html:203
+#: builder/templates/builder/interactive_flyer_settings.html:282
+#: builder/templates/builder/interactive_flyer_settings.html:535
+#: builder/templates/builder/interactive_flyer_settings.html:549
+#: builder/templates/builder/interactive_flyer_settings.html:563
+#: builder/templates/builder/interactive_flyer_settings.html:577
+#: builder/templates/builder/interactive_flyer_settings.html:653
+msgid "Attualmente:"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_settings.html:198
+msgid "Banner categoria su mobile"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_settings.html:212
+msgid "Nascondi marcatore prodotto"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_settings.html:225
+msgid "Nascondi marcatore prezzo prodotto"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_settings.html:238
+msgid "Nascondi lista delle pagine"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_settings.html:251
+#: builder/templates/builder/new/edit_interactive_flyer.html:144
+#: builder/templates/builder/new/edit_interactive_flyer.html:186
+#: builder/templates/builder/new/edit_interactive_flyer.html:906
+msgid "Tipo"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_settings.html:266
+msgid "Banner Prodotto"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_settings.html:277
+msgid "File PDF"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_settings.html:291
+msgid "Click sui banner"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_settings.html:304
+msgid "Click sui banner esterni"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_settings.html:317
+msgid "Nessun link al sito"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_settings.html:330
+msgid "Disabilita animazioni icone"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_settings.html:343
+msgid "Icone grandi"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_settings.html:356
+msgid "Nascondi il logo"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_settings.html:369
+msgid "Logo piccolo"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_settings.html:382
+msgid "Solo sfogliabile"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_settings.html:395
+#, fuzzy
+#| msgid "Elimina"
+msgid "Visualizza singola pagina"
+msgstr "Elimina"
+
+#: builder/templates/builder/interactive_flyer_settings.html:408
+msgid "Versione"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_settings.html:419
+msgid "Filtro marca"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_settings.html:430
+#: builder/templates/builder/new/interactive_flyer_settings.html:233
+msgid "Filtro prodotti scontati"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_settings.html:447
+msgid "ID cliente"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_settings.html:458
+msgid "ID signboard"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_settings.html:469
+msgid "ID release"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_settings.html:530
+#: builder/templates/builder/new/clientsetting_form.html:17
+msgid "Icona cliente"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_settings.html:544
+#, fuzzy
+#| msgid "Elimina"
+msgid "Video nella pagina"
+msgstr "Elimina"
+
+#: builder/templates/builder/interactive_flyer_settings.html:558
+msgid "Immagine del marchio"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_settings.html:572
+msgid "Immagine prezzo scontato"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_settings.html:592
+#, fuzzy
+#| msgid "Vuoi cancellare il volantino?"
+msgid "Condividi titolo volantino"
+msgstr "Vuoi cancellare il volantino?"
+
+#: builder/templates/builder/interactive_flyer_settings.html:603
+#, fuzzy
+#| msgid "Vuoi cancellare il volantino?"
+msgid "Condividi URL volantino"
+msgstr "Vuoi cancellare il volantino?"
+
+#: builder/templates/builder/interactive_flyer_settings.html:625
+msgid "Meta titolo"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_settings.html:637
+msgid "Meta descrizione"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_settings.html:648
+msgid "Meta immagine"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_settings.html:662
+msgid "Attiva Google Analytics"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_settings.html:675
+msgid "Tracking Google Analytics"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:5
+#: builder/templates/builder/page/_edit_product.html:5
+msgid "Modifica prodotto interattivo"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:10
+#: builder/templates/builder/page/_edit_product.html:10
+msgid "SALVA"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:14
+#: builder/templates/builder/interactive_flyer_without_pages/_import_products_modal.html:20
+#: builder/templates/builder/page/_edit_product.html:14
+msgid "ANNULLA"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:20
+#: builder/templates/builder/new/edit_interactive_flyer.html:464
+#: builder/templates/builder/page/_edit_product.html:36
+msgid "Immagini"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:26
+#: builder/templates/builder/new/edit_interactive_flyer.html:472
+#: builder/templates/builder/page/_edit_product.html:43
+msgid "Gestisci immagini"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:37
+#: builder/templates/builder/interactive_flyer_without_pages/_products.html:33
+#: builder/templates/builder/page/_products.html:30
+msgid "language"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:45
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:65
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:85
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:105
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:125
+#: builder/templates/builder/page/_edit_product.html:83
+#: builder/templates/builder/page/_edit_product.html:103
+#: builder/templates/builder/page/_edit_product.html:123
+#: builder/templates/builder/page/_edit_product.html:143
+msgid "presente"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:47
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:67
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:87
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:107
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:127
+#: builder/templates/builder/page/_edit_product.html:85
+#: builder/templates/builder/page/_edit_product.html:105
+#: builder/templates/builder/page/_edit_product.html:125
+#: builder/templates/builder/page/_edit_product.html:145
+msgid "non presente"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:57
+#: builder/templates/builder/interactive_flyer_without_pages/_products.html:38
+#: builder/templates/builder/page/_products.html:35
+msgid "play_arrow"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:77
+#: builder/templates/builder/interactive_flyer_without_pages/_products.html:43
+#: builder/templates/builder/page/_products.html:40
+msgid "restaurant_menu"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:79
+#: builder/templates/builder/modals/edit_interactive_flyer/_hat_chef_interactivity_modal.html:36
+#: builder/templates/builder/new/edit_interactive_flyer.html:420
+#: builder/templates/builder/page/_edit_product.html:97
+msgid "Ricetta"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:97
+#: builder/templates/builder/interactive_flyer_without_pages/_products.html:48
+#: builder/templates/builder/page/_products.html:45
+msgid "info"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:99
+#: builder/templates/builder/new/edit_interactive_flyer.html:436
+#: builder/templates/builder/page/_edit_product.html:117
+msgid "Info"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:117
+#: builder/templates/builder/interactive_flyer_without_pages/_products.html:53
+#: builder/templates/builder/page/_products.html:50
+msgid "list_alt"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_without_pages/_edit_product.html:119
+#: builder/templates/builder/modals/edit_interactive_flyer/_specs_interactivity_modal.html:30
+#: builder/templates/builder/new/edit_interactive_flyer.html:452
+#: builder/templates/builder/page/_edit_product.html:137
+msgid "Specifiche"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_without_pages/_import_products_modal.html:9
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:77
+msgid "Importa prodotti da progetti collegati A&B"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_without_pages/_import_products_modal.html:16
+msgid ""
+"Vuoi importare i prodotti dai progetti collegati cancellando quelli "
+"attualmente esistenti?"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_without_pages/_import_products_modal.html:21
+msgid "IMPORTA"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_without_pages/_products.html:5
+#: builder/templates/builder/new/edit_interactive_flyer.html:109
+#: builder/templates/builder/page/_products.html:4
+#, fuzzy
+#| msgid "Lista Volantini interattivi"
+msgid "Prodotti interattivi"
+msgstr "Lista Volantini interattivi"
+
+#: builder/templates/builder/interactive_flyer_without_pages/_products.html:65
+#: builder/templates/builder/new/dashboard.html:86
+#: builder/templates/builder/new/edit_interactive_flyer.html:819
+msgid "Modifica"
+msgstr "Modifica"
+
+#: builder/templates/builder/interactive_flyer_without_pages/_products.html:67
+#: builder/templates/builder/new/dashboard.html:55
+#: builder/templates/builder/new/dashboard.html:100
+msgid "Elimina"
+msgstr "Elimina"
+
+#: builder/templates/builder/interactive_flyer_without_pages/_products.html:75
+#: builder/templates/builder/page/_products.html:72
+msgid "Nessun prodotto"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:25
+msgid "Apri JSON"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:38
+msgid "Generato"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:54
+msgid "Importazione prodotti in corso"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:59
+msgid "Importati"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:105
+msgid "Crea prodotto interattivo"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:153
+msgid "ITEM"
+msgstr ""
+
+#: builder/templates/builder/interactive_flyer_without_pages/edit.html:208
+msgid "Sottocategoria</label>"
+msgstr ""
+
+#: builder/templates/builder/modals/_clone_interactive_flyer_modal.html:7
+msgid "Clona volantino"
+msgstr ""
+
+#: builder/templates/builder/modals/_clone_interactive_flyer_modal.html:18
+msgid "Nome nuovo volantino"
+msgstr ""
+
+#: builder/templates/builder/modals/_clone_interactive_flyer_modal.html:26
+#: builder/templates/builder/new/dashboard.html:96
+msgid "Clona"
+msgstr "Clona"
+
+#: builder/templates/builder/modals/edit_interactive_flyer/_add_index_modal.html:27
+#: builder/templates/builder/new/new_interactive_flyer_aeb.html:58
+#: builder/templates/builder/new/new_interactive_flyer_internal.html:37
+#: builder/templates/builder/new/new_interactive_flyer_internal.html:87
+#: builder/templates/builder/new_interactive_flyer.html:60
+msgid "Crea"
+msgstr ""
+
+#: builder/templates/builder/modals/edit_interactive_flyer/_add_index_modal.html:28
+#, fuzzy
+#| msgid "Modifica"
+msgid "Scegli/Modifica"
+msgstr "Modifica"
+
+#: builder/templates/builder/modals/edit_interactive_flyer/_add_index_modal.html:41
+msgid "Carica indice"
+msgstr ""
+
+#: builder/templates/builder/modals/edit_interactive_flyer/_add_page_modal.html:36
+msgid "Ultima pagina"
+msgstr ""
+
+#: builder/templates/builder/modals/edit_interactive_flyer/_change_page_image_modal.html:7
+msgid "Carica nuova immagine per la pagina"
+msgstr ""
+
+#: builder/templates/builder/modals/edit_interactive_flyer/_hat_chef_interactivity_modal.html:7
+msgid "Interattività: ricetta"
+msgstr ""
+
+#: builder/templates/builder/modals/edit_interactive_flyer/_hat_chef_interactivity_modal.html:30
+msgid "Ingredienti"
+msgstr ""
+
+#: builder/templates/builder/modals/edit_interactive_flyer/_hat_chef_interactivity_modal.html:30
+msgid "(separati da virgola)"
+msgstr ""
+
+#: builder/templates/builder/modals/edit_interactive_flyer/_info_interactivity_modal.html:29
+msgid "Titolo info"
+msgstr ""
+
+#: builder/templates/builder/modals/edit_interactive_flyer/_info_interactivity_modal.html:35
+msgid "Testo info"
+msgstr ""
+
+#: builder/templates/builder/modals/edit_interactive_flyer/_play_interactivity_modal.html:34
+#: builder/templates/builder/new/edit_interactive_flyer.html:246
+#: builder/templates/builder/new/edit_interactive_flyer.html:336
+#: builder/templates/builder/new/edit_interactive_flyer.html:871
+#, fuzzy
+#| msgid "Lista Volantini interattivi"
+msgid "Mostra l'icona interattività"
+msgstr "Lista Volantini interattivi"
+
+#: builder/templates/builder/modals/edit_interactive_flyer/_polotno_integration_modal.html:12
+msgid "Scegli/Modifica template"
+msgstr ""
+
+#: builder/templates/builder/modals/edit_interactive_flyer/_polotno_integration_modal.html:27
+msgid "Non ci sono template"
+msgstr ""
+
+#: builder/templates/builder/modals/edit_interactive_flyer/_specs_interactivity_modal.html:30
+msgid "(separate da virgola)"
+msgstr ""
+
+#: builder/templates/builder/new/base.html:15
+#: builder/templates/builder/new/error.html:10
+#, fuzzy
+#| msgid "Lista Volantini interattivi"
+msgid "Generatore Interattivo"
+msgstr "Lista Volantini interattivi"
+
+#: builder/templates/builder/new/clientsetting_form.html:9
+msgid "Modifica impostazioni cliente"
+msgstr ""
+
+#: builder/templates/builder/new/clientsetting_form.html:14
+msgid "Icona"
+msgstr ""
+
+#: builder/templates/builder/new/clientsetting_form.html:27
+#: builder/templates/builder/new/clientsetting_form.html:149
+#: builder/templates/builder/new/interactive_flyer_settings.html:333
+msgid "Anteprima icona"
+msgstr ""
+
+#: builder/templates/builder/new/clientsetting_form.html:41
+msgid "Colori predefiniti"
+msgstr ""
+
+#: builder/templates/builder/new/clientsetting_form.html:45
+#: builder/templates/builder/new/interactive_flyer_settings.html:120
+msgid "Primario"
+msgstr ""
+
+#: builder/templates/builder/new/clientsetting_form.html:57
+#: builder/templates/builder/new/interactive_flyer_settings.html:132
+msgid "Secondario"
+msgstr ""
+
+#: builder/templates/builder/new/clientsetting_form.html:73
+#: builder/templates/builder/new/interactive_flyer_settings.html:148
+msgid "Terziario"
+msgstr ""
+
+#: builder/templates/builder/new/clientsetting_form.html:85
+#: builder/templates/builder/new/interactive_flyer_settings.html:160
+msgid "Hover"
+msgstr ""
+
+#: builder/templates/builder/new/clientsetting_form.html:110
+msgid "Colore hover"
+msgstr ""
+
+#: builder/templates/builder/new/clientsetting_form.html:120
+#: builder/templates/builder/new/edit_interactive_flyer.html:538
+msgid "Extra"
+msgstr ""
+
+#: builder/templates/builder/new/clientsetting_form.html:124
+msgid "Brand image"
+msgstr ""
+
+#: builder/templates/builder/new/clientsetting_form.html:134
+msgid "Anteprima Brand"
+msgstr ""
+
+#: builder/templates/builder/new/clientsetting_form.html:141
+#: builder/templates/builder/new/interactive_flyer_settings.html:321
+msgid "Icona personalizzata"
+msgstr ""
+
+#: builder/templates/builder/new/clientsetting_form.html:154
+msgid "Video apertura"
+msgstr ""
+
+#: builder/templates/builder/new/clientsetting_form.html:164
+#: builder/templates/builder/new/interactive_flyer_settings.html:446
+msgid "piece_label"
+msgstr ""
+
+#: builder/templates/builder/new/clientsetting_form.html:170
+#: builder/templates/builder/new/interactive_flyer_settings.html:450
+msgid "gr_label"
+msgstr ""
+
+#: builder/templates/builder/new/clientsetting_form.html:178
+#: builder/templates/builder/new/interactive_flyer_settings.html:456
+msgid "hectogram_label"
+msgstr ""
+
+#: builder/templates/builder/new/clientsetting_form.html:184
+#: builder/templates/builder/new/interactive_flyer_settings.html:460
+msgid "kg_label"
+msgstr ""
+
+#: builder/templates/builder/new/clientsetting_form.html:192
+#: builder/templates/builder/new/interactive_flyer_settings.html:466
+msgid "kg_price_label"
+msgstr ""
+
+#: builder/templates/builder/new/clientsetting_form.html:199
+#: builder/templates/builder/new/interactive_flyer_settings.html:470
+msgid "hectogram_price_label"
+msgstr ""
+
+#: builder/templates/builder/new/dashboard.html:9
+#: builder/templates/builder/new/dashboard.html:109
+msgid "Crea un"
+msgstr ""
+
+#: builder/templates/builder/new/dashboard.html:9
+#: builder/templates/builder/new/dashboard.html:109
+#, fuzzy
+#| msgid "Lista Volantini interattivi"
+msgid "nuovo volantino"
+msgstr "Lista Volantini interattivi"
+
+#: builder/templates/builder/new/dashboard.html:9
+#: builder/templates/builder/new/dashboard.html:109
+msgid "per iniziare"
+msgstr ""
+
+#: builder/templates/builder/new/dashboard.html:11
+msgid "Lista Volantini interattivi"
+msgstr "Lista Volantini interattivi"
+
+#: builder/templates/builder/new/dashboard.html:18
+msgid "Stato"
+msgstr ""
+
+#: builder/templates/builder/new/dashboard.html:48
+msgid "Errore nella generazione"
+msgstr "Errore nella generazione"
+
+#: builder/templates/builder/new/dashboard.html:52
+msgid "Messaggio errore"
+msgstr "Messaggio di errore"
+
+#: builder/templates/builder/new/dashboard.html:54
+#: builder/templates/builder/new/dashboard.html:99
+msgid "Vuoi cancellare il volantino?"
+msgstr "Vuoi cancellare il volantino?"
+
+#: builder/templates/builder/new/dashboard.html:76
+#, fuzzy
+#| msgid "inizializzazione in corso..."
+msgid "Inizializzazione in corso..."
+msgstr "inizializzazione in corso..."
+
+#: builder/templates/builder/new/dashboard.html:80
+msgid "Pubblica"
+msgstr ""
+
+#: builder/templates/builder/new/dashboard.html:82
+msgid "Visualizza"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:43
+#, fuzzy
+#| msgid "Modifica"
+msgid "Modifica immagine"
+msgstr "Modifica"
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:46
+#, fuzzy
+#| msgid "Elimina"
+msgid "Cancella pagina"
+msgstr "Elimina"
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:84
+#, fuzzy
+#| msgid "English"
+msgid "Publish"
+msgstr "Inglese"
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:96
+msgid "di"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:115
+#: builder/templates/builder/new/edit_interactive_flyer.html:141
+#: builder/templates/builder/new/edit_interactive_flyer.html:163
+#: builder/templates/builder/new/edit_interactive_flyer.html:184
+#: builder/templates/builder/new/edit_interactive_flyer.html:905
+msgid "ID"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:116
+#: builder/templates/builder/new/edit_interactive_flyer.html:142
+#: builder/templates/builder/new/edit_interactive_flyer.html:164
+#: builder/templates/builder/new/edit_interactive_flyer.html:185
+msgid "Ritaglio"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:156
+msgid "Link interni"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:177
+msgid "Link esterni"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:199
+#: builder/templates/builder/new/edit_interactive_flyer.html:970
+#, fuzzy
+#| msgid "Lista Volantini interattivi"
+msgid "Aggiungi link interno"
+msgstr "Lista Volantini interattivi"
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:208
+#: builder/templates/builder/new/edit_interactive_flyer.html:281
+#: builder/templates/builder/new/edit_interactive_flyer.html:507
+#: builder/templates/builder/new/edit_interactive_flyer.html:786
+#: builder/templates/builder/new/edit_interactive_flyer.html:926
+#: builder/templates/builder/new/edit_interactive_flyer.html:979
+msgid "blueprint top"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:214
+#: builder/templates/builder/new/edit_interactive_flyer.html:287
+#: builder/templates/builder/new/edit_interactive_flyer.html:513
+#: builder/templates/builder/new/edit_interactive_flyer.html:792
+#: builder/templates/builder/new/edit_interactive_flyer.html:932
+#: builder/templates/builder/new/edit_interactive_flyer.html:985
+msgid "blueprint left"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:220
+#: builder/templates/builder/new/edit_interactive_flyer.html:293
+#: builder/templates/builder/new/edit_interactive_flyer.html:519
+#: builder/templates/builder/new/edit_interactive_flyer.html:798
+#: builder/templates/builder/new/edit_interactive_flyer.html:938
+#: builder/templates/builder/new/edit_interactive_flyer.html:991
+msgid "blueprint width"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:226
+#: builder/templates/builder/new/edit_interactive_flyer.html:299
+#: builder/templates/builder/new/edit_interactive_flyer.html:525
+#: builder/templates/builder/new/edit_interactive_flyer.html:804
+#: builder/templates/builder/new/edit_interactive_flyer.html:944
+#: builder/templates/builder/new/edit_interactive_flyer.html:997
+msgid "blueprint height"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:234
+msgid "page_number"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:242
+#: builder/templates/builder/new/edit_interactive_flyer.html:332
+#: builder/templates/builder/new/edit_interactive_flyer.html:859
+msgid "Grafica"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:249
+#: builder/templates/builder/new/edit_interactive_flyer.html:339
+#: builder/templates/builder/new/edit_interactive_flyer.html:874
+msgid "Mostra informazione al passaggio del mouse"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:255
+#: builder/templates/builder/new/edit_interactive_flyer.html:345
+#: builder/templates/builder/new/edit_interactive_flyer.html:880
+msgid "tooltip"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:272
+#: builder/templates/builder/new/edit_interactive_flyer.html:917
+#, fuzzy
+#| msgid "Lista Volantini interattivi"
+msgid "Aggiungi link esterno"
+msgstr "Lista Volantini interattivi"
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:306
+msgid "URL"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:309
+msgid "E-Mail"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:312
+msgid "Telefono"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:364
+#, fuzzy
+#| msgid "Lista Volantini interattivi"
+msgid "Aggiungi prodotto"
+msgstr "Lista Volantini interattivi"
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:371
+msgid "Da archivio"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:377
+msgid "Da progetto correlato"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:382
+#, fuzzy
+#| msgid "Modifica"
+msgid "Modifica prodotto"
+msgstr "Modifica"
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:393
+#: builder/templates/builder/new/edit_interactive_flyer.html:408
+#: builder/templates/builder/new/edit_interactive_flyer.html:424
+#: builder/templates/builder/new/edit_interactive_flyer.html:440
+#: builder/templates/builder/new/edit_interactive_flyer.html:456
+msgid "Disattivo"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:537
+msgid "Informazioni prodotto"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:550
+msgid "codice_interno_insegna"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:556
+msgid "descrizione_1"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:562
+msgid "descrizione_2"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:568
+msgid "descrizione_3"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:574
+msgid "descrizione_4"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:580
+msgid "varieties"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:591
+msgid "price_with_iva"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:601
+msgid "offer_price"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:611
+msgid "grammage"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:626
+msgid "price_for_kg"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:642
+msgid "category"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:644
+msgid "Seleziona una categoria"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:653
+msgid "subcategory"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:666
+msgid "calcolo_prezzo"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:668
+msgid "Seleziona un calcolo"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:670
+msgid "Prezzo al kg, calcolo al kg"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:671
+msgid "Prezzo al kg, calcolo all'etto"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:672
+msgid "Prezzo al kg, calcolo in grammi"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:673
+msgid "Prezzo all'etto, calcolo all'etto"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:674
+msgid "Prezzo all'etto, calcolo in grammi"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:680
+msgid "price_label"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:686
+msgid "grocery_label"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:692
+msgid "equivalence"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:698
+msgid "quantity_step"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:744
+msgid "available_pieces"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:750
+msgid "max_purchasable_pieces"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:756
+msgid "points"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:769
+msgid "Salva e Continua"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:777
+msgid "Aggiungi video"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:824
+msgid "Carica video"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:827
+msgid "Inserisci link YouTube"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:862
+#, fuzzy
+#| msgid "Lista Volantini interattivi"
+msgid "Apri tramite interattività"
+msgstr "Lista Volantini interattivi"
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:865
+msgid "Visualizza sulla pubblicazione"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:899
+#, fuzzy
+#| msgid "Elimina"
+msgid "Elimina indice"
+msgstr "Elimina"
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:907
+msgid "Valore"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:952
+msgid "url"
+msgstr ""
+
+#: builder/templates/builder/new/edit_interactive_flyer.html:1005
+msgid "page"
+msgstr ""
+
+#: builder/templates/builder/new/error.html:10
+#: builder/templates/builder/new/error.html:21
+msgid "Oops... Si è verificato un errore"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:14
+msgid "Note generali"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:15
+msgid "Configurazione & Grafica"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:16
+msgid "Lista spesa"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:17
+msgid "SEO & Condivisione"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:28
+#: builder/templates/builder/new/new_interactive_flyer_internal.html:20
+msgid "Nome pubblicazione"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:29
+msgid "Non viene visualizzato nell\\"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:31
+#: builder/templates/builder/new/new_interactive_flyer_internal.html:21
+#, fuzzy
+#| msgid "Lista Volantini interattivi"
+msgid "Volantino Interattivo"
+msgstr "Lista Volantini interattivi"
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:35
+msgid "Progetto collegato"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:36
+msgid ""
+"Rende disponibili al volantino tutti i prodotti del progetto selezionato"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:39
+#: builder/templates/builder/new/new_interactive_flyer_internal.html:26
+msgid "Seleziona un progetto"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:59
+msgid "URL pubblicazione"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:60
+msgid "Inserisci un url personalizzato alla tua pubblicazione"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:63
+msgid "tuonome"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:72
+msgid "Cambia PDF"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:73
+msgid "Sostituisci il pdf scaricabile"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:86
+msgid "Stato pubblicazione"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:90
+msgid "Pubblica manualmente"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:94
+msgid "Pianifica pubblicazione"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:100
+msgid "Data di pubblicazione"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:102
+#: builder/templates/builder/new/interactive_flyer_settings.html:783
+msgid "Inserisci data di pubblicazione"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:102
+#: builder/templates/builder/new/interactive_flyer_settings.html:566
+#: builder/templates/builder/new/interactive_flyer_settings.html:777
+#: builder/templates/builder/new/interactive_flyer_settings.html:816
+#: builder/templates/builder/new/interactive_flyer_settings.html:824
+msgid "Disabilitato"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:105
+msgid "Data di scadenza"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:107
+msgid "Inserisci data di scadenza"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:116
+msgid "Colori"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:175
+msgid "Layout"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:178
+msgid "Layout pubblicazione"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:182
+#: builder/templates/builder/new/interactive_flyer_settings.html:183
+msgid "Pagina singola"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:187
+#: builder/templates/builder/new/interactive_flyer_settings.html:188
+msgid "Formato libro"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:193
+msgid "Layout paginatore"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:210
+msgid "Barra di ricerca"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:214
+#: builder/templates/builder/new/interactive_flyer_settings.html:237
+msgid "Mostra"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:218
+#: builder/templates/builder/new/interactive_flyer_settings.html:241
+msgid "Nascondi"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:225
+msgid "Video all'apertura"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:244
+#, fuzzy
+#| msgid "Lista Volantini interattivi"
+msgid "Prodotti sottocosto"
+msgstr "Lista Volantini interattivi"
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:250
+msgid "Sidebar"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:254
+msgid "leaflet"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:258
+msgid "products"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:262
+msgid "pages"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:266
+msgid "pdf"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:270
+msgid "full_screen"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:274
+msgid "share"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:280
+#, fuzzy
+#| msgid "Lista Volantini interattivi"
+msgid "Icone interattività"
+msgstr "Lista Volantini interattivi"
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:284
+msgid "Animazione icone"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:288
+#: builder/templates/builder/new/interactive_flyer_settings.html:289
+msgid "Fissa"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:293
+#: builder/templates/builder/new/interactive_flyer_settings.html:294
+msgid "Salto"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:298
+#: builder/templates/builder/new/interactive_flyer_settings.html:299
+msgid "Scomparsa"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:304
+msgid "Dimensione icone"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:308
+msgid "Icona piccola"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:309
+msgid "Piccola"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:313
+msgid "Icona grande"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:314
+msgid "Grande"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:347
+msgid "Banner"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:351
+msgid "Desktop"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:360
+#: builder/templates/builder/new/interactive_flyer_settings.html:380
+#: builder/templates/builder/new/interactive_flyer_settings.html:427
+msgid "Anteprima banner"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:371
+msgid "Mobile"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:393
+msgid "Attiva click su banner"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:400
+msgid "Scegli prodotto"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:417
+msgid "Banner dettaglio prodotto"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:442
+msgid "Labels"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:480
+msgid "Lista della spesa"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:483
+msgid "Attiva lista spesa"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:491
+msgid "Evidenzia prodotti aggiunti alla lista"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:507
+msgid "Cerchio nero"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:518
+msgid "Cerchio azzurro"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:529
+msgid "Ellisse"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:540
+msgid "Evidenziatore"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:550
+msgid "InShop"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:554
+msgid "Attiva invio lista al punto vendita*"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:557
+msgid "*Opzione valida solo se nel piano è incluso il servizio InShop"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:582
+msgid "Titolo SEO"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:583
+msgid "Inserisci il titolo SEO"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:586
+msgid "Descrizione SEO (max 64 caratteri)"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:588
+msgid "Inserisci la descrizione SEO"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:618
+msgid "Attiva Analytics"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:620
+msgid "Inserisci link Tracking"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:626
+msgid "Integrazione web"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:631
+msgid "Larghezza finestra"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:638
+msgid "Altezza finestra"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:646
+msgid "Condivisione"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:652
+msgid "Immagine condivisione social"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:662
+#: builder/templates/builder/new/interactive_flyer_settings.html:691
+msgid "Anteprima immagine"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:674
+msgid "Dimensioni consigliate: 1200x630 px, formato immagine: .png"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:682
+msgid "Immagine condivisione Whatsapp/Telegram"
+msgstr ""
+
+#: builder/templates/builder/new/interactive_flyer_settings.html:703
+msgid "Dimensioni consigliate: 300x300 px, formato immagine: .jpeg"
+msgstr ""
+
+#: builder/templates/builder/new/new_interactive_flyer_aeb.html:34
+#: builder/templates/builder/new/new_interactive_flyer_internal.html:45
+#: builder/templates/builder/new_interactive_flyer.html:37
+msgid "Affiliato"
+msgstr ""
+
+#: builder/templates/builder/new/new_interactive_flyer_aeb.html:48
+#: builder/templates/builder/new_interactive_flyer.html:53
+msgid "PDF Volantino"
+msgstr ""
+
+#: builder/templates/builder/new/new_interactive_flyer_aeb.html:51
+#: builder/templates/builder/new/new_interactive_flyer_internal.html:76
+#: templates/bootstrap4-interattivo/custom_filefield.html:8
+msgid "Scegli un file"
+msgstr ""
+
+#: builder/templates/builder/new/new_interactive_flyer_internal.html:24
+msgid "Seleziona campagna"
+msgstr ""
+
+#: builder/templates/builder/new/new_interactive_flyer_internal.html:51
+msgid "Tipo pubblicazione"
+msgstr ""
+
+#: builder/templates/builder/new/new_interactive_flyer_internal.html:53
+msgid "Volantino"
+msgstr ""
+
+#: builder/templates/builder/new/new_interactive_flyer_internal.html:54
+msgid "Catalogo"
+msgstr ""
+
+#: builder/templates/builder/new/new_interactive_flyer_internal.html:58
+msgid "Formato"
+msgstr ""
+
+#: builder/templates/builder/new/new_interactive_flyer_internal.html:60
+msgid "Volantino A4"
+msgstr ""
+
+#: builder/templates/builder/new/new_interactive_flyer_internal.html:61
+msgid "Volantino quadrato"
+msgstr ""
+
+#: builder/templates/builder/new/new_interactive_flyer_internal.html:65
+msgid "PDF"
+msgstr ""
+
+#: builder/templates/builder/new_interactive_flyer.html:12
+#, fuzzy
+#| msgid "Lista Volantini interattivi"
+msgid "Nuovo volantino interattivo"
+msgstr "Lista Volantini interattivi"
+
+#: builder/templates/builder/page/_edit_product.html:176
+msgid "ITEM ID"
+msgstr ""
+
+#: builder/templates/registration/login.html:9
+#, fuzzy
+#| msgid "Lista Volantini interattivi"
+msgid "Login | Gestionale interattivo"
+msgstr "Lista Volantini interattivi"
+
+#: builder/templates/registration/login.html:20
+#: builder/templates/registration/login.html:32
+msgid "Sign in"
+msgstr ""
+
+#: builder/templates/registration/login.html:24
+msgid "Username"
+msgstr ""
+
+#: builder/templates/registration/login.html:28
+msgid "Password"
+msgstr ""
+
+#: builder/views/api.py:285
+msgid "Inserisci la descrizione 1"
+msgstr ""
+
+#: builder/views/api.py:306
+msgid "Inserisci prezzo con IVA"
+msgstr ""
+
+#: builder/views/api.py:379
+msgid "Scegli una categoria"
+msgstr ""
+
+#: builder/views/api.py:389
+msgid "Scegli una sottocategoria"
+msgstr ""
+
+#: builder/views/views.py:47
+msgid "Lista pubblicazioni"
+msgstr ""
+
+#: builder/views/views.py:88
+msgid "Modifica Impostazioni Cliente"
+msgstr ""
+
+#: builder/views/views.py:92
+msgid "Impostazioni salvate."
+msgstr ""
+
+#: builder/views/views.py:121
+msgid "Modifica Impostazioni Volantino"
+msgstr ""
+
+#: builder/views/views.py:331
+msgid "Crea una nuova pubblicazione"
+msgstr ""
+
+#: builder/views/views.py:366
+msgid ""
+"Limite di pubblicazioni attive raggiunto.<br>Scopri i piani di InPublish!"
+msgstr ""
+
+#: builder/views/views.py:445
+msgid ""
+"Non è possibile pubblicare il volantino.<br>Troppe pubblicazioni attive."
+"<br>Scopri i piani di inPublish."
+msgstr ""
+
+#: builder/views/views.py:463
+#, fuzzy
+#| msgid "Lista Volantini interattivi"
+msgid "Volantino pubblicato"
+msgstr "Lista Volantini interattivi"
+
+#: builder/views/views.py:465
+msgid "Si è verificato un errore"
+msgstr ""
+
+#: builder/views/views.py:471
+#, fuzzy
+#| msgid "Lista Volantini interattivi"
+msgid "Modifica volantino interattivo"
+msgstr "Lista Volantini interattivi"
+
+#: builder/views/views.py:549
+msgid "Immagine aggiornata"
+msgstr ""
+
+#: builder/views/views.py:551
+msgid "Il volantino non contiene pagine"
+msgstr ""
+
+#: gestionale_interattivo/settings.py:138
+msgid "English"
+msgstr "Inglese"
+
+#: gestionale_interattivo/settings.py:139
+msgid "Italian"
+msgstr "Italiano"
+
+#: gestionale_interattivo/settings.py:140
+msgid "Spanish"
+msgstr "Spagnolo"
