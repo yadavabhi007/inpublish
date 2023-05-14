@@ -1,0 +1,256 @@
+{% extends "builder/new/base.html" %}
+{% load static %}
+{% load basename %}
+{% load i18n %}
+
+{% block content %}
+<div class="col-lg-9 col-12 mx-auto">
+    <h2 class="font-weight-bold badil-color-gray">{% trans "Modifica impostazioni cliente" %} </h2>
+    <div class="card text-left">
+        <div class="card-body">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <h3 class="font-weight-bold badil-color-gray mb-3">{% trans "Icona cliente" %}</h3>
+                <div class="form-row mb-3">
+                    <div class="col-12 col-md-6 col-sm-12">
+                        <label class="font-weight-bold badil-color-gray" style="display:block">{% trans "Icona cliente" %}</label>
+                        <div class="badil-file-picker">
+                            <input type="file" class="live_preview" data-target="#clientIconC_preview" name="clientIcon" id="clientIconC" accept="image/*" style="display: none;" onchange="updateField('clientIconCPlaceholder', this)">
+                            <span id="clientIconCPlaceholder">{% if form.clientIcon.value %}{{ form.clientIcon.value.url | basename }}{% endif %}</span>
+                            <label ><a onclick="uploadModal('clientIconC','Icona')">{% trans "Scegli" %}</a></label>
+                            <label for="clientIconC" id="for-clientIconC" class="d-none">{% trans "Scegli" %}</label>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-sm-12">
+                        <label class="font-weight-bold badil-color-gray" style="display:block" for="clientIconC_preview">{% trans "Anteprima icona" %}</label>
+                        <img id="clientIconC_preview" class="img-thumbnail badil-rounded" style="max-width:140px; max-height: 140px"
+                             {% if form.clientIcon.value %}
+                                src="{{ form.clientIcon.value.url }}"
+                             {% else %}
+                                src="{% static "gull-admin/images/faces/1.jpg" %}"
+                             {% endif %}
+                        >
+                    </div>
+
+                </div>
+
+                <hr>
+
+                <h3 class="font-weight-bold badil-color-gray mb-3">{% trans "Colori predefiniti" %}</h3>
+                <div class="form-row mb-3">
+
+                    <div class="col-12 col-md-12 col-lg-6 col-sm-12">
+                        <label class="font-weight-bold badil-color-gray" for="primary_color">{% trans "Primario" %}</label>
+                        <div class="input-group">
+                            <input type="text" id="primary_color" name="primary_color" value="{{ form.primary_color.value }}" class="form-control textinput textInput badil-rounded badil-color-gray badil-shadow zindex-one color-picker-next-child">
+                            <div class="input-group-append">
+                                <div class="input-group-text textinput textInput badil-rounded badil-color-gray badil-shadow zindex-one color-picker-child color-picker-previous" value="{{ form.primary_color.value }}">
+                                    <div class='badil-shadow badil-square' style="{% if form.primary_color %}background-color: {{ form.primary_color.value }};{% endif %}"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-12 col-lg-6 col-sm-12">
+                        <label class="font-weight-bold badil-color-gray" for="secondary_color">{% trans "Secondario" %}</label>
+                        <div class="input-group">
+                            <input type="text" id="secondary_color" name="secondary_color" value="{{ form.secondary_color.value }}" class="form-control textinput textInput badil-rounded badil-color-gray badil-shadow zindex-one color-picker-next-child">
+                            <div class="input-group-append">
+                                <div class="input-group-text textinput textInput badil-rounded badil-color-gray badil-shadow zindex-one color-picker-child color-picker-previous" value="{{ form.secondary_color.value }}">
+                                    <div class='badil-shadow badil-square' style="{% if form.secondary_color %}background-color: {{ form.secondary_color.value }};{% endif %}"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-row mb-3">
+
+                    <div class="col-12 col-md-12 col-lg-6 col-sm-12">
+                        <label class="font-weight-bold badil-color-gray" for="tertiary_color">{% trans "Terziario" %}</label>
+                        <div class="input-group">
+                            <input type="text" id="tertiary_color" name="tertiary_color" value="{{ form.tertiary_color.value }}" class="form-control textinput textInput badil-rounded badil-color-gray badil-shadow zindex-one color-picker-next-child">
+                            <div class="input-group-append">
+                                <div class="input-group-text textinput textInput badil-rounded badil-color-gray badil-shadow zindex-one color-picker-child color-picker-previous" value="{{ form.tertiary_color.value }}">
+                                    <div class='badil-shadow badil-square' style="{% if form.tertiary_color %}background-color: {{ form.tertiary_color.value }};{% endif %}"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 ">
+                        <label class="font-weight-bold badil-color-gray" for="hover_color">{% trans "Hover" %}</label>
+                        <div class="input-group">
+                            <input type="text" id="hover_color" name="hover_color" value="{{ form.hover_color.value }}" class="form-control textinput textInput badil-rounded badil-color-gray badil-shadow zindex-one color-picker-next-child">
+                            <div class="input-group-append">
+                                <div class="input-group-text textinput textInput badil-rounded badil-color-gray badil-shadow zindex-one color-picker-child color-picker-previous" value="{{ form.hover_color.value }}">
+                                    <div class='badil-shadow badil-square' style="{% if form.hover_color %}background-color: {{ form.hover_color.value }};{% endif %}"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+                </div>
+                <div class="form-row mb-3">
+                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 mb-3 ">
+                        <label class="font-weight-bold badil-color-gray mb-0" for="background_color">{% trans "Sfondo" %}</label>
+                        <div class="input-group">
+                            <input type="text" id="background_color" name="background_color" value="{{ form.background_color.value }}" class="form-control textinput textInput badil-rounded badil-color-gray badil-shadow zindex-one color-picker-next-child">
+                            <div class="input-group-append">
+                                <div class="input-group-text textinput textInput badil-rounded badil-color-gray badil-shadow zindex-one color-picker-child color-picker-previous" value="{{ form.background_color.value }}">
+                                    <div class='badil-shadow badil-square' style="{% if form.background_color %}background-color: {{ form.background_color.value }};{% endif %} "></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+<!--                <div class="form-row mb-3">-->
+<!--                    <div class="col-12 col-md-6 col-sm-12">-->
+<!--                        <label class="font-weight-bold badil-color-gray" for="{{ form.primary_color.id_for_label }}">{% trans "Colore primario" %}</label>-->
+<!--                        {{ form.primary_color }}-->
+<!--                    </div>-->
+<!--                    <div class="col-12 col-md-6 col-sm-12">-->
+<!--                        <label class="font-weight-bold badil-color-gray" for="{{ form.secondary_color.id_for_label }}">{% trans "Colore secondario" %}</label>-->
+<!--                        {{ form.secondary_color }}-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="form-row  mb-4">-->
+<!--                    <div class="col-12 col-md-6 col-sm-12">-->
+<!--                        <label class="font-weight-bold badil-color-gray" for="{{ form.hover_color.id_for_label }}">{% trans "Colore hover" %}</label>-->
+<!--                        {{ form.hover_color }}-->
+<!--                    </div>-->
+<!--                    <div class="col-12 col-md-6 col-sm-12">-->
+<!--                        <label class="font-weight-bold badil-color-gray" for="{{ form.tertiary_color.id_for_label }}">{% trans "Colore terziario" %}</label>-->
+<!--                        {{ form.tertiary_color }}-->
+<!--                    </div>-->
+<!--                </div>-->
+
+                <hr>
+                <h3 class="font-weight-bold badil-color-gray mb-3">{% trans "Extra" %}</h3>
+
+                <div class="form-row mb-3 ">
+                    <div class="col-12 col-md-6 col-sm-12">
+                        <label class="font-weight-bold badil-color-gray" style="display:block">{% trans "Immagine brand" %}</label>
+                        <div class="badil-file-picker">
+                            <input type="file" name="brandImage" data-target="#brandImageC_preview" class="live_preview" accept="image/*" style="display: none;" id="{{ form.brandImage.id_for_label }}" onchange="updateField('brandImageCPlaceholder', this)">
+                            <span id="brandImageCPlaceholder">{% if form.brandImage.value %}{{ form.brandImage.value.url | basename }}{% endif %}</span>
+                            <label><a onclick="uploadModal('brandImageC','Immagine brand')">Scegli</a></label>
+                            <label for="{{ form.brandImage.id_for_label }}" id="for-brandImageC" class="d-none">{% trans "Carica" %}</label>
+                        </div>
+                        
+                    </div>
+                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 mb-3">
+                        <label class="font-weight-bold badil-color-gray d-block" for="brandImageC_preview">{% trans 'Anteprima Brand' %} </label>
+                        <img id="brandImageC_preview" class="img-thumbnail badil-rounded" style="max-width:120px; max-height: 120px" src="{% if  form.brandImage.value %} {{ form.brandImage.value.url }} {% endif %}">
+                    </div>
+                   
+                </div>
+                <!-- <div class="form-row mb-3">
+                    <div class="col-12 col-md-6 col-sm-12">
+                        <label class="font-weight-bold badil-color-gray" style="display:block">{% trans "Icona personalizzata" %}</label>
+                        <div class="badil-file-picker">
+                            <input class="live_preview" type="file" data-target="#clientIconLOW_preview" name="clientIcon" accept="image/*" id="clientIconLOW" onchange="updateField('clientIconLOWPlaceholder', this)">
+                            <span id="clientIconLOWPlaceholder"> </span>
+                            <label for="clientIconLOW" ><a onclick="uploadModal('7')">{% trans "Carica" %}</a></label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 mb-3">
+                        <label class="font-weight-bold badil-color-gray d-block" for="clientIconLOW_preview">{% trans 'Anteprima icona' %} </label>
+                        <img id="clientIconLOW_preview" class="img-thumbnail badil-rounded" style="max-width:120px; max-height: 120px" src="form.clientIcon.value.url">
+                    </div>
+                </div> -->
+                <div class="col-12 col-md-6 col-sm-12 pl-0 mb-3">
+                    <label class="font-weight-bold badil-color-gray" style="display:block">{% trans "Video apertura" %}</label>
+                    <div class="badil-file-picker">
+                        <input type="file" name="videoInPage" accept="video/*" style="display: none;" id="{{ form.videoInPage.id_for_label }}"onchange="updateField('videoInPagePlaceholder', this)">
+                        <span id="videoInPagePlaceholder">{% if form.videoInPage.value %}{{ form.videoInPage.value.url | basename }}{% endif %}</span>
+                        <label for="{{ form.videoInPage.id_for_label }}">{% trans "Carica" %}</label>
+                    </div>
+                </div>
+
+                <div class="form-row mb-3">
+                    <div class="col-12 col-md-6 col-sm-12">
+                        <label class="font-weight-bold badil-color-gray" for="piece_label">{% trans "Etichetta peso" %}</label>
+                        <div class="input-group">
+                            <input type="text" id="piece_label" name="piece_label" value="{{ form.piece_label.value }}" class="form-control textinput textInput badil-rounded badil-color-gray badil-shadow zindex-one">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-sm-12">
+                        <label class="font-weight-bold badil-color-gray" for="gr_label">{% trans "Etichetta gr" %}</label>
+                        <div class="input-group">
+                            <input type="text" id="gr_label" name="gr_label" value="{{ form.gr_label.value }}" class="form-control textinput textInput badil-rounded badil-color-gray badil-shadow zindex-one">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row mb-3">
+                    <div class="col-12 col-md-6 col-sm-12">
+                        <label class="font-weight-bold badil-color-gray" for="hectogram_label">{% trans "Etichetta hg" %}</label>
+                        <div class="input-group">
+                            <input type="text" id="hectogram_label" name="hectogram_label" value="{{ form.hectogram_label.value }}" class="form-control textinput textInput badil-rounded badil-color-gray badil-shadow zindex-one">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-sm-12">
+                        <label class="font-weight-bold badil-color-gray" for="kg_label">{% trans "Etichetta kg" %}</label>
+                        <div class="input-group">
+                            <input type="text" id="kg_label" name="kg_label" value="{{ form.kg_label.value }}" class="form-control textinput textInput badil-rounded badil-color-gray badil-shadow zindex-one">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row mb-1">
+                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 mb-3">
+                        <label class="font-weight-bold badil-color-gray" for="kg_price_label">{% trans "Etichetta prezzo al kg" %}</label>
+                        <div class="input-group">
+                            <input type="text"  id="kg_price_label" name="kg_price_label" {% if form.kg_price_label.value %} value="{{ form.kg_price_label.value }}"{% else %} value="al Kg." {% endif %} class="textinput textInput form-control badil-rounded badil-color-gray badil-shadow zindex-one">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 mb-3">
+                        <label class="font-weight-bold badil-color-gray" for="hectogram_price_label">{% trans "Etichetta prezzo l'etto" %}</label>
+                        <input type="text" id="hectogram_price_label"  name="hectogram_price_label" {% if form.hectogram_price_label.value %} value="{{ form.hectogram_price_label.value }}" {% else %} value="l'etto" {% endif %} class="textinput textInput form-control badil-rounded badil-color-gray badil-shadow">
+                    </div>
+                </div>
+                <div class="form-row mb-1">
+                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 mb-3">
+                        <label class="font-weight-bold badil-color-gray" for="price_label">{% trans "Etichetta prezzo" %}</label>
+                        <div class="input-group">
+                            <input type="text" id="price_label" name="price_label" {% if form.price_label.value %} value="{{ form.price_label.value }}"{% else %} value="€" {% endif %} class="textinput textInput form-control badil-rounded badil-color-gray badil-shadow zindex-one">
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="mt-5">
+                    <button type="submit" class="btn btn-success"><i class="fa fa-plus"></i> {% trans "Salva" %}</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+{% block modals %}
+    {% include "builder/modals/edit_interactive_flyer/_add_index_modal.html" %}
+    {% include "builder/modals/edit_interactive_flyer/_polotno_integration_modal.html" %}
+{% endblock %}
+{% block javascript %}
+<script src="{% static 'builder/new/live_preview.js' %}" type="text/javascript"></script>
+<script>
+// App.interactive_flyer.settings.init();
+let polotnoIntegration = new PolotnoIntegrationClass({{ request.user.settings.client_id }});
+function updateField(id, trigger){
+    var filename = trigger.value.split(/(\\|\/)/g).pop()
+    document.getElementById(id).innerText = filename;
+}
+function uploadModal(type,name="") {
+    $('#add-index-modal').modal('show');
+    $('.polotno-create').attr('data-type',type);
+    $('.polotno-choose-edit').attr('data-type',type);
+    $('#upload-format').attr('onclick','$("#add-index-modal").click();setTimeout(function(){ $("#for-'+ type +'").click() }, 300);');
+    $('.sizes').hide();
+    $('#modal-title h5').html(name);
+}
+</script>
+{% endblock %}

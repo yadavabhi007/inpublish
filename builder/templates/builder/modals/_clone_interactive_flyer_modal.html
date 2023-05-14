@@ -1,0 +1,31 @@
+{% load i18n %}
+
+<div id="clone-interactive-flyer-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{% trans 'Clona volantino' %}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="hidden" id="clone-interactive-flyer-form_source_flyer_id" name="source_flyer_id" required>
+                
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label for="clone-interactive-flyer-form_name" class="col-sm-4 col-form-label">{% trans 'Nome nuovo volantino' %}</label>
+                        <div class="col-sm-8">
+                            <input type="input" class="form-control" id="clone-interactive-flyer-form_name" name="name" required autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"> {% trans 'Chiudi' %}</button>
+                    <button type="submit" class="btn btn-primary">{% trans 'Clona' %}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

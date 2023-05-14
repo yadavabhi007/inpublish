@@ -1,0 +1,538 @@
+{% extends "builder/layout.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block interactive_flyer_menu %}
+<hr>
+<nav class="nav flex-column main-menu">
+    <a class="nav-link active" href="javascript:void(0)">
+        <i class="material-icons">import_contacts</i>
+        {{ flyer.name }}
+    </a>
+    <a class="nav-link l1" href="{% url 'builder:interactive_flyer_settings' interactive_flyer_id=flyer.id %}">
+        <i class="material-icons">settings_applications</i>
+        {% trans 'Impostazioni' %}
+    </a>
+    <!-- <a id="generate-interactive_flyer-zip-item" class="nav-link l1" href="javascript:void(0)"
+        onclick="App.edit_interactive_flyer.generate_zip()"
+        style="display: {{ flyer.zip_generation_in_progress|yesno:'none,block' }}">
+        <i class="material-icons">archive</i>
+        Genera ZIP pubblicazione
+    </a> -->
+    <a class="nav-link l1" href="{% url 'builder:interactive_flyer_json' uid=flyer.id %}" target="_blank"
+        style="display: {{ flyer.zip_generation_in_progress|yesno:'none,block' }}">
+        <i class="material-icons">insert_drive_file</i>
+        {% trans 'Apri JSON' %}
+    </a>
+    <a id="generating-interactive_flyer-zip-item" class="nav-link l1 disabled" href="javascript:void(0)"
+        style="display: {{ flyer.zip_generation_in_progress|yesno:'block,none' }}">
+        <i class="material-icons animated infinite bounce slow">archive</i>
+        {% trans 'Generazione ZIP pubblicazione in corso...' %}'
+    </a>
+    {% if flyer.flyer_zip_file %}
+    <a class="nav-link l1" href="{{ flyer.flyer_zip_file.url }}" target="_blank" download>
+        <i class="material-icons">cloud_download</i>
+        {% trans 'Scarica ZIP' %}
+        <br>
+        <span style="font-size: 12px; font-style: italic; font-weight: normal">
+            {% trans 'Generato' %}:
+            <span id="pdf-generated-datetime">
+                {{ flyer.zip_last_generation|date:'d/m/Y' }} {{ flyer.zip_last_generation|time:'H:i' }}
+            </span>
+        </span>
+    </a>
+    {% endif %}
+</nav>
+{% endblock %}
+
+{% block content %}
+
+{% if flyer.products_import_in_progress %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <h3 class="mt-3">{% trans 'Importazione prodotti in corso' %}</h3>
+            <div class="mt-5">
+                <i class="material-icons animated infinite bounce slow">save_alt</i>
+            </div>
+            <div>
+                {% trans 'Importati' %} {{ flyer.products_imported }} di
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        setTimeout(function(){ window.location.reload() }, 10000);
+    });
+</script>
+{% else %}
+<div id="flyer-wp-header">
+    <div class="container-fluid h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-auto">
+                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#import-products-modal">
+                    <i class="material-icons">save_alt</i>
+                    {% trans 'Importa prodotti da progetti collegati A&B' %}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="flyer-wp-content">
+    <div id="left">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <div id="products-container" class="mt-3">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="right">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <div id="create-product-card" class="card mt-3">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-auto">
+                                    <button class="btn btn-primary mb-1"
+                                        onclick="App.edit_iflyer_wpag.create_interactive_product()">
+                                        {% trans 'Crea prodotto interattivo' %}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="new-product-card" class="card mt-3 mb-3" style="display: none">
+                        <div class="card-header bg-secondary text-light">
+                            {% trans 'Nuovo prodotto interattivo' %}
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="form-row">
+                                    <div class="form-group col">
+                                        <button class="btn btn-primary mr-5" type="button"
+                                            onclick="App.edit_interactive_flyer.show_project_items_list()">
+                                            {% trans 'Seleziona prodotto da progetto correlato' %}
+                                        </button>
+                                    </div>
+                                    <input type="hidden" id="item_id">
+                                </div>
+                                <hr style="border-top: 4px solid #ddd;">
+                                <!-- <div class="form-row">
+                                    <div class="form-group col">
+                                        <label for="exampleInputEmail1">Blueprint top</label>
+                                        <input type="text" class="form-control" id="blueprint_top" readonly />
+                                    </div>
+                                    <div class="form-group col">
+                                        <label for="exampleInputEmail1">Blueprint left</label>
+                                        <input type="text" class="form-control" id="blueprint_left" readonly />
+                                    </div>
+                                    <div class="form-group col">
+                                        <label for="exampleInputEmail1">Blueprint width</label>
+                                        <input type="text" class="form-control" id="blueprint_width" readonly />
+                                    </div>
+                                    <div class="form-group col">
+                                        <label for="exampleInputEmail1">Blueprint height</label>
+                                        <input type="text" class="form-control" id="blueprint_height" readonly />
+                                    </div>
+                                </div> -->
+                            </form>
+                            <!-- <div id="crop-preview" class="mt-3 mb-3"
+                                style="height: 400px; overflow: hidden; border:2px solid #007bff;"></div>
+                            <hr style="border-top: 4px solid #ddd;"> -->
+                            <form>
+                                <div class="form-group row">
+                                    <label for="new-interactive-product-form_product_uid"
+                                        class="col-sm-4 col-form-label">{% trans 'ITEM' %} ID</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="field1" class="form-control"
+                                            id="new-interactive-product-form_product_uid" autocomplete="off" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="new-interactive-product-form_field1"
+                                        class="col-sm-4 col-form-label">{% trans 'Descrizione' %} 1</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="field1" class="form-control"
+                                            id="new-interactive-product-form_field1" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="new-interactive-product-form_field2"
+                                        class="col-sm-4 col-form-label">{% trans 'Descrizione' %} 2</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="field2" class="form-control"
+                                            id="new-interactive-product-form_field2" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="new-interactive-product-form_field3"
+                                        class="col-sm-4 col-form-label">{% trans 'Descrizione' %} 3</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="field3" class="form-control"
+                                            id="new-interactive-product-form_field3" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="new-interactive-product-form_field4"
+                                        class="col-sm-4 col-form-label">{% trans 'Descrizione' %}
+                                        4</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="field4" class="form-control"
+                                            id="new-interactive-product-form_field4" autocomplete="off">
+                                    </div>
+                                </div>
+                                <hr style="border-top: 4px solid #ddd;">
+                                <div class="form-group row">
+                                    <label for="new-interactive-product-form_category"
+                                        class="col-sm-4 col-form-label">{% trans 'Categoria' %}</label>
+                                    <div class="col-sm-8">
+                                        <select id="new-interactive-product-form_category" name="category"
+                                            class="form-control">
+                                            <option value=""></option>
+                                            {% for category in categories %}
+                                            <option value="{{category.id}}">{{category.name}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="new-interactive-product-form_subcategory"
+                                        class="col-sm-4 col-form-label">{% trans 'Sottocategoria</label>' %}
+                                    <div class="col-sm-8">
+                                        <select id="new-interactive-product-form_subcategory" name="subcategory"
+                                            class="form-control" disabled>
+                                            <option value=""></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row" style="display: none;" id="save_categories_on_catalog_wrapper">
+                                    <div class="col-sm-4"></div>
+                                    <div class="col-sm-8">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox"
+                                                id="new-interactive-product-form_save_categories_on_catalog" name="save_categories_on_catalog">
+                                            <label class="form-check-label" for="new-interactive-product-form_save_categories_on_catalog">
+                                                {% trans 'Salva categoria e sottocategoria nel catalogo A&B' %}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr style="border-top: 4px solid #ddd;">
+                                <div class="form-group row">
+                                    <label for="new-interactive-product-form_price_computation_type"
+                                        class="col-sm-4 col-form-label">{% trans 'CALCOLO PREZZO' %}</label>
+                                    <div class="col-sm-8">
+                                        <select id="new-interactive-product-form_price_computation_type"
+                                            name="price_computation_type" class="form-control">
+                                            <option value="pz">{% trans 'Prezzo al pezzo' %}</option>
+                                            <option value="kg-kg">{% trans 'Prezzo al Kg' %}, {% trans 'Calcolo al kg' %}</option>
+                                            <option value="kg-etto">{% trans 'Prezzo al Kg' %}, {% trans 'Calcolo in etto' %}</option>
+                                            <option value="kg-gr">{% trans 'Prezzo al Kg' %}, {% trans 'Calcolo in grammi' %}</option>
+                                            <option value="etto-etto">{% trans "Prezzo all'etto" %}, {% trans 'Calcolo in etto' %}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="new-interactive-product-form_price_label"
+                                        class="col-sm-4 col-form-label">{% trans 'Etichetta prezzo' %}</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="price_label" class="form-control"
+                                            id="new-interactive-product-form_price_label" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="new-interactive-product-form_grocery_label"
+                                        class="col-sm-4 col-form-label">{% trans 'Etichetta quantità' %}</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="grocery_label" class="form-control"
+                                            id="new-interactive-product-form_grocery_label" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="new-interactive-product-form_equivalence"
+                                        class="col-sm-4 col-form-label">{% trans 'Equivalenza' %}</label>
+                                    <div class="col-sm-8">
+                                        <input type="number" name="equivalence" class="form-control"
+                                            id="new-interactive-product-form_equivalence" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="new-interactive-product-form_quantity_step"
+                                        class="col-sm-4 col-form-label">{% trans 'Misura quantità' %}</label>
+                                    <div class="col-sm-8">
+                                        <input type="number" name="quantity_step" class="form-control"
+                                            id="new-interactive-product-form_quantity_step" autocomplete="off">
+                                    </div>
+                                </div>
+                                <hr style="border-top: 4px solid #ddd;">
+                                <div class="form-group row">
+                                    <label for="new-interactive-product-form_varieties"
+                                        class="col-sm-4 col-form-label">{% trans 'Varietà' %}</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="varieties" class="form-control"
+                                            id="new-interactive-product-form_varieties" autocomplete="off">
+                                        <small class="form-text text-muted">
+                                            Virgola o invio per separare le varietà
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="new-interactive-product-form_grammage"
+                                        class="col-sm-4 col-form-label">{% trans 'Grammatura' %}</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="grammage" class="form-control"
+                                            id="new-interactive-product-form_grammage" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="new-interactive-product-form_price_with_iva"
+                                        class="col-sm-4 col-form-label">{% trans 'Prezzo' %}</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="price_with_iva" class="form-control"
+                                            id="new-interactive-product-form_price_with_iva" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="new-interactive-product-form_price_for_kg"
+                                        class="col-sm-4 col-form-label">{% trans 'Prezzo al Kg' %}</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="price_for_kg" class="form-control"
+                                            id="new-interactive-product-form_price_for_kg" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="new-interactive-product-form_available_pieces"
+                                        class="col-sm-4 col-form-label">{% trans 'Pezzi disponibili' %}</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="available_pieces" class="form-control"
+                                            id="new-interactive-product-form_available_pieces" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="new-interactive-product-form_max_purchasable_pieces"
+                                        class="col-sm-4 col-form-label">{% trans 'Massimo pezzi acquistabili' %}</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="max_purchasable_pieces" class="form-control"
+                                            id="new-interactive-product-form_max_purchasable_pieces" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="new-interactive-product-form_points"
+                                        class="col-sm-4 col-form-label">{% trans 'Punti' %}</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="max_purchasable_pieces" class="form-control"
+                                            id="new-interactive-product-form_points" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-4"></div>
+                                    <div class="col-sm-8">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox"
+                                                id="new-interactive-product-form_fidelity_product"
+                                                name="fidelity_product">
+                                            <label class="form-check-label"
+                                                for="new-interactive-product-form_fidelity_product">
+                                                {% trans 'Prodotto fedeltà' %}'
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-4"></div>
+                                    <div class="col-sm-8">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox"
+                                                id="new-interactive-product-form_focus" name="focus">
+                                            <label class="form-check-label" for="new-interactive-product-form_focus">
+                                                {% trans 'Focus' %}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-4"></div>
+                                    <div class="col-sm-8">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox"
+                                                id="new-interactive-product-form_pam" name="pam">
+                                            <label class="form-check-label" for="new-interactive-product-form_pam">
+                                                {% trans 'Pam' %}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-4"></div>
+                                    <div class="col-sm-8">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox"
+                                                id="new-interactive-product-form_three_for_two" name="three_for_two">
+                                            <label class="form-check-label"
+                                                for="new-interactive-product-form_three_for_two">
+                                                3x2
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-4"></div>
+                                    <div class="col-sm-8">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox"
+                                                id="new-interactive-product-form_one_and_one_gratis"
+                                                name="one_and_one_gratis">
+                                            <label class="form-check-label"
+                                                for="new-interactive-product-form_one_and_one_gratis">
+                                                {% trans '1+1 gratis' %}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-4"></div>
+                                    <div class="col-sm-8">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox"
+                                                id="new-interactive-product-form_underpriced_product"
+                                                name="underpriced_product">
+                                            <label class="form-check-label"
+                                                for="new-interactive-product-form_underpriced_product">
+                                                {% trans 'Sottocosto' %}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-primary" onclick="App.edit_iflyer_wpag.save_interactive_product()">
+                                {% trans 'Salva' %}
+                            </button>
+                            <button class="btn btn-secondary"
+                                onclick="App.edit_iflyer_wpag.cancel_interactive_product_creation()">
+                                {% trans 'Annulla' %}
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="edit-product-container">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        App.edit_iflyer_wpag.init('{{ flyer.id }}');
+    });
+</script>
+{% endif %}
+
+{% endblock %}
+
+{% block modals %}
+{% include "builder/interactive_flyer_without_pages/_import_products_modal.html" %}
+
+<div id="project-items-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{% trans 'Seleziona prodotto' %}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-sm" id="items-table" style="width: 100% !important">
+                    <thead>
+                        <tr>
+                            <th scope="col">desc 1</th>
+                            <th scope="col">desc 2</th>
+                            <th scope="col">desc 3</th>
+                            <th scope="col">desc 4</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="product-created-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>{% trans 'Prodotto interattivo creato!' %}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="product-deleted-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>{% trans 'Prodotto interattivo cancellato!' %}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="product-updated-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>{% trans 'Prodotto interattivo aggiornato!' %}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="product-images-modal-container"></div>
+<div id="edit-link-interactivity-modal-container"></div>
+<div id="edit-video-interactivity-modal-container"></div>
+<div id="edit-recipe-interactivity-modal-container"></div>
+<div id="edit-info-interactivity-modal-container"></div>
+<div id="edit-specs-interactivity-modal-container"></div>
+{% endblock %}

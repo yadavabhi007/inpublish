@@ -1,0 +1,1360 @@
+{% extends "builder/new/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block style %}
+    {{ pages|json_script:"pages" }}
+    {{ request.user.connector_type|json_script:"connector_type" }}
+    <style>
+        .main-header {
+            display: none !important;
+        }
+        .main-content-wrap {
+            margin-top:0
+        }
+        .layout-sidebar-large .sidebar-left-secondary, .layout-sidebar-large .sidebar-left{
+            top:0;
+            bottom:0;
+            height:100vh!important;
+        }
+        #page-products-card,#video-interactivities-card,#internal-link-interactivities-card,#external-link-interactivities-card,#add-external-link-card,#add-internal-link-card,#add-video-card,#add-product-card{
+            border-radius:0;
+        }
+        #cards-container,#add-product-card,#add-external-link-card,#add-video-card,#index-card,#add-index-link-card{
+            overflow:auto;
+            max-height: calc( 100vh - 55px)
+        }
+        .share-button:hover{
+            background-color:#cecece86
+        }
+        .share-button:hover .i-Share{
+            font-size:40px
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    <div id="flyer-page-dimension" class="d-none" data-orientation="{% if flyer.image_page_width > flyer.image_page_height %}horizontal{% else %}vertical{% endif %}" data-width="{{ flyer.image_page_width }}" data-height="{{ flyer.image_page_height }}"></div>
+
+    <div class="row bg-gray-100 position-relative "  style="height: 100vh;overflow:auto;margin-left:-10px">  <!-- TODO 85vh su mobile non va bene sistema-->
+
+        <div class="col-lg-1 pages-bar col-md-1 col-sm-12 h-100 ">
+                <div class="pb-0 m-0 pt-2 text-center bg-white navbar-brand" style="height: 51px; border-bottom:1px solid lightgrey;font-size:1.01625rem">
+                    {% trans "Pagina" %}
+                </div>
+            <nav class="navbar navbar-expand-lg navbar-light bg-white p-0" style="border-bottom: 1px solid lightgrey;border-right: 1px solid lightgrey">
+                <a href="#" class="navbar-brand m-0 navbar-page-icon text-center" title="{% trans "Aggiungi pagina" %}" onclick="editInteractiveFlyer.addPage()">
+                    <i class="nav-icon i-Add"></i>
+                </a>
+                <a href="#"  class="navbar-brand navbar-brand-right  m-0 navbar-page-icon text-center" title="{% trans "Cancella pagina" %}" onclick="editInteractiveFlyer.deletePage()">
+                    <i class="nav-icon i-Remove"></i>
+                        <!-- <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 nav-icon "><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line>
+                        </svg> -->
+                </a>
+                <a href="#" class="navbar-brand navbar-brand-right m-0 navbar-page-icon text-center" title="{% trans "Modifica immagine" %}" onclick="editInteractiveFlyer.changePageBackground()">
+                    <i _ngcontent-auy-c8=""  class="text-20  i-Landscape"></i>
+                </a>
+
+                <a href="#" class="navbar-brand m-0 navbar-page-icon text-center col-12 col-md-3" title="{% trans "Cambia posizione pagina" %}" onclick="editInteractiveFlyer.changePagePosition()">
+                    <i class="nav-icon i-Repeat2"></i>
+                        <!-- <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 nav-icon "><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line>
+                        </svg> -->
+                </a>
+            </nav>
+            <div id="pages-bar" class="col-lg-12 pages-bar col-md-12 " style="overflow:auto; height: calc(100vh - 101px);"> <!-- style="overflow:auto;height:80vh" con header-->
+                <div id="page-bar-body" ></div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-sm-12 h-100 p-0  text-center">
+            <div class="pb-0 m-0  text-center bg-white " style="border:1px solid lightgrey;border-right:none;height:51px">
+                <div style="position:relative;" class="h-100">
+                        <h3 class="d-inline" style="line-height:2">{{ flyer.name }}</h3>
+                        {% if flyer.publication_url %}
+                        <a href="{% url 'builder:share_flyer' interactive_flyer_id=flyer.pk  %}" style="position:absolute;right:0;top:0;height: 100%;line-height:4" class="p-2 share-button" title="Condividi">
+                            <i _ngcontent-wkd-c8="" class="text-20 i-Share  text-center" style="font-size:30px;color:black"></i>
+                        </a>
+                        {% endif %}
+
+                </div>
+
+
+            </div>
+            <div class="canvas-page  bg-gray-100 " id="canvas-pages" style="position:relative; display: inline-block;height: calc(100vh - 51px )">
+                <img src="{{ flyer.pages.image_file }}"
+                     width="auto"
+                     height="{{ flyer.image_page_height }}"
+                     id="flyer-page-image" class="img-fluid page-image h-100 " />
+                <div id="draw" class="" style="top:0;left:0;" >
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-5 col-md-5 col-sm-12 h-100 " style="border-left: 1px solid lightgrey;padding-left:0;padding-right:0">
+            <div class="d-flex  ">
+                <nav class="navbar navbar-expand-lg navbar-light bg-white p-0 w-100" style="border-bottom: 1px solid lightgrey;border-right: 1px solid lightgrey;">
+                    <a class="navbar-brand navbar-brand-right m-0 navbar-page-icon text-center col-6 col-lg-3" href="{% url "builder:dashboard" %}">
+                        <img style="height:30px" class="mr-2" src="{% static "icons/Dashborad.svg" %}">
+                        {% trans "Dashboard" %}
+                    </a>
+                    <a class="navbar-brand navbar-brand-right m-0 navbar-page-icon text-center col-6 col-lg-3" href="#" onclick="editInteractiveFlyer.openSettings()">
+                        {% trans "Impostazioni" %}
+                    </a>
+                    <a class="navbar-brand  navbar-brand-right m-0 navbar-page-icon text-center col-6 col-lg-3" target="_blank" href="{% url "builder:preview_interactive_flyer" flyer.id %}">
+                        {% trans "Anteprima" %}
+                    </a>
+                    <a class="navbar-brand navbar-brand-right m-0 navbar-page-icon text-center col-6 col-lg-3"
+                       {% if flyer.status == 1 %}
+                           {# volantino già pubblicato #}
+                           href="{% url "builder:manage_publication_interactive_flyer" flyer.id "re-publish" %}"
+                       {% else %}
+                           {# volantino ancora pubblicare #}
+                           href="{% url "builder:manage_publication_interactive_flyer" flyer.id "publish" %}"
+                       {% endif %}
+                    >
+                        {% trans "Pubblica" %}
+                    </a>
+                </nav>
+            </div>
+
+            <!--
+            <div class="card mt-2 mb-2">
+                <div class="card-body text-center">
+                    <div class="d-inline-block">
+                        <i class="text-11 cursor-pointer" id="chevrons-left" data-feather="chevrons-left" onclick="editInteractiveFlyer.firstPage();"></i>
+                        <i class="text-11 cursor-pointer" id="chevron-left" data-feather="chevron-left" onclick="editInteractiveFlyer.prevPage();"></i>
+                        {% with flyer.pages.all.count as flyer_pages %}
+                            <p data-flyer-pages="{{ flyer_pages }}" class="text-15 d-inline-block"><span id="current-page">1</span> {% trans "di" %} <span id="total-pages">{{ flyer_pages }}</span></p>
+                        {% endwith %}
+                        <i class="text-11 cursor-pointer" id="chevron-right" data-feather="chevron-right" onclick="editInteractiveFlyer.nextPage();"></i>
+                        <i class="text-11 cursor-pointer" id="chevrons-right" data-feather="chevrons-right" onclick="editInteractiveFlyer.lastPage();"></i>
+                    </div>
+                </div>
+            </div>
+            -->
+
+            <!-- region cards -->
+            <div class="" id="cards-container">
+                <div id="page-products-card" class="card mt-0 mb-1" style="display:none;">
+                    <div class="card-body" >
+                        <div class="d-flex">
+                            <img class="d-inline" style="height:30px" src="{% static "icons/Product.svg" %}">
+                            <h4 class="d-inline mb-0" style="line-height:1.8">{% trans "Prodotti interattivi" %}</h4>
+                        </div>
+
+
+                        <div class="row mt-4 mb-2 text-center">
+                            <div class="col-12 table-responsive">
+                                <table class="w-100 table" id="page-products-table">
+                                    <thead>
+                                        <th></th>
+                                        <th>{% trans "ID" %}</th>
+                                        <th class="position-relative" ><span class="position-absolute centered-tag" >{% trans "Ritaglio" %}</span></th>
+                                        <th class="position-relative"><span class="position-absolute centered-tag" >{% trans "Descrizione" %}</span></th>
+                                        <th class="position-relative"><span class="position-absolute centered-tag" >{% trans "Categoria" %}</span></th>
+                                        <th class="position-relative"><span class="position-absolute centered-tag" >{% trans "Prezzo" %}</span></th>
+                                        <th >
+                                            <img style="height:30px" src='{% static "icons/Interattivo.svg" %}'>
+                                        </th>
+                                        <th></th>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="video-interactivities-card" class="card mt-0 mb-1" style="display:none;">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <img class="d-inline" style="height:30px" src="{% static "icons/Video.svg" %}">
+                            <h4 class="d-inline mb-0" style="line-height:1.6">{% trans "Video" %}</h4>
+                        </div>
+                        <div class="row mt-4 mb-2 text-center">
+                            <div class="col-12 table-responsive">
+
+                                <table class="w-100 table" id="video-interactivities-table">
+                                    <thead>
+                                        <th>{% trans "ID" %}</th>
+                                        <th>{% trans "Ritaglio" %}</th>
+                                        <th>{% trans "Nome" %}</th>
+                                        <th>{% trans "Tipo" %}</th>
+                                        <th></th>
+                                    </thead>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="internal-link-interactivities-card" class="card mt-0 mb-1" style="display:none;">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <img class="d-inline" style="height:30px" src="{% static "icons/Internal-link.svg" %}">
+                            <h4 class="d-inline mb-0" style="line-height:1.6">{% trans "Link interni" %}</h4>
+                        </div>
+
+
+                        <div class="row mt-4 mb-2 text-center">
+                            <div class="col-12 table-responsive">
+
+                                <table class="w-100 table" id="internal-link-interactivities-table">
+                                    <thead>
+                                        <th>{% trans "ID" %}</th>
+                                        <th>{% trans "Ritaglio" %}</th>
+                                        <th>{% trans "Pagina" %}</th>
+                                        <th></th>
+                                    </thead>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="external-link-interactivities-card" class="card mt-0 mb-1" style="display:none;">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <img class="d-inline " style="height:30px" src="{% static "icons/External-link.svg" %}">
+                            <h4 class="d-inline mb-0" style="line-height:1.6">{% trans "Link esterni" %}</h4>
+                        </div>
+
+
+                        <div class="row mt-4 mb-2 text-center">
+                            <div class="col-12 table-responsive">
+
+                                <table class="w-100 table" id="external-link-interactivities-table">
+                                    <thead>
+                                        <th>{% trans "ID" %}</th>
+                                        <th>{% trans "Ritaglio" %}</th>
+                                        <th>{% trans "Tipo" %}</th>
+                                        <th>{% trans "Link" %}</th>
+                                        <th></th>
+                                    </thead>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="add-internal-link-card" class="card mt-1 mb-0" style="display:none;">
+                    <div class="card-body">
+                        <div class="row">
+                            <h4 class="col-11">{% trans "Aggiungi link interno" %}</h4>
+                            <a class="d-inline ml-0 col-1 align-self-center" title="Vai all'articolo" href=" https://supportinterattivo.zendesk.com/hc/it/articles/4407820561681-Come-posso-integrare-un-Link-Interno-sulla-mia-pubblicazione-" style="color:#47404f" target="_blank">
+                                <i _ngcontent-fpv-c8="" class="text-30 i-Speach-Bubble-Asking"></i>
+                            </a>  
+                        </div>
+                        
+
+                        <form method="POST" action="" id="i-internal-link-form" enctype="multipart/form-data">
+                           
+                            <input type="text" id="i-internal-link_id" name="id" class="id textinput textInput form-control d-none ">
+                            
+
+                            <div class="form-row {% if request.GET.debug != 'true' %}d-none{% endif %}">
+                                <div class="form-group col-12 col-lg-6 mb-0">
+                                    <div class="form-group">
+                                        <label for="blueprint_top">{% trans 'blueprint top' %}</label>
+                                        <input type="text" id="i-internal-link_blueprint_top" name="blueprint_top" class="blueprint_top textinput textInput form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group col-12 col-lg-6 mb-0">
+                                    <div class="form-group">
+                                        <label for="blueprint_left">{% trans 'blueprint left' %}</label>
+                                        <input type="text" id="i-internal-link_blueprint_left" name="blueprint_left" class="blueprint_left textinput textInput form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group col-12 col-lg-6 mb-0">
+                                    <div class="form-group">
+                                        <label for="blueprint_width">{% trans 'blueprint width' %}</label>
+                                        <input type="text" id="i-internal-link_blueprint_width" name="blueprint_width" class="blueprint_width textinput textInput form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group col-12 col-lg-6 mb-0">
+                                    <div class="form-group">
+                                        <label for="blueprint_width">{% trans 'blueprint height' %}</label>
+                                        <input type="text" id="i-internal-link_blueprint_height" name="blueprint_height" class="blueprint_height textinput textInput form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-12 mb-2">
+                                <div class="form-group">
+                                    <label for="page_number">{% trans 'page_number' %}</label>
+                                    <select name="page_number" class="page_number form-control" id="i-internal-link_page_number">
+                                    </select>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <h5>{% trans "Grafica" %}</h5>
+                            <div class="form-row">
+                                <div class="form-group col-12">
+                                    <label class="checkbox checkbox-primary">
+                                        <input type="checkbox" value="True" name="show_icon" id="i-internal-link_show_icon"><span>{% trans "Mostra l'icona interattività" %}</span><span class="checkmark"></span>
+                                    </label>
+                                    <label class="checkbox checkbox-primary">
+                                        <input type="checkbox" id="i-internal-link_show_tooltip"><span>{% trans "Mostra informazione al passaggio del mouse" %}</span><span class="checkmark"></span>
+                                    </label>
+                                </div>
+
+                                <div id="tooltip-internal-link" class="form-group col-12 d-none">
+                                    <div class="form-group">
+                                        <label for="tooltip">{% trans 'tooltip' %}</label>
+                                        <input type="text" id="i-internal-link_tooltip" name="tooltip" class="textinput textInput form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div>
+                            <button type="button" class="mt-2 btn btn-primary" onclick="editInteractiveFlyer.saveInternalLinkInteraction();">{% trans 'Salva' %}</button>
+                            <button type="button" class="mt-2 btn btn-secondary" onclick="editInteractiveFlyer.undoInteractivity('internal_link');">{% trans 'Annulla' %}</button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div id="add-external-link-card" class="card mt-0 mb-1" style="display:none;">
+                    <div class="card-body">
+                        <div class="row">
+                            <h4 class="col-11">{% trans "Aggiungi link esterno" %}</h4>
+                            <a class="d-inline ml-0 col-1 align-self-center" title="Vai all'articolo" href="https://supportinterattivo.zendesk.com/hc/it/articles/4407818186897-Come-posso-integrare-un-Link-Esterno-sulla-mia-pubblicazione-" style="color:#47404f" target="_blank">
+                                <i _ngcontent-fpv-c8="" class="text-30 i-Speach-Bubble-Asking"></i>
+                            </a>
+                        </div>
+                        <form method="POST" action="" id="i-external-link-form" enctype="multipart/form-data">
+
+                            <input type="text" id="i-external-link_id" name="id" class="id textinput textInput form-control d-none">
+
+                            <div class="form-row {% if request.GET.debug != 'true' %}d-none{% endif %}">
+                                <div class="form-group col-12 col-lg-6 mb-0">
+                                    <div class="form-group">
+                                        <label for="blueprint_top">{% trans 'blueprint top' %}</label>
+                                        <input type="text" id="i-external-link_blueprint_top" name="blueprint_top" class="blueprint_top textinput textInput form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group col-12 col-lg-6 mb-0">
+                                    <div class="form-group">
+                                        <label for="blueprint_left">{% trans 'blueprint left' %}</label>
+                                        <input type="text" id="i-external-link_blueprint_left" name="blueprint_left" class="blueprint_left textinput textInput form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group col-12 col-lg-6 mb-0">
+                                    <div class="form-group">
+                                        <label for="blueprint_width">{% trans 'blueprint width' %}</label>
+                                        <input type="text" id="i-external-link_blueprint_width" name="blueprint_width" class="blueprint_width textinput textInput form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group col-12 col-lg-6 mb-0">
+                                    <div class="form-group">
+                                        <label for="blueprint_width">{% trans 'blueprint height' %}</label>
+                                        <input type="text" id="i-external-link_blueprint_height" name="blueprint_height" class="blueprint_height textinput textInput form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <label class="radio radio-secondary">
+                                <input type="radio" onclick="editInteractiveFlyer.linkTypeRadioClick(this);" name="link_type" value="url" /><span>{% trans "URL" %}</span><span class="checkmark"></span>
+                            </label>
+                            <label class="radio radio-secondary">
+                                <input type="radio" onclick="editInteractiveFlyer.linkTypeRadioClick(this);" name="link_type" value="email" /><span>{% trans "E-Mail" %}</span><span class="checkmark"></span>
+                            </label>
+                            <label class="radio radio-secondary">
+                                <input type="radio" onclick="editInteractiveFlyer.linkTypeRadioClick(this);" name="link_type" value="telephone" /><span>{% trans "Telefono" %}</span><span class="checkmark"></span>
+                            </label>
+
+                            <div class="form-group col-12">
+                                <div id="i-external-link_link_url_wrapper" class="form-group d-none input-group mb-3">
+                                    <div class="input-group-prepend"><span class="input-group-text" id="basic-addon">   </span></div>
+                                    <input type="text" id="i-external-link_link_url" name="link" placeholder="link" class="form-control">
+                                </div>
+                                <div id="i-external-link_link_email_wrapper" class="form-group d-none input-group mb-3" >
+                                    <div class="input-group-prepend"><span class="input-group-text" id="basic-addon1">@</span></div>
+                                    <input class="form-control" id="i-external-link_link_email" name="link" type="text" placeholder="E-mail"  />
+                                </div>
+                                <div id="i-external-link_link_telephone_wrapper" class="form-group d-none">
+                                    <label for="link">{% trans 'Link' %}</label>
+                                    <input type="text" id="i-external-link_link_telephone" name="link" class="textinput textInput form-control">
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <h5>{% trans "Grafica" %}</h5>
+                            <div class="form-row">
+                                <div class="form-group col-12">
+                                    <label class="checkbox checkbox-primary">
+                                        <input type="checkbox" value="True" name="show_icon" id="i-external-link_show_icon"><span>{% trans "Mostra l'icona interattività" %}</span><span class="checkmark"></span>
+                                    </label>
+                                    <label class="checkbox checkbox-primary">
+                                        <input type="checkbox" id="i-external-link_show_tooltip"><span>{% trans "Mostra informazione al passaggio del mouse" %}</span><span class="checkmark"></span>
+                                    </label>
+                                </div>
+
+                                <div id="tooltip-external-link" class="form-group col-12 d-none">
+                                    <div class="form-group">
+                                        <label for="tooltip">{% trans 'tooltip' %}</label>
+                                        <input type="text" id="i-external-link_tooltip" name="tooltip" class="textinput textInput form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+
+                        <div>
+                            <button type="button" class="mt-2 btn btn-primary" onclick="editInteractiveFlyer.saveExternalLinkInteraction();">{% trans 'Salva' %}</button>
+                            <button type="button" class="mt-2 btn btn-secondary" onclick="editInteractiveFlyer.undoInteractivity('external_link');">{% trans 'Annulla' %}</button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div id="add-product-card" class="card mt-0 mb-1" style="display:none;">
+                    <div class="card-body">
+                        <div class="create-product-block d-none ">
+                            <div class="row d-flex ">
+                                <h4 class="d-inline col-11">{% trans "Aggiungi prodotto" %}</h4>
+                                <a class="d-inline ml-0 col-1 align-self-center" title="Vai all'articolo" href="https://supportinterattivo.zendesk.com/hc/it/articles/4410744914577-Creazione-Interattivit%C3%A0-Prodotto" style="color:#47404f" target="_blank">
+                                    <i _ngcontent-fpv-c8="" class="text-30 i-Speach-Bubble-Asking"></i>
+                                </a>
+                                <!-- <div>
+                                    <a class="d-inline bold h6" style="text-decoration:underline" href="https://supportinterattivo.zendesk.com/hc/it/articles/4410744914577-Creazione-Interattivit%C3%A0-Prodotto" target="_blank">Vedi tutorial</a>
+                                </div> -->
+                            </div>
+                            <div class="row mt-4 mb-2 ">
+                                <div class="col-12 ">
+                                    <h5>{% trans "Seleziona prodotto" %}</h5>
+                                </div>
+                                {% if request.user.connector_type == "giodicart" %}
+                                    <div class="col-9 mb-1 d-inline">
+                                        <button type="button" class="mt-2 btn btn-primary" onclick="giodicartManager.openSearchProductModal();" data-toggle="tooltip" data-placement="top" title="" data-original-title="{% trans 'Inserisci un prodotto direttamente dal tuo archivio.' %}">{% trans 'Da archivio' %}</button>
+                                        
+                                    </div>
+                                {% else %}
+                                    <div class="col-9 mb-1 d-inline">
+                                        <button type="button" class="mt-2 btn btn-primary" onclick="editInteractiveFlyer.selectProductFromArchive();" data-toggle="tooltip" data-placement="top" title="" data-original-title="{% trans 'Inserisci un prodotto direttamente dal tuo archivio.' %}">{% trans 'Da archivio' %}</button>
+                                    </div>
+                                    <div class="col-12">
+                                        <hr class="m-1">
+                                    </div>
+                                    <div id="if-has-project" class="col-12">
+                                        <button type="button" class="mt-2 btn btn-primary" onclick="editInteractiveFlyer.selectProductFromProject();" data-toggle="tooltip" data-placement="top" title="" data-original-title="{% trans 'Inserisci un prodotto direttamente dai tuoi progetti correlati.' %}">{% trans 'Da progetto correlato' %}</button>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="update-product-block d-none">
+                            <h4 class="mb-2 text-center">{% trans "Modifica prodotto" %}</h4>
+                            <h5 class="font-weight-bold">{% trans "Interattività" %}</h5>
+                            <div id="product-interactivities-table" class="row mt-4 mb-2 text-left">
+                                <div class="col-6 product-button-interactivity world">
+                                    <button type="button" class="btn btn-primary btn-sm int-btn d-flex justify-content-center" onclick="editInteractiveFlyer.productInteractionModal('world');">
+                                        <svg class="mr-1" xmlns="http://www.w3.org/2000/svg" height="15px" viewBox="0 0 24 24" width="15px" fill="#FFFFFF"><path d="M0 0h24v24H0z" fill="none"/>
+                                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56zm2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"/>
+                                        </svg>{% trans 'Link' %}
+                                    </button>
+                                </div>
+                                <div class="col-6">
+                                    <div id="marker-world-inactive" class="d-none badge badge-danger m-2 p-1">{% trans "Disattivo" %}</div>
+                                    <div id="marker-world-active" class="d-none badge badge-success m-2 p-1">{% trans "Attivo" %}</div>
+                                </div>
+                                <div class="col-12">
+                                    <hr class="m-1">
+                                </div>
+                                <div class="col-6 product-button-interactivity play">
+                                    <button type="button" class="btn btn-primary btn-sm int-btn d-flex justify-content-center" onclick="editInteractiveFlyer.productInteractionModal('play');">
+                                        <svg class="mr-1" xmlns="http://www.w3.org/2000/svg"  fill="#FFFFFF" height="15px" width="15px" viewBox="0 0 24 24"><path d="M0 0h24v24H0z"   fill="none"/>
+                                            <path d="M8 5v14l11-7z"/>
+                                        </svg> {% trans 'Video' %}
+                                    </button>
+                                </div>
+                                <div class="col-6">
+                                    <div id="marker-play-inactive" class="d-none badge badge-danger m-2 p-1">{% trans "Disattivo" %}</div>
+                                    <div id="marker-play-active" class="d-none badge badge-success m-2 p-1">{% trans "Attivo" %}</div>
+                                </div>
+                                <div class="col-12">
+                                    <hr class="m-1">
+                                </div>
+
+                                <div class="col-6 product-button-interactivity hat-chef">
+                                    <button type="button" class="btn btn-primary btn-sm int-btn d-flex justify-content-center" onclick="editInteractiveFlyer.productInteractionModal('hat-chef');">
+                                        <svg class="mr-1" xmlns="http://www.w3.org/2000/svg" height="15px" viewBox="0 0 24 24" width="15px" fill="#FFFFFF">
+                                            <path d="M0 0h24v24H0V0z" fill="none"/>
+                                            <path d="M8.1 13.34l2.83-2.83L3.91 3.5c-1.56 1.56-1.56 4.09 0 5.66l4.19 4.18zm6.78-1.81c1.53.71 3.68.21 5.27-1.38 1.91-1.91 2.28-4.65.81-6.12-1.46-1.46-4.2-1.1-6.12.81-1.59 1.59-2.09 3.74-1.38 5.27L3.7 19.87l1.41 1.41L12 14.41l6.88 6.88 1.41-1.41L13.41 13l1.47-1.47z"/>
+                                        </svg>{% trans 'Ricetta' %}
+                                    </button>
+                                </div>
+                                <div class="col-6">
+                                    <div id="marker-hat-chef-inactive" class="d-none badge badge-danger m-2 p-1">{% trans "Disattivo" %}</div>
+                                    <div id="marker-hat-chef-active" class="d-none badge badge-success m-2 p-1">{% trans "Attivo" %}</div>
+                                </div>
+                                <div class="col-12">
+                                    <hr class="m-1">
+                                </div>
+
+                                <div class="col-6 product-button-interactivity info">
+                                    <button type="button" class="btn btn-primary btn-sm int-btn d-flex justify-content-center" onclick="editInteractiveFlyer.productInteractionModal('info');">
+                                        <svg class="mr-1" xmlns="http://www.w3.org/2000/svg" height="15px" viewBox="0 0 24 24" width="15px" fill="#FFFFFF">
+                                            <path d="M0 0h24v24H0z" fill="none"/>
+                                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                                        </svg> {% trans 'Info' %}
+                                    </button>
+                                </div>
+                                <div class="col-6">
+                                    <div id="marker-info-inactive" class="d-none badge badge-danger m-2 p-1">{% trans "Disattivo" %}</div>
+                                    <div id="marker-info-active" class="d-none badge badge-success m-2 p-1">{% trans "Attivo" %}</div>
+                                </div>
+                                <div class="col-12">
+                                    <hr class="m-1">
+                                </div>
+
+                                <div class="col-6 product-button-interactivity specs">
+                                    <button type="button" class="btn btn-primary btn-sm int-btn d-flex justify-content-center" onclick="editInteractiveFlyer.productInteractionModal('specs');">
+                                        <svg class="mr-1" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 24 24" width="18px" fill="#FFFFFF"><path d="M0 0h24v24H0z" fill="none"/>
+                                            <path d="M19 5v14H5V5h14m1.1-2H3.9c-.5 0-.9.4-.9.9v16.2c0 .4.4.9.9.9h16.2c.4 0 .9-.5.9-.9V3.9c0-.5-.5-.9-.9-.9zM11 7h6v2h-6V7zm0 4h6v2h-6v-2zm0 4h6v2h-6zM7 7h2v2H7zm0 4h2v2H7zm0 4h2v2H7z"/>
+                                        </svg>
+                                        {% trans 'Specifiche' %}
+                                        </button>
+                                </div>
+                                <div class="col-6">
+                                    <div id="marker-specs-inactive" class="d-none badge badge-danger m-2 p-1">{% trans "Disattivo" %}</div>
+                                    <div id="marker-specs-active" class="d-none badge badge-success m-2 p-1">{% trans "Attivo" %}</div>
+                                </div>
+                                <div class="col-12">
+                                    <hr class="m-1">
+                                </div>
+                            </div>
+
+                            <h5 class="font-weight-bold">{% trans "Immagini" %}</h5>
+                            <input type="text" value="" class="d-none" id="attr-product-id"/>
+
+                            <div class="row mt-0 mb-2 text-center">
+                                <div class="col-6 d-flex justify-content-center flex-column">
+                                    <div class="mb-0" id="number-images">
+                                    </div>
+                                    <div class="">
+                                        <button type="button" class="mt-2 btn btn-primary btn-sm" id="image-management-button" attr-product-id="" onclick="editInteractiveFlyer.imageManagement(this);">{% trans 'Gestisci immagini' %}</button>
+                                    </div>
+                                </div>
+                                <div class="col-6 d-flex justify-content-center">
+
+                                    <div id="carouselExampleControls" class="carousel slide " data-ride="carousel" style="overflow:hidden;max-width:100px">
+                                        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                          <span class="sr-only">Previous</span>
+                                        </a>
+                                        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                          <span class="sr-only">Next</span>
+                                        </a>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                        <form method="POST" action="" id="i-product-form" enctype="multipart/form-data">
+
+                            <input type="text" id="i-product_id" name="id" class="id textinput textInput form-control d-none">
+
+                            {# <fieldset disabled="disabled"> #}
+                            <fieldset>
+                            <input type="text" id="i-product_images" name="images" class="product_images textinput textInput form-control d-none">
+
+                                <div class="form-row {% if request.GET.debug != 'true' %}d-none{% endif %}">
+                                    <div class="form-group col-12 col-lg-6 mb-0">
+                                        <div class="form-group">
+                                            <label for="blueprint_top">{% trans 'blueprint top' %}</label>
+                                            <input type="text" id="i-product_blueprint_top" name="blueprint_top" class="blueprint_top textinput textInput form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-12 col-lg-6 mb-0">
+                                        <div class="form-group">
+                                            <label for="blueprint_left">{% trans 'blueprint left' %}</label>
+                                            <input type="text" id="i-product_blueprint_left" name="blueprint_left" class="blueprint_left textinput textInput form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-12 col-lg-6 mb-0">
+                                        <div class="form-group">
+                                            <label for="blueprint_width">{% trans 'blueprint width' %}</label>
+                                            <input type="text" id="i-product_blueprint_width" name="blueprint_width" class="blueprint_width textinput textInput form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-12 col-lg-6 mb-0">
+                                        <div class="form-group">
+                                            <label for="blueprint_width">{% trans 'blueprint height' %}</label>
+                                            <input type="text" id="i-product_blueprint_height" name="blueprint_height" class="blueprint_height textinput textInput form-control">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="text-center mx-auto mb-3 crop-preview-wrapper">
+                                    <div class="crop-preview text-center mx-auto my-2"></div>
+                                </div>
+
+                                <nav>
+                                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                        <a class="nav-item nav-link active" id="nav-description-tab" data-toggle="tab" href="#nav-description" role="tab" aria-controls="nav-description" aria-selected="true">{% trans "Informazioni prodotto" %}</a>
+                                        <a class="nav-item nav-link" id="nav-other-2-tab" data-toggle="tab" href="#nav-other-2" role="tab" aria-controls="nav-other-2" aria-selected="false">{% trans "Extra" %}</a>
+                                        {% if request.user.connector_type == "giodicart" %}
+                                        <a class="nav-item nav-link" id="nav-json-tab" data-toggle="tab" href="#nav-json" role="tab" aria-controls="nav-json" aria-selected="false">{% trans "Json" %}</a>
+                                        {% endif %}
+                                    </div>
+                                </nav>
+
+                                <div class="tab-content ul-tab__content" id="nav-tabContent">
+                                    <div class="tab-pane fade show active" id="nav-description" role="tabpanel" aria-labelledby="nav-description-tab">
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <input type="hidden" id="i-product_product_uid" name="product_uid" class="product_uid textinput textInput form-control">
+                                            </div>
+                                            <div class="form-group col-12 mb-2">
+                                                <div class="form-group">
+                                                    <label class="mb-0" for="codice_interno_insegna">{% trans 'Codice interno insegna' %}*</label>
+                                                    <input type="text" id="i-product_codice_interno_insegna" name="codice_interno_insegna" class="codice_interno_insegna textinput textInput form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-12 col-lg-6 mb-0">
+                                                <div class="form-group">
+                                                    <label class="mb-0" for="field1">{% trans 'Descrizione 1' %}* </label>
+                                                    <input type="text" id="i-product_field1" name="field1" class="field1 textinput textInput form-control " required>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-12 col-lg-6 mb-0">
+                                                <div class="form-group">
+                                                    <label class="mb-0" for="field2">{% trans 'Descrizione 2' %}</label>
+                                                    <input type="text" id="i-product_field2" name="field2" class="field2 textinput textInput form-control ">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-12 col-lg-6 mb-0">
+                                                <div class="form-group">
+                                                    <label class="mb-0" for="field3">{% trans 'Descrizione 3' %}</label>
+                                                    <input type="text" id="i-product_field3" name="field3" class="field3 textinput textInput form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-12 col-lg-6 mb-0">
+                                                <div class="form-group">
+                                                    <label class="mb-0" for="field4">{% trans 'Descrizione 4' %}</label>
+                                                    <input type="text" id="i-product_field4" name="field4" class="field4 textinput textInput form-control ">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-12 mb-2">
+                                                <div class="form-group">
+                                                    <label class="mb-0" for="i-product_descrizione_estesa">{% trans 'Descrizione estesa' %}</label>
+                                                    <textarea id="i-product_descrizione_estesa" name="descrizione_estesa" class=" textinput textInput form-control " rows="8"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-12 mb-2 giodicart">
+                                                <div class="form-group" id="perm-variants_and_tags">
+                                                    <label class="mb-0" for="varieties">{% trans 'Varietà' %}</label>
+                                                    <i class="ml-1 text-12 i-Information position-absolute" data-toggle="tooltip" data-placement="top" title="" data-original-title="{% trans 'Digitare tipologia e premere invio.' %}"></i>
+                                                    <div id="i-product_varieties" name="varieties" class="tagBox case-sensitive"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <hr class="m-3">
+                                            </div>
+                                        </div>
+                                        <div class="form-row giodicart">
+                                            <div class="form-group col-6 mb-2">
+                                                <div class="form-group ">
+                                                    <label class="mb-0" for="price_with_iva">{% trans 'Prezzo con IVA' %}</label>
+                                                    <i class="ml-1 text-12 i-Information position-absolute" data-toggle="tooltip" data-placement="top" title="" data-original-title="{% trans 'Inserisci il prezzo compreso di IVA. Separa le cifre con un punto ( . ).'  %}"></i>
+                                                    <div class=" input-group mb-3">
+                                                        <div class="input-group-prepend"><span class="input-group-text">€</span></div>
+                                                        <input id="i-product_price_with_iva" class="form-control textinput price_with_iva" type="text" name="price_with_iva" value="0" required>
+                                                    </div>
+                                                    <!-- <input type="number" id="i-product_price_with_iva" name="price_with_iva" class="price_with_iva textinput textInput form-control"> -->
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-6 mb-2">
+                                                <div class="form-group">
+                                                    <label class="mb-0" for="offer_price">{% trans 'Prezzo in offerta' %}</label>
+                                                    <i class="ml-1 text-12 i-Information position-absolute" data-toggle="tooltip" data-placement="top" title="" data-original-title="{% trans 'Inserisci il prezzo del prodotto se è in offerta. Separa le cifre con un punto ( . ).'  %}"></i>
+                                                    <div class=" input-group mb-3">
+                                                        <div class="input-group-prepend"><span class="input-group-text">€</span></div>
+                                                        <input id="i-product_offer_price" class="form-control offer_price textinput" type="text" name="offer_price" >
+                                                    </div>
+                                                    <!-- <input type="number" id="i-product_offer_price" name="offer_price" class="offer_price textinput textInput form-control"> -->
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-6 mb-2">
+                                                <div class="form-group">
+                                                    <label class="mb-0" for="grammage">{% trans 'Grammatura' %}</label>
+                                                    <i class="ml-1 text-12 i-Information position-absolute" data-toggle="tooltip" data-placement="top" title="" data-original-title="{% trans 'Inserisci il peso del prodotto (selziona anche unità di misura).'  %}"></i>
+                                                    <div class="input-group mb-3">
+                                                        <input id="i-product_grammage" class="form-control grammage textinput" type="number" step="1" name="grammage" />
+                                                        <select name="" id="basic-addon2" class="input-group-append" style="background-color:#EEEEEE;color:#665c70;border-radius:0 0.25rem 0.25rem 0 ">
+                                                            <option value="gr">gr</option>
+                                                            <option value="ml">ml</option>
+                                                            <option value="pz">pz</option>
+                                                        </select>
+                                                        <!-- <div class="input-group-append"><span class="input-group-text" id="basic-addon2">g</span></div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-6 mb-2">
+                                                <div class="form-group">
+                                                    <label class="mb-0" for="price_for_kg">{% trans 'Prezzo al kg' %}</label>
+                                                    <i class="ml-1 text-12 i-Information position-absolute" data-toggle="tooltip" data-placement="top" title="" data-original-title="{% trans 'Prezzo al kg o al l'  %}"></i>
+                                                    <div class=" input-group mb-3">
+                                                        <div class="input-group-prepend"><span class="input-group-text" id="price_for">€/kg</span></div>
+                                                        <input id="i-product_price_for_kg" class="form-control price_for_kg textinput" type="text" name="price_for_kg" aria-label="">
+                                                    </div>
+                                                    <!-- <input type="number" id="i-product_price_for_kg" name="price_for_kg" class="price_for_kg textinput textInput form-control"> -->
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-12">
+                                            <hr class="m-3">
+                                        </div>
+                                        <div class="form-row giodicart">
+                                            <div class="form-group col-6 mb-2">
+                                                <div class="form-group">
+                                                    <label class="mb-0" for="category">{% trans 'Categoria' %}*</label>
+                                                    <i class="ml-1 text-12 i-Information position-absolute" data-toggle="tooltip" data-placement="top" title="" data-original-title="{% trans 'Seleziona una Categoria per il prodotto.'  %}"></i>
+                                                    <select name="category" class="id_category form-control" id="i-product_id_category" required>
+                                                        <option value="">{% trans "Seleziona una categoria" %}</option>
+                                                        {% for category in categories %}
+                                                            <option value="{{category.id}}">{{category.name}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-6 mb-2">
+                                                <div class="form-group">
+                                                    <label class="mb-0" for="subcategory">{% trans 'Sottocategoria' %}*</label>
+                                                    <i class="ml-1 text-12 i-Information position-absolute" data-toggle="tooltip" data-placement="top" title="" data-original-title="{% trans 'Seleziona una Sottoategoria per il prodotto. '  %}"></i>
+                                                    <select name="subcategory" disabled class="id_category form-control" id="i-product_id_subcategory" required>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <hr class="m-3">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row giodicart">
+                                            <div class="form-group col-12 mb-2">
+                                                <div class="form-group">
+                                                    <label class="mb-0" for="calcolo_prezzo">{% trans 'Calcolo prezzo' %}</label>
+                                                    <i class="ml-1 text-12 i-Information position-absolute" data-toggle="tooltip" data-placement="top" title="" data-original-title="{% trans 'Seleziona il metodo di calcolo del prezzo.'  %}"></i>
+                                                    <select name="calcolo_prezzo" class="calcolo_prezzo form-control" id="i-product_calcolo_prezzo">
+                                                        <option value="0">{% trans "Seleziona un calcolo" %}</option>
+                                                        <option value="1">{% trans "Prezzo al pezzo" %}</option>
+                                                        <option value="2">{% trans "Prezzo al kg, calcolo al kg" %}</option>
+                                                        <option value="3">{% trans "Prezzo al kg, calcolo all'etto" %}</option>
+                                                        <option value="4">{% trans "Prezzo al kg, calcolo in grammi" %}</option>
+                                                        <option value="5">{% trans "Prezzo all'etto, calcolo all'etto" %}</option>
+                                                        <option value="6">{% trans "Prezzo all'etto, calcolo in grammi" %}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-6 mb-2">
+                                                <div class="form-group">
+                                                    <label class="mb-0" for="price_label">{% trans 'Etichetta prezzo' %}</label>
+                                                    <input type="text" id="i-product_price_label" name="price_label" class="price_label textinput form-control" >
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-6 mb-2">
+                                                <div class="form-group">
+                                                    <label class="mb-0" for="grocery_label">{% trans 'Etichetta grocery' %}</label>
+                                                    <input type="text" id="i-product_grocery_label" name="grocery_label" class="grocery_label textinput form-control" required>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-6 mb-2">
+                                                <div class="form-group">
+                                                    <label class="mb-0" for="equivalence">{% trans 'Equivalenza' %}*</label>
+                                                    <i class="ml-1 text-12 i-Information position-absolute" data-toggle="tooltip" data-placement="top" title="" data-original-title="{% trans 'Quantità necessaria di prodotti per raggiungere il prezzo indicato.'  %}"></i>
+                                                    <input type="number" id="i-product_equivalence" name="equivalence" class="equivalence textinput form-control" value="1" required>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-6 mb-2">
+                                                <div class="form-group">
+                                                    <label class="mb-0" for="quantity_step">{% trans 'Step quantità' %}*</label>
+                                                    <i class="ml-1 text-12 i-Information position-absolute" data-toggle="tooltip" data-placement="top" title="" data-original-title="{% trans 'Prodotti compresi per ogni acquisto.'  %}"></i>
+                                                    <input type="number" id="i-product_quantity_step" name="quantity_step" class="quantity_step textinput form-control" value="1" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <hr class="m-3">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="tab-pane fade giodicart" id="nav-other-2" role="tabpanel" aria-labelledby="nav-other-2-tab">
+                                        <div class="form-row">
+                                            <div class="perm-tags form-group col-6">
+                                                <label class="checkbox checkbox-primary ">
+                                                    <input type="checkbox" value="True" name="fidelity_product" id="i-product_fidelity_product"><span>{% trans 'Prodotto fedeltà' %}</span><span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <div class="perm-tags form-group col-6">
+                                                <label class="checkbox checkbox-primary">
+                                                    <input type="checkbox" value="True" name="focus" id="i-product_focus"><span>{% trans 'Focus' %}</span><span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <div class="perm-tags form-group col-6">
+                                                <label class="checkbox checkbox-primary">
+                                                    <input type="checkbox" value="True" name="pam" id="i-product_pam"><span>{% trans 'Pam' %}</span><span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <div class="perm-tags form-group col-6">
+                                                <label class="checkbox checkbox-primary">
+                                                    <input type="checkbox" value="True" name="three_for_two" id="i-product_three_for_two"><span>{% trans '3x2' %}</span><span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <div class="perm-tags form-group col-6">
+                                                <label class="checkbox checkbox-primary">
+                                                    <input type="checkbox" value="True" name="one_and_one_gratis" id="i-product_one_and_one_gratis"><span>{% trans '1+1 gratis' %}</span><span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <div class="perm-tags form-group col-6">
+                                                <label class="checkbox checkbox-primary">
+                                                    <input type="checkbox" value="True" name="underpriced_product" id="i-product_underpriced_product"><span>{% trans 'Sottocosto' %}</span><span class="checkmark"></span>
+                                                </label>
+                                            </div>
+
+                                            <div class="form-group col-6 mb-2">
+                                                <div class="form-group">
+                                                    <label class="mb-0" for="available_pieces">{% trans 'Pezzi disponibili' %}*</label>
+                                                    <i class="ml-1 text-12 i-Information position-absolute" data-toggle="tooltip" data-placement="top" title="" data-original-title="{% trans 'Prodotti disponibili.'  %}"></i>
+                                                    <input type="number" id="i-product_available_pieces" name="available_pieces" class="available_pieces textinput textInput form-control" value="1">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-6 mb-2">
+                                                <div class="form-group">
+                                                    <label class="mb-0" for="descrizione_4">{% trans 'Max pezzi acquistabili' %}*</label>
+                                                    <i class="ml-1 text-12 i-Information position-absolute" data-toggle="tooltip" data-placement="top" title="" data-original-title="{% trans 'Massimo di prodotti acquistabili per volta.'  %}"></i>
+                                                    <input type="number" id="i-product_max_purchasable_pieces" name="max_purchasable_pieces" class="max_purchasable_pieces textinput textInput form-control" value="1">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-12 mb-2">
+                                                <div class="form-group">
+                                                    <label class="mb-0" for="points">{% trans 'Punti' %}</label>
+                                                    <input type="number" id="i-product_points" name="points" class="points textinput textInput form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        {% if request.user.connector_type == "giodicart" %}
+                                        <div class="form-row ">
+                                            <div class="form-group col-6 mb-2">
+                                                <div class="form-group">
+                                                    <label class="mb-0" for="photo">{% trans 'Foto' %}</label>
+                                                    <input type="text" id="i-photo" name="photo" class="photo textinput textInput form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-6 mb-2">
+                                                <div class="form-group">
+                                                    <label class="mb-0" for="thumb">{% trans 'Thumb' %}</label>
+                                                    <input type="text" id="thumb" name="thumb" class="thumb textinput textInput form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-6 mb-2">
+                                                <div class="form-group">
+                                                    <label class="mb-0" for="strike-price">{% trans 'Prezzo di esercizio' %}</label>
+                                                    <input type="number" id="strike-price" name="strike-price" class="strike-price textinput textInput form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-6 mb-2">
+                                                <div class="form-group">
+                                                    <label class="mb-0" for="discount-rate">{% trans 'Tasso di sconto' %}</label>
+                                                    <input type="number" id="discount-rate" name="discount-rate" class="discount-rate textinput textInput form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-6 mb-2">
+                                                <div class="form-group">
+                                                    <label class="mb-0" for="prices">{% trans 'Prezzi' %}</label>
+                                                    <input type="text" id="i-prices" name="prices" class="prices textinput textInput form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-6 ">
+                                                <div class="form-group">
+                                                    <label class="mb-0" for="promo">{% trans 'Promo' %}</label>
+                                                    <input type="checkbox" id="promo" name="promo" class="promo textinput textInput form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-6 mb-2">
+                                                <div class="form-group">
+                                                    <label class="mb-0" for="stock">{% trans 'Stock' %}</label>
+                                                    <input type="text" id="stock" name="stock" class="stock textinput textInput form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-6 mb-2">
+                                                <div class="form-group">
+                                                    <label class="mb-0" for="tdc">{% trans 'TDC' %}</label>
+                                                    <input type="text" id="tdc" name="tdc" class="tdc textinput textInput form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-6 mb-2">
+                                                <div class="form-group">
+                                                    <label class="mb-0" for="from">{% trans 'From' %}</label>
+                                                    <input type="text" id="from" name="from" class="from textinput textInput form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                    {% if request.user.connector_type == "giodicart" %}
+                                    <div class="tab-pane fade giodicart" id="nav-json" role="tabpanel" aria-labelledby="nav-json-tab">
+                                        <div class="d-none" id="json-giodicart-hidden" style="background-color:rgb(27, 27, 27);color:white">
+                                        </div>
+                                        <div class="form-row json-giodicart" id="json-giodicart" style="background-color:rgb(27, 27, 27);color:white">
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                <input type="reset" id="reset-product-form" class="d-none" value="reset"/>
+                                </div>
+                            </fieldset>
+                        </form>
+
+                        <div class="text-center">
+                            <div class="text-center mx-auto mb-3 crop-preview-wrapper">
+                            <button type="button" class="mt-2 btn btn-primary" onclick="clear_product_image();editInteractiveFlyer.saveProductTriggerEvent(0);">{% trans 'Salva' %}</button>
+                            <button type="button" class="mt-2 btn btn-primary" onclick="editInteractiveFlyer.saveProductTriggerEvent(1);">{% trans 'Salva e Continua' %}</button>
+                            <button type="button" class="mt-2 btn btn-secondary" onclick="clear_product_image();editInteractiveFlyer.undoInteractivity();">{% trans 'Annulla' %}</button>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+                <div id="add-video-card" class="card mt-0 mb-1" style="display:none;">
+                    <div class="card-body">
+                        <div class="row">
+                            <h4 class="col-11">{% trans "Aggiungi video" %}</h4>
+                            <a class="d-inline ml-0 col-1 align-self-center" title="Vai all'articolo" href=" https://supportinterattivo.zendesk.com/hc/it/articles/4407818166289-Come-posso-inserire-un-video-interattivo-sulla-mia-pubblicazione-" style="color:#47404f" target="_blank">
+                                <i _ngcontent-fpv-c8="" class="text-30 i-Speach-Bubble-Asking"></i>
+                            </a>
+                        </div>
+                        
+                        <form method="POST" action="" id="interaction-video-form">
+
+                            <input type="text" id="i-interaction-video_id" name="id" class="id textinput textInput form-control d-none">
+
+                            <div class="form-row {% if request.GET.debug != 'true' %}d-none{% endif %}">
+                                <div class="form-group col-12 col-lg-6 mb-0">
+                                    <div class="form-group">
+                                        <label for="blueprint_top">{% trans 'blueprint top' %}</label>
+                                        <input type="text" id="i-interaction-video_blueprint_top" name="blueprint_top" class="blueprint_top textinput textInput form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group col-12 col-lg-6 mb-0">
+                                    <div class="form-group">
+                                        <label for="blueprint_left">{% trans 'blueprint left' %}</label>
+                                        <input type="text" id="i-interaction-video_blueprint_left" name="blueprint_left" class="blueprint_left textinput textInput form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group col-12 col-lg-6 mb-0">
+                                    <div class="form-group">
+                                        <label for="blueprint_width">{% trans 'blueprint width' %}</label>
+                                        <input type="text" id="i-interaction-video_blueprint_width" name="blueprint_width" class="blueprint_width textinput textInput form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group col-12 col-lg-6 mb-0">
+                                    <div class="form-group">
+                                        <label for="blueprint_width">{% trans 'blueprint height' %}</label>
+                                        <input type="text" id="i-interaction-video_blueprint_height" name="blueprint_height" class="blueprint_height textinput textInput form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="i-interaction-video-edit-preview" class="mt-1 d-none">
+                                <h5>{% trans "Video attuale" %}</h5>
+                                <div></div>
+                            </div>
+                                <br>
+                            <div class="form-group" id="edit-video">
+                                <label class="checkbox radio-secondary ">
+                                    <input type="checkbox" name="edit-video" onclick="editInteractiveFlyer.videoRadioClick(this);" value="edit-video" /><span>{% trans "Modifica" %}</span><span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="d-none" id="radio-add-video">
+                                <label class="radio radio-secondary">
+                                    <input type="radio" name="video_type" onclick="editInteractiveFlyer.videoRadioClick(this);" value="video_file" /><span>{% trans "Carica video" %}</span><span class="checkmark"></span>
+                                </label>
+                                <label class="radio radio-secondary">
+                                    <input type="radio" name="video_type" onclick="editInteractiveFlyer.videoRadioClick(this);" value="youtube" /><span>{% trans "Inserisci link YouTube" %}</span><span class="checkmark"></span>
+                                </label>
+
+                                <div id="interaction-video_video_type_vf" class="d-none">
+                                    <div class="form-row">
+                                        <input type="file"
+                                            accept="video/*"
+                                            class="my-custom-file-input"
+                                            data-type="video" data-id="i-interaction-video_video_file"
+                                            data-target="#interaction-video_preview"
+                                            id="i-interaction-video_video_file"
+                                            name="i-interaction-video_video_file">
+                                    </div>
+
+                                    <div class="form-group row" id="interaction-video_preview"></div>
+                                </div>
+                                <div id="interaction-video_video_type_yt" class="d-none">
+                                    <div class="form-row">
+                                        <label for="i-interaction-video_link" class="col-12 col-form-label">{% trans 'Link' %}</label>
+                                        <input type="text" class="form-control youtube-link-field" data-target="#interaction-video_yt_preview" id="i-interaction-video_link" name="link" value="">
+                                    </div>
+
+                                    <div class="form-row d-none mt-2" id="interaction-video_yt_preview">
+                                        <iframe class="w-100"
+                                        src="" frameborder="0"
+                                        allowfullscreen></iframe>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <h5>{% trans "Grafica" %}</h5>
+
+                            <label class="radio radio-secondary">
+                                <input type="radio" name="open_modal" value="True" onclick="editInteractiveFlyer.videoDetailRadioClick(this);" /><span>{% trans "Apri tramite interattività" %}</span><span class="checkmark"></span>
+                            </label>
+                            <label class="radio radio-secondary">
+                                <input type="radio" name="open_modal" value="False" onclick="editInteractiveFlyer.videoDetailRadioClick(this);" /><span>{% trans "Visualizza sulla pubblicazione" %}</span><span class="checkmark"></span>
+                            </label>
+
+                            <div id="interaction-video-details" class="form-row d-none">
+                                <div class="form-group col-12">
+                                    <label class="checkbox checkbox-primary">
+                                        <input type="checkbox" value="True" name="show_icon" id="i-interaction-video_show_icon"><span>{% trans "Mostra l'icona interattività" %}</span><span class="checkmark"></span>
+                                    </label>
+                                    <label class="checkbox checkbox-primary">
+                                        <input type="checkbox" id="i-interaction-video_show_tooltip"><span>{% trans "Mostra informazione al passaggio del mouse" %}</span><span class="checkmark"></span>
+                                    </label>
+                                </div>
+
+                                <div id="tooltip-interaction-video" class="form-group col-12 d-none">
+                                    <div class="form-group">
+                                        <label for="tooltip">{% trans 'tooltip' %}</label>
+                                        <input type="text" id="i-interaction-video_tooltip" name="tooltip" class="textinput textInput form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+
+                        <div>
+                            <button type="button" class="mt-2 btn btn-primary" onclick="editInteractiveFlyer.saveVideoInteractivity();">{% trans 'Salva' %}</button>
+                            <button type="button" class="mt-2 btn btn-secondary" onclick="editInteractiveFlyer.undoInteractivity('video');">{% trans 'Annulla' %}</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="index-card" class="card mt-0 mb-1" style="display:none;">
+                    <div class="card-body">
+                        <h4 class="d-inline">{% trans "Indice" %}</h4>
+                        <div class="d-inline float-right">
+                            <button type="button" class="btn btn-danger" onclick="editInteractiveFlyer.deleteFlyerIndex();">{% trans 'Elimina indice' %}</button>
+                        </div>
+
+                        <div class="mt-5 table-responsive">
+                            <table class="w-100 table d-none" id="index-links-table">
+                                <thead>
+                                    <th>{% trans "ID" %}</th>
+                                    <th>{% trans "Tipo" %}</th>
+                                    <th>{% trans "Titolo" %}</th>
+                                    <th>{% trans "Valore" %}</th>
+                                    <th>{% trans "Colore" %}</th>
+                                    <th></th>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="add-external-link-index-card" class="card mt-0 mb-1" style="display:none;">
+                    <div class="card-body">
+                        <h4>{% trans "Aggiungi link esterno" %}</h4>
+
+                        <form method="POST" action="" id="i-external-link-index-form" enctype="multipart/form-data">
+
+                            <input type="text" id="i-external-link-index_id" name="id" class="id textinput textInput form-control d-none">
+
+                            <div class="form-row {% if request.GET.debug != 'true' %}d-none{% endif %}">
+                                <div class="form-group col-12 col-lg-6 mb-0">
+                                    <div class="form-group">
+                                        <label for="blueprint_top">{% trans 'blueprint top' %}</label>
+                                        <input type="text" id="i-external-link-index_blueprint_top" name="blueprint_top" class="blueprint_top textinput textInput form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group col-12 col-lg-6 mb-0">
+                                    <div class="form-group">
+                                        <label for="blueprint_left">{% trans 'blueprint left' %}</label>
+                                        <input type="text" id="i-external-link-index_blueprint_left" name="blueprint_left" class="blueprint_left textinput textInput form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group col-12 col-lg-6 mb-0">
+                                    <div class="form-group">
+                                        <label for="blueprint_width">{% trans 'blueprint width' %}</label>
+                                        <input type="text" id="i-external-link-index_blueprint_width" name="blueprint_width" class="blueprint_width textinput textInput form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group col-12 col-lg-6 mb-0">
+                                    <div class="form-group">
+                                        <label for="blueprint_width">{% trans 'blueprint height' %}</label>
+                                        <input type="text" id="i-external-link-index_blueprint_height" name="blueprint_height" class="blueprint_height textinput textInput form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-12 mb-2">
+                                <div class="form-group">
+                                    <label for="title">{% trans 'Titolo' %}</label>
+                                    <input type="text" id="i-external-link-index_title" name="title" class="title textinput textInput form-control">
+                                    <br>
+                                    <label for="url">{% trans 'url' %}</label>
+                                    <input type="text" id="i-external-link-index_url" name="url" class="url textinput textInput form-control">
+                                    <br>
+                                    <label class=" badil-color-gray" for="color">{% trans "Colore" %}</label>
+                                    <div class="input-group">
+                                        <input type="text"  name="color" value="" id="i-external-link-div-index_color" class="form-control textinput textInput  zindex-one color-picker-next-child">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text textinput textInput   zindex-one color-picker-child color-picker-previous " value="">
+                                                <div class='badil-square' id="i-external-link-style-index_color" style="background-color:"></div>
+                                            </div>
+                                        </div>
+                                    </div><br>
+                                </div>
+                            </div>
+                            <div class="text-center mx-auto mb-3 crop-preview-wrapper">
+                                <div class="crop-preview text-center mx-auto my-2"></div>
+                            </div>
+                            <button type="button" class="mt-2 btn btn-primary" onclick="editInteractiveFlyer.saveExternalLinkIndex();">{% trans 'Salva' %}</button>
+                            <button type="button" class="mt-2 btn btn-secondary" onclick="editInteractiveFlyer.undoInteractivity('external_link_index');">{% trans 'Annulla' %}</button>
+
+                        </form>
+                    </div>
+                </div>
+
+                <div id="add-internal-link-index-card" class="card mt-0 mb-1" style="display:none;">
+                    <div class="card-body">
+                        <h4>{% trans "Aggiungi link interno" %}</h4>
+
+                        <form method="POST" action="" id="i-internal-link-index-form" enctype="multipart/form-data">
+
+                            <input type="text" id="i-internal-link-index_id" name="id" class="id textinput textInput form-control d-none">
+
+                            <div class="form-row {% if request.GET.debug != 'true' %}d-none{% endif %}">
+                                <div class="form-group col-12 col-lg-6 mb-0">
+                                    <div class="form-group">
+                                        <label for="blueprint_top">{% trans 'blueprint top' %}</label>
+                                        <input type="text" id="i-internal-link-index_blueprint_top" name="blueprint_top" class="blueprint_top textinput textInput form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group col-12 col-lg-6 mb-0">
+                                    <div class="form-group">
+                                        <label for="blueprint_left">{% trans 'blueprint left' %}</label>
+                                        <input type="text" id="i-internal-link-index_blueprint_left" name="blueprint_left" class="blueprint_left textinput textInput form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group col-12 col-lg-6 mb-0">
+                                    <div class="form-group">
+                                        <label for="blueprint_width">{% trans 'blueprint width' %}</label>
+                                        <input type="text" id="i-internal-link-index_blueprint_width" name="blueprint_width" class="blueprint_width textinput textInput form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group col-12 col-lg-6 mb-0">
+                                    <div class="form-group">
+                                        <label for="blueprint_width">{% trans 'blueprint height' %}</label>
+                                        <input type="text" id="i-internal-link-index_blueprint_height" name="blueprint_height" class="blueprint_height textinput textInput form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-12 mb-2">
+                                <div class="form-group">
+                                    <label for="title">{% trans 'Titolo' %}</label>
+                                    <input type="text" id="i-internal-link-index_title" name="title" class="title textinput textInput form-control">
+                                    <br>
+                                    <label for="page">{% trans 'page' %}</label>
+                                    <select name="page" class="page form-control" id="i-internal-link-index_page">
+                                    </select>
+                                    <br>
+                                    <label class=" badil-color-gray" for="color">{% trans "Colore" %}</label>
+                                    <div class="input-group">
+                                        <input type="text"  name="color" value="" id="i-internal-link-div-index_color" class="form-control textinput textInput   zindex-one color-picker-next-child">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text textinput textInput  zindex-one color-picker-child color-picker-previous " value="">
+                                                <div class='badil-square' id="i-internal-link-style-index_color" ></div>
+                                            </div>
+                                        </div>
+                                    </div><br>
+                                </div>
+                            </div>
+
+                            <div class="text-center mx-auto mb-3 crop-preview-wrapper">
+                                <div class="crop-preview text-center mx-auto my-2"></div>
+                            </div>
+
+                            <button type="button" class="mt-2 btn btn-primary" onclick="editInteractiveFlyer.saveInternalLinkIndex();">{% trans 'Salva' %}</button>
+                            <button type="button" class="mt-2 btn btn-secondary" onclick="editInteractiveFlyer.undoInteractivity('internal_link_index');">{% trans 'Annulla' %}</button>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- endregion -->
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        
+
+        $('#interactivity-product').on('click', function(){
+            setTimeout(function(){
+                check_unit_of_measure();
+            }, 2000)
+        })
+
+        $('#basic-addon2').on('change',function(){
+            price_for_kg()
+            check_unit_of_measure()
+        })
+
+        $('input[name="edit-video"]').on('change', function(){
+            $('#radio-add-video').removeClass('d-block');
+            $('#radio-add-video').removeClass('d-none');
+
+            if($('input[name="edit-video"]').is(':checked')){
+                $('#radio-add-video').addClass('d-block')
+            }else{
+                $('#radio-add-video input').prop('checked',false)
+                $('#radio-add-video').addClass('d-none');
+                $('#interaction-video_video_type_yt').addClass('d-none');
+                $('#interaction-video_video_type_vf').addClass('d-none');
+            }
+        });
+
+        if($('#flyer-page-dimension').data('orientation') == 'horizontal'){
+            $('#flyer-page-image').removeClass('h-100');
+            $('#flyer-page-image').addClass('w-100');
+            $('#canvas-pages').css('height', 'unset');
+        }
+    });
+
+    let editInteractiveFlyer, giodicartManager;
+    document.addEventListener("DOMContentLoaded", function () {
+        editInteractiveFlyer = new EditInteractiveFlyerClass('{{ flyer.id }}', {{ flyer.pages.all.count }}, {{ flyer.zip_generation_in_progress|yesno:'true,false'}}, {{ request.user.settings.client_id }});
+        if (JSON.parse($("#connector_type").html()) === "giodicart") {
+            giodicartManager = new GiodicartManagerClass('{{ flyer.id }}');
+        }
+    });
+
+    // Check price for kg
+    $('#i-product_offer_price').on('keyup',function(){
+        price_for_kg();
+    });
+    $('#i-product_price_with_iva').on('keyup',function(){
+        price_for_kg()
+    });
+    $('#i-product_grammage').on('keyup',function(){
+        price_for_kg()
+    });
+
+    function open_detail(id,type) {
+        $('.table-active').removeClass('table-active');
+        $( 'button[attr-' + type +'-id='+ id +']' ).parent().parent().addClass('table-active');
+    }
+
+    function price_for_kg() {
+        var multiple= 1000 / $('#i-product_grammage').val();
+        if($('#i-product_offer_price').val()){
+            var price_for_kg = $('#i-product_offer_price').val() * multiple;
+        }else{
+            var price_for_kg = $('#i-product_price_with_iva').val() * multiple;
+        }
+        if(Math.round(price_for_kg * 100) / 100 == Infinity){
+            $('#i-product_price_for_kg').val('')
+        }else{
+            $('#i-product_price_for_kg').val(Math.round(price_for_kg * 100) / 100)
+        }
+    }
+
+    function clear_product_image() {
+        $('#new_product_image_preview').html('');
+        $('#new_product_image').val('');
+        $(`label[for='new_product_image']`).html('Scegli file');
+    }
+
+   function check_unit_of_measure() {
+    $('#i-product_price_for_kg').attr('disabled', false);
+        if($('#basic-addon2').val() == 'ml'){
+            $('#price_for').html('€/l')
+        }else if($('#basic-addon2').val() == 'gr'){
+            $('#price_for').html('€/kg')
+        }else{
+            $('#price_for').html('');
+            $('#i-product_price_for_kg').val(0);
+            $('#i-product_price_for_kg').attr('disabled', true);
+        }
+   }
+   function deleteElement(element,tipo) {
+        Swal.fire({
+            title: `${gettext('Sei sicuro di voler eliminare questo '+tipo+'?')}`,
+            showDenyButton: true,
+            showCancelButton: false,
+            denyButtonText: `${gettext('Annulla')}`,
+            confirmButtonText: `${gettext('Si')}`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                if(tipo == 'link indice'){
+                    editInteractiveFlyer.deleteIndexLink(element)
+                }else{
+                    editInteractiveFlyer.deleteProductFromPage(element);
+                }
+                
+            }
+        });
+    }
+
+</script>
+<script src="{% static 'builder/new/my_custom_file_input.js' %}" type="text/javascript"></script>
+<script src="{% static 'builder/new/youtube_preview.js' %}" type="text/javascript"></script>
+<script src="{% static 'jsonViewer/jquery.beautify-json.js' %}"></script>
+{% endblock %}
+
+{% block modals %}
+    {% include "builder/modals/edit_interactive_flyer/_add_index_modal.html" %}
+    {% include "builder/modals/edit_interactive_flyer/_change_page_image_modal.html" %}
+    {% include "builder/modals/edit_interactive_flyer/_add_page_modal.html" %}
+    {% include "builder/modals/edit_interactive_flyer/_project_items_modal.html" %}
+    {% include "builder/modals/edit_interactive_flyer/_polotno_integration_modal.html" %}
+    {% include "builder/modals/edit_interactive_flyer/_change_page_modal.html" %}
+    
+    {% include "builder/modals/edit_interactive_flyer/_product_images_modal.html" %}
+
+    {% include "builder/modals/edit_interactive_flyer/_world_interactivity_modal.html" %}
+    {% include "builder/modals/edit_interactive_flyer/_play_interactivity_modal.html" %}
+    {% include "builder/modals/edit_interactive_flyer/_info_interactivity_modal.html" %}
+    {% include "builder/modals/edit_interactive_flyer/_hat_chef_interactivity_modal.html" %}
+    {% include "builder/modals/edit_interactive_flyer/_specs_interactivity_modal.html" %}
+
+    {% if request.user.connector_type == 'giodicart' %}
+        {% include "builder/modals/edit_interactive_flyer/_giodicart_search_products_modal.html" %}
+    {% endif %}
+{% endblock %}
+
+{% block custom_css %}
+    <style>
+         .main-content-wrap {
+             padding: 0 !important;
+         }
+    </style>
+{% endblock %}

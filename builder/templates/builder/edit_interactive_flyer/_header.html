@@ -1,0 +1,46 @@
+{% load i18n %}
+
+<div class="container-fluid h-100">
+
+    <div class="row h-100 align-items-center">
+        {% if not flyer.has_index %}
+        <div class="col-auto">
+            <button type="button" class="btn btn-secondary rounded" onclick="App.interactive_flyer.index.open_create_modal()">
+                <i class="material-icons">list_alt</i>
+                {% trans 'Aggiungi indice' %}
+            </button>
+        </div>
+        {% endif %}
+        <div class="col-auto">
+            <button type="button" class="btn btn-secondary rounded" onclick="$('#add-page-modal').modal('show')">
+                <i class="material-icons">insert_drive_file</i>
+                {% trans 'Aggiungi pagina' %}
+            </button>
+        </div>
+        <div class="col-auto">
+            <div class="container-fluid h-100">
+              <div class="row align-items-center h-100">        
+                <div class="col-auto">
+                  <a class="nav-link l1 dark" href="{% url 'builder:interactive_flyer_settings' interactive_flyer_id=flyer.id %}">
+                    <i class="material-icons">remove_red_eye</i>
+                    {% trans 'Anteprima' %}
+                  </a>
+                </div>        
+              </div>
+            </div>
+        </div>
+        <div class="col-auto">
+            <div class="container-fluid h-100">
+              <div class="row align-items-center h-100">        
+                <div class="col-auto">
+                  <a class="nav-link l1 dark" href="{% url 'builder:interactive_flyer_settings' interactive_flyer_id=flyer.id %}">
+                    <i class="material-icons">build</i>
+                    {% trans 'Impostazioni' %}
+                  </a>
+                </div>        
+              </div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,261 @@
+{% extends "builder/new/base.html" %}
+{% load static %}
+{% load basename %}
+{% load i18n %}
+
+{% block style %}
+    {{ request.user.pk|json_script:"seller_id" }}
+{% endblock %}
+
+{% block content %}
+    <div class="col-lg-9 col-12 mx-auto">
+        <div class="card mt-2 mb-4">
+            <div class="card-body">
+
+                <form id="create-interactive-flyer-form" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="form-row  mb-3">
+                        <div class="col-12 col-md-12 col-lg-6 col-sm-12 mb-0">
+                            <label class="font-weight-bold badil-color-gray" for="name">{% trans 'Nome pubblicazione' %}</label>
+                            <input type="text" id="name" name="name" class="textinput textInput form-control badil-rounded badil-color-gray badil-shadow" placeholder="{% trans 'Volantino Interattivo' %}">
+                        </div>
+                        {% if request.user.connector_type == "internal" or request.user.connector_type == "giodicart" %}
+                            <div class="col-12 col-md-12 col-lg-6 col-sm-12 mb-0" id="project-container">
+                                <label class="font-weight-bold badil-color-gray" for="projects-select">{% trans 'Seleziona campagna' %}</label>
+                                <select class="form-control badil-rounded badil-color-gray badil-shadow" id="projects-select" name="projects"> <!-- id="project-select" TODO imposta il select2 -->
+                                    <option value="">{% trans "Seleziona un progetto" %}</option>
+                                    {% for campaign in projects %}
+                                        <option value="{{ campaign.id }}">{{ campaign.nome }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        
+                        {% elif request.user.connector_type == "AEB" %}
+                            <div class="form-group col-12 col-md-12 col-lg-6 col-sm-12 mb-0">
+                                <div class="form-group">
+                                    <label for="seller-select">{% trans 'Cliente' %}</label>
+                                    <select class="form-control  badil-rounded badil-color-gray badil-shadow" name="seller" id="seller-select">
+                                        <option value="">Scegli cliente</option>
+                                        {% for seller in sellers %}
+                                            <option value="{{ seller.id }}">{{ seller.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        {% endif %}
+                        <!-- <div class="col-12 col-md-12 col-lg-3 col-sm-12 ">
+                            <label class="">{% trans "Nuovo" %}</label>
+                            <div >
+                                <a class="nav-link" href="#">
+                                    <button type="button" class="nav-link polotno-create btn btn-volantino btn-violet my-1 my-md-0" data-type="Volantino A4">{% trans "Crea" %} {{ url }}</button>
+                                </a>
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="form-row">
+                       
+<!--                        <div class="col-12 col-md-12 col-lg-6 col-sm-12 mb-0" id="affiliate-container">-->
+<!--                            <label class="font-weight-bold badil-color-gray" for="affiliate-select">{% trans 'Affiliato' %}</label>-->
+<!--                            <select class="form-control badil-rounded badil-color-gray badil-shadow" id="affiliate-select" name="affiliate-select">-->
+<!--                            </select>-->
+<!--                        </div>-->
+
+                        <div class="col-12 col-md-12 col-lg-6 col-sm-12 mb-1" id="publication-type-container">
+                            <label class="font-weight-bold badil-color-gray" for="publication-type-select">{% trans 'Tipo pubblicazione' %}</label>
+                            <select class="form-control badil-rounded badil-color-gray badil-shadow" id="publication-type-select" name="publication-type">
+                                <option value="leaflet" selected>{% trans "Volantino" %}</option>
+                                <option value="catalog">{% trans "Catalogo" %}</option>
+                            </select>
+                        </div>
+                        {% if request.user.connector_type == "AEB" %}
+                        <!-- <div class="form-group col-md-6 col-sm-12 mb-0" id="affiliate-container">
+                            <div class="form-group">
+                                <label for="affiliate-select">{% trans 'Affiliato' %}</label>
+                                <select class="form-control badil-rounded badil-color-gray badil-shadow" name="affiliate" id="affiliate-select">
+                                    <option value="">Seleziona un affiliato</option>
+                                </select>
+                            </div>
+                        </div> -->
+
+                        <div class="form-group col-md-6 col-sm-12 mb-0" id="project-container">
+                            <div class="form-group">
+                                <label class="font-weight-bold badil-color-gray" for="project-select">{% trans 'Seleziona progetto collegato' %}</label>
+                                <select class="form-control badil-rounded badil-color-gray badil-shadow" name="projects[]" id="project-select" multiple="multiple"></select>
+                            </div>
+                        </div>
+                        {% endif %}
+                        <div class="col-12 col-md-12 col-lg-6 col-sm-12 mb-0" id="publication-format-container">
+                            <label class="font-weight-bold badil-color-gray" for="publication-format-select">{% trans 'Formato' %}</label>
+                            <select class="form-control badil-rounded badil-color-gray badil-shadow" id="publication-type-format-select" name="publication-type-format">
+                                <option value="13" selected>{% trans "Volantino A4" %}</option>
+                                <option value="14">{% trans "Volantino quadrato" %}</option>
+                            </select>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-6 col-sm-12 mt-3">
+                            <label class="font-weight-bold badil-color-gray d-inline mr-2">{% trans "PDF" %}</label>
+                            <div class="d-inline">
+                                <input type="radio" name="pdf" value="crea" id="crea-pdf" class="d-inline" checked>
+                                <label for="crea-pdf" class="d-inline">Crea</label>
+                                <input type="radio" name="pdf" value="carica" id="carica-pdf" class="d-inline" >
+                                <label for="carica-pdf" class="d-inline">Carica</label>
+                            </div>
+                            
+                            <div class="badil-file-picker d-none" id="pdf-input">
+                                <input type="file" accept="application/pdf" name="flyer_pdf" id="flyer_pdf" onchange="updateField('flyer_pdfPlaceholder', this)">
+                                <span id="flyer_pdfPlaceholder">{% trans "Scegli un file" %}</span>
+                                <label for="flyer_pdf">{% trans "Scegli" %}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="text" hidden id="seller" name="seller" value="{{ request.user.pk }}">
+
+                    <div class="text-right mt-3">
+                        <button type="submit" class="btn btn-primary" id="create-flyer" value="Create">{% trans 'Crea' %}</button>
+                        <a href="{% url 'builder:dashboard' %}" class="btn btn-secondary">{% trans 'Annulla' %}</a>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+        
+    </div>
+
+{% endblock %}
+{% block javascript %}
+<script src="{% static 'builder/new/new_interactive_flyer.js' %}"></script>
+<script>
+    {% if request.user.connector_type != 'giodicart' %}
+     var   max_file_size = {{max_file_size}} 
+     {%else%}
+     var   max_file_size = {{max_file_size_giodicart}} 
+     {%endif%}
+    $(document).ready(function () {
+                
+        $('input[name="pdf"]').on('change',function(){
+            if($(this).val() == 'carica'){
+                $('#pdf-input').removeClass('d-none');
+            }else{
+                $('#pdf-input').addClass('d-none');
+            }
+    })
+    
+        $('#create-flyer').on('click', function(e){
+            
+            e.preventDefault();
+            if($('input[name="pdf"]:checked').val() == 'crea' ){ 
+                
+               if ($('#name').val() != '' && $('#publication-type-select').val() != '' && $('#publication-type-format-select').val() != '' ){
+                $.ajax({
+                    method: "POST",
+                    url: "{% url 'builder:new_interactive_flyer' %}",
+                    data:{
+                            'X-CSRFToken':$('input[name="csrfToken"]').val(),
+                            'pdf': $('input[name="pdf"]:checked').val(),
+                            'publication-type': $('#publication-type-select').val(),
+                            'publication-type-format': $('#publication-type-format-select').val(),
+                            'projects':$('#projects-select').val(),
+                            'seller':$('#seller').val(),
+                            'name':$('#name').val(),
+                            'ajax':true
+                            }
+                        })
+                    .done(function (data) {
+                            if(data.warning){
+                                $('body').append('<div id="noty_layout__topCenter" role="alert" aria-live="polite" class="noty_layout"><div id="noty_bar_c7e8b6fa-5757-442a-a540-596b30d6f196" class="noty_bar noty_type__error noty_theme__bootstrap-v4 noty_has_timeout noty_has_progressbar noty_close_with_button"><div class="noty_body">Limite di pubblicazioni attive raggiunto.<br>Scopri i piani di InPublish!</div><div class="noty_progressbar" style="transition: width 5000ms linear 0s; width: 0%;"></div><div class="noty_close_button">×</div></div></div>')
+                                $('.noty_layout').on('click', function(){
+                                $('.noty_layout').remove()
+                            })
+                            }else{
+                                // var obj=JSON.parse(data);
+                                let polotno = new PolotnoIntegrationClass(data.clientId,data.flyerId)
+                                polotno.createPolotnoImage('new',data.data, '0');
+                            }
+                            // this.createPolotnoImage('new', obj.data);
+                        })
+                        .fail(function (data) {
+                            console.log(data)
+                    })
+               }else{
+                    errorMessage('Inserisci tutti i campi richiesti');
+               }
+            }else{
+                {% if request.user.connector_type != 'giodicart' %}
+                if($('#flyer_pdf').val() != '' &&  $('#name').val() != '' ){
+                    $('#create-interactive-flyer-form').submit()
+                }else if(document.getElementById('flyer_pdf').files.size > max_file_size){
+                    errorMessage("Il file è maggiore di 30 Mb.")                        
+                }else if($('#flyer_pdf').val() == ''){
+                    errorMessage("Carica un pdf.")
+                }else if($('#name').val() == ''){
+                    errorMessage("Inserisci il nome della pubblicazione.")
+                }
+                
+                if($('#flyer_pdf').val() != '' &&  $('#flyer_pdfPlaceholder').text() != 'Scegli un file'){
+                    $('#create-interactive-flyer-form').submit()
+                }else if(document.getElementById('flyer_pdf').files.size > max_file_size){
+                    errorMessage("Il file è maggiore di 30Mb.")                        
+                }else if($('#flyer_pdf').val() == ''){
+                    errorMessage("Carica un pdf.")
+                }else if($('#name').val() == ''){
+                    errorMessage("Inserisci il nome del volantino.")
+                }
+                {% else %}
+                    $('#create-interactive-flyer-form').submit()
+                {% endif %}
+            }
+            
+        })
+    
+        $('#publication-type-select').on('change', function(){
+            if($(this).val() == 'leaflet'){
+                var template=8
+            }else{
+                var template=6
+            }
+            $.ajax({
+                    method: "GET",
+                    url: "https://polotno-api-test.interattivo.net/api/get-format-list/",
+                    data:{
+                            'id_template_type':template,
+                            }
+                })
+            .done(function (data) {
+                      console.log(data.data);
+                      $('#publication-type-format-select').html('');
+                      for (let i = 0; i < data.data.length; i++) {
+                          const element = data.data[i];
+                          $('#publication-type-format-select').append('<option value="'+element.id+'" selected>'+element.name+'</option>')
+                          
+                      }
+            })
+        })
+        
+    });
+    function updateField(id, trigger){
+            var filename = trigger.value.split(/(\\|\/)/g).pop()
+            {% if request.user.connector_type != 'giodicart' %}
+            if(trigger.files[0].size > max_file_size){
+                errorMessage("Il file è maggiore di 30Mb");
+                $('#flyer_pdf').val()
+                flyer_pdfPlaceholder.innerText="Scegli un file"
+            }else{
+                document.getElementById(id).innerText = filename;
+            };
+            {%else%}
+            document.getElementById(id).innerText = filename;
+            {%endif%}
+        }
+    function errorMessage(message=null) {
+        if (!message) {
+            message = `${gettext('Qualcosa è andato storto!')}`;
+        }
+        Swal.fire({
+            icon: 'error',
+            title: `${gettext('Oops...')}`,
+            text: message,
+        });
+    }
+    </script>
+{% endblock %}
+

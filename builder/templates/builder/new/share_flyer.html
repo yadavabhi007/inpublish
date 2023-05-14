@@ -1,0 +1,379 @@
+{% extends "builder/new/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block style %}
+    {{ pages|json_script:"pages" }}
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+        .toggle {
+  --size: 1.125rem;
+  --width: calc(1.125rem * 2);
+  display: inline-grid;
+  align-items: center;
+  width: var(--width);
+  height: var(--size);
+  cursor: pointer;
+}
+
+.toggle::before {
+  content: "";
+  grid-area: 1 / -1;
+  width: var(--width);
+  height: var(--size);
+  transition: all 250ms ease;
+  border-radius: var(--width);
+  background-color: grey;
+}
+
+.toggle:hover::before {
+  box-shadow: 0 0 0 2px #aef;
+}
+
+.toggle::after {
+  content: "";
+  grid-area: 1 / -1;
+  width: calc(var(--size) * 0.8);
+  height: calc(var(--size) * 0.8);
+  transform: translateX(10%);
+  transform-origin: center center;
+  transition: all 250ms ease;
+  border-radius: 100%;
+  background: #fff;
+}
+
+.toggle:checked::before {
+  background-color: #2be;
+}
+
+.toggle:checked::after {
+   transform: translateX(calc(var(--width) - var(--size) * 0.8 - 10%));
+}
+
+.toggle:disabled {
+  pointer-events: none;
+  filter: grayscale(1);
+}
+
+.toggle:disabled::before {
+   background: #2be;
+}
+.card {
+   clear: both;
+
+  }
+    </style>
+{% endblock %}
+{% block content %}
+    <div class="row text-left">
+        
+        <div class="col-sm-12 col-md-4">
+            <div class="card mt-2 mb-4 mb-md-0  pb-4 position-relative">
+                <div class="card-body pl-4 pt-3 pb-5">
+                    {% if flyer.publication_url %}
+                    <div class="row">
+                        <label class="col-12 h5"><strong>{% trans 'URL Pubblicazione' %}</strong></label>
+                            <input class="ml-3 textinput textInput form-control badil-rounded badil-color-gray badil-shadow col-6" type="text" value="{{flyer.publication_url}}" id="url" readonly>
+                            <button class="btn btn-primary ml-1" id="copia-url">Copia</button>
+                    </div>
+                    <hr style="margin-bottom:20px;margin-top:20px">
+    
+                    <label class="col-12 h5 pl-0"><strong>{% trans 'Condividi sui social' %}</strong></label>
+                    <div class="col-12 row">
+                        <div class="col-12 col-sm-6 col-md-6  col-lg-6">
+                            <button class="btn btn-green text-white col-12 mt-2 mt-md-0"  onclick="share('wa','{{flyer.publication_url}}')">
+                                <i class="fab fa-whatsapp"></i>
+                                Whatsapp
+                            </button>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                            <button class="btn btn-fb  text-white col-12 mt-2 mt-md-0" onclick="share('fb','{{flyer.publication_url}}')">
+                                <i class="fab fa-facebook"></i>
+                                Facebook
+                            </button>
+                        </div>
+                        <div class="mt-md-2 col-12 col-sm-6 col-md-6 col-lg-6">
+                            <button class="btn  text-white btn-tw col-12 mt-2 mt-md-0" onclick="share('tw','{{flyer.publication_url}}')">
+                                <i class="fab fa-twitter"></i>
+                                Twitter
+                            </button>
+                        </div>
+                        
+                        <div class="mt-md-2 col-12 col-sm-6 col-md-6 col-lg-6">
+                            <button class="btn  text-white btn-yellow col-12 mt-2 mt-md-0" onclick="share('email','{{flyer.publication_url}}')">
+                                <i class="far fa-envelope"></i>
+                                Mail
+                            </button>
+                        </div>
+                        <div class="mt-md-2 col-12 col-sm-6 col-md-6 col-lg-6">
+                            <button class="btn  text-white btn-yellow col-12 mt-2 mt-md-0" onclick="share('in','{{flyer.publication_url}}')" style="background-color:#0e76a8">
+                                <i class="fab fa-linkedin-in"></i>
+                                LinkedIn
+                            </button>
+                        </div>
+                        <div class="mt-md-2 col-12 col-sm-6 col-md-6 col-lg-6">
+                            <button class="btn  text-white btn-tgram col-12 mt-2 mt-md-0" onclick="share('tgram','{{flyer.publication_url}}')">
+                                <i class="fab fa-telegram-plane"></i>
+                                Telegram
+                            </button>
+                        </div>
+                        
+                    </div>
+                    
+                    <hr style="margin-bottom:20px;margin-top:20px">
+                    <div class="mt-1 col-12 row p-0 ">
+                        <label class="col-12 h5"><strong>{% trans 'Iframe' %}</strong></label>
+                        <div class=" row col-lg-12 col-sm-12">
+                            <label class="col-12">{% trans 'Codice iframe' %}</label>
+                            {% if flyer.publication_url %}
+                            <input class="ml-3 textinput textInput form-control badil-rounded badil-color-gray badil-shadow col-6 col-sm-8 col-md-9 col-lg-7" type="text" id="iframe" value='<iframe src="{{flyer.publication_url}}" title="Volantino" width="720" height="480" allowfullscreen></iframe>' readonly>
+                            <button class="btn btn-primary ml-1" id="copia-iframe">Copia</button>
+                            {% endif %}
+                        </div>
+                        
+                    </div>
+                    <div class="row mt-1">
+                        <div class="col-12 row">
+                            <div class="col-lg-6 mt-2">
+                                <label>{% trans 'Larghezza Responsive' %}</label>
+                                <div>
+                                    <input type="checkbox" id="responsive" class="toggle">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mt-2">
+                                <label>{% trans 'Inizia da Pagina' %}</label>
+                                <div>
+                                    <select name="start-to-page" id="start-to-page" class="form-control text-center" onchange="start_to_page()">
+                                        <option value="0">0</option>
+                                        {% for page in pages %}
+                                            <option value="{{page}}">{{page}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <label>{% trans 'Larghezza' %} (px)</label>
+                                <div>
+                                    <input type="number" id="iframe-width" class="form-control badil-rounded badil-color-gray badil-shadow col-12" max="2000" value="1140">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>{% trans 'Altezza' %} (px)</label>
+                                <div>
+                                    <input type="number" id="iframe-height" class="form-control badil-rounded badil-color-gray badil-shadow col-12" max="2000" value="700">
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                
+                {% else %}
+                    <h1 class="text-center">Volantino non pubblicato</h1>
+                {% endif %}
+                <div class="px-2 position-absolute bottom-0 row col-12 col-md-12 " style="bottom: 10px;right:50%;transform: translateX( 50% );">
+                    <a href="{% url 'builder:edit_interactive_flyer' flyer.pk %}" class="btn btn-primary text-white  mt-2 mt-md-0 col-5" >
+                        VOLANTINO
+                    </a>
+                    <a href="{% url 'builder:dashboard' %}" class="btn btn-secondary text-white mt-2 mt-md-0 col-5 ml-1" >
+                        DASHBOARD
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        {% if flyer.publication_url %}
+        <div id="flyer-preview" class="col-12 col-md-7 ml-md-5 ">
+            <div class="browser-title-bar " >
+                <div class="bullets">
+                    <i class="fas fa-window-minimize" style="position:relative;bottom:4px"></i>
+                    <i class="far fa-window-restore mx-2"></i>
+                    <i class="fas fa-times-circle"></i>
+                    
+                </div>
+            </div>
+            
+            <div style="width:100%;" class="col-12 px-2">
+                <div class=" row">
+                    <div class="col-3">
+                        <div class="fake-item w-0" ></div>
+                        <div class="fake-item w-50"></div>
+                    </div>
+                    <div class="col-6">
+                        <div class="fake-item w-100"></div>
+                        <div class="fake-item "></div>
+                    </div>
+                    
+                </div>
+                <div id="preview" style="width:100%;margin:0 auto" class=" d-flex justify-content-center ">
+                    <iframe class="align-self-center" src="{{flyer.publication_url}}" title="Volantino Interattivo" width="1140" height="700" frameBorder="0">
+                    </iframe>
+                </div>
+                <div class="page-preview-footer col-12 px-2">
+                    
+                    <div class="fake-item-container  col-9 ">
+                        <div class="fake-item" style="width:80%;">
+                        </div>
+                        <div class="fake-item" style="width:100%;">
+                        </div>
+                        <div class="fake-item" style="width:70%;">
+                        </div>
+                    </div>
+                    <div class="fake-item col-3" style="height:100px">
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        {% endif %}
+    </div>
+{% endblock %}
+{% block javascript %}
+    <script type="text/javascript">
+    $(document).ready(function(){
+        var iframe_width=1140;
+        var iframe_height=700;
+
+        change_iframe_dimension(iframe_width,iframe_height)
+        $('#copia-url').on('click',function(){
+            $('#url').select();
+            document.execCommand("copy");
+        });
+        $('#copia-iframe').on('click',function(){
+            $('#iframe').select();
+            document.execCommand("copy");
+        })
+        $('#iframe-width').on('keyup',function(){
+            if(!($('#responsive').is(':checked'))){
+                iframe_height=$('#iframe-height').val()
+                iframe_width=$('#iframe-width').val()
+                if(iframe_width>2000){
+                    iframe_width=2000
+                    $('#iframe-width').val(2000)
+                }
+                change_iframe_dimension(iframe_width,iframe_height)
+            }
+        })
+        $('#iframe-height').on('keyup',function(){
+            iframe_height=$('#iframe-height').val()
+            iframe_width=$('#iframe-width').val()
+            if(iframe_height>2000){
+                iframe_height=2000
+                    $('#iframe-height').val(2000)
+                }
+            change_iframe_dimension(iframe_width,iframe_height)
+        })
+        $('#responsive').on('change',function(){
+            if($('#responsive').is(':checked')){
+                $('#iframe-width').attr('disabled','true')
+                $('#flyer-preview iframe').css('width','100%')
+                $('#flyer-preview iframe').attr('width','100%')
+                iframe_height=$('#iframe-height').val()
+                iframe='<iframe src="{{flyer.publication_url}}" title="Volantino" width="100%" height="'+iframe_height+'" allowfullscreen frameBorder="0"></iframe>'
+                $('#iframe').val(iframe);
+            }else{
+                $('#iframe-width').removeAttr('disabled');
+                iframe_width=$('#iframe-width').val()
+                $('#flyer-preview iframe').css('width',iframe_width)
+                $('#flyer-preview iframe').attr('width',iframe_width)
+                iframe='<iframe src="{{flyer.publication_url}}" title="Volantino" width="'+iframe_width+'" height="'+iframe_height+'" allowfullscreen frameBorder="0"></iframe>'
+                $('#iframe').val(iframe);
+            }
+        })
+    });
+
+    function change_iframe_dimension(iframe_width,iframe_height){
+        var sizes=resize_preview(iframe_width,iframe_height)
+        if($('#responsive').is(':checked')){
+            sizes.width='100%';
+            iframe_width='100%'
+        }
+        iframe='<iframe src="{{flyer.publication_url}}" title="Volantino" width="'+iframe_width+'" height="'+iframe_height+'" allowfullscreen frameBorder="0"></iframe>'
+        $('#iframe').val(iframe);
+        console.log(sizes)
+        $('#preview iframe').animate(
+            {
+            height: sizes.height,
+            width: sizes.width
+        });
+    }
+
+    // Funzione che può essere usata anche per mantenere il ratio delle immagini
+    function resize_preview(iframe_width,iframe_height) {
+        var maxWidth = $('#preview').width(); // Max width for the image
+        var maxHeight = $('#preview').width();    // Max height for the image
+        var ratio = 0;  // Used for aspect ratio
+        var width = iframe_width;    // Current image width
+        var height = iframe_height ;  // Current image height
+        // Check if the current width is larger than the max
+
+        if(width > maxWidth){
+            ratio = maxWidth / width;   // get ratio for scaling image
+            // $(this).css("width", maxWidth); // Set new width
+            // $(this).css("height", height * ratio);  // Scale height based on ratio
+            height = height * ratio;    // Reset height to match scaled image
+            width = maxWidth;    // Reset width to match scaled image
+        }
+       
+        
+        // Check if current height is larger than max
+        if(height > maxHeight){
+            ratio = maxHeight / height; // get ratio for scaling image
+            // $(this).css("height", maxHeight);   // Set new height
+            // $(this).css("width", width * ratio);    // Scale width based on ratio
+            width = width * ratio;    // Reset width to match scaled image
+            height = height * ratio;    // Reset height to match scaled image
+        }
+        
+        return {
+            width,
+            height
+        }
+    }
+
+    function start_to_page(){
+        if($('#responsive').is(':checked')){
+            iframe_width='100%'
+        }else{
+            iframe_width=$('#iframe-width').val()
+        }
+        iframe_height=$('#iframe-height').val()
+        var page= $('#start-to-page').val();
+        $('#flyer-preview iframe').attr('src','{{flyer.publication_url}}/' + page);
+        iframe='<iframe src="{{flyer.publication_url}}/'+ page +'" title="Volantino" width="'+iframe_width+'" height="'+iframe_height+'" allowfullscreen frameBorder="0"></iframe>'
+        $('#iframe').val(iframe);
+    }
+
+    function share(social,url) {
+        switch (social) {
+            case "fb":
+                window.open("https://www.facebook.com/sharer/sharer.php?u=" + url, '_blank',
+                    'width=500,height=500,resizable=0');
+                break;
+            case "in":
+                window.open("https://www.linkedin.com/shareArticle?mini=true&url=" + url, '_blank',
+                    'width=500,height=500,resizable=0');
+                break;
+            case "email":
+                window.open("mailto:?&subject=&body=" + url);
+                break;
+            case "tw":
+                window.open("https://twitter.com/intent/tweet?url=" + url, '_blank',
+                    'width=500,height=500,resizable=0');
+                break;
+            case "wa":
+                window.open("whatsapp://send?text=" + url);
+                break;
+            case "tgram":
+                window.open("https://t.me/share/url?url="+url+"&text=");
+        }
+    }
+
+    </script>
+{% endblock %}

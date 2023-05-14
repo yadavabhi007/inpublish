@@ -1,0 +1,53 @@
+{% load i18n %}
+
+<div id="edit-product-card" class="card mb-3">
+    <div class="card-header bg-secondary text-light">
+        {% trans 'Modifica link' %}
+    </div>
+    <div class="card-body">
+        <form>
+            <div class="form-group row">
+                <label for="edit-index-link-form_page" class="col-sm-6 col-form-label">{% trans 'Pagina' %}</label>
+                <div class="col-sm-6">
+                    <select class="form-control" id="edit-index-link-form_page" name="page">
+                        {% for page in flyer.pages.all %}
+                        <option value="{{page.number}}" {% if page.number == link.page %}selected{% endif %}>{{page.number}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <hr style="border-top: 4px solid #ddd;">
+            <div class="form-row">
+                <div class="form-group col">
+                    <label for="index_link_blueprint_top_edit">{% trans 'Blueprint top' %}</label>
+                    <input type="text" class="form-control" id="index_link_blueprint_top_edit" readonly />
+                </div>
+                <div class="form-group col">
+                    <label for="index_link_blueprint_left_edit">{% trans 'Blueprint left' %}</label>
+                    <input type="text" class="form-control" id="index_link_blueprint_left_edit" readonly />
+                </div>
+                <div class="form-group col">
+                    <label for="index_link_blueprint_width_edit">{% trans 'Blueprint width' %}</label>
+                    <input type="text" class="form-control" id="index_link_blueprint_width_edit" readonly />
+                </div>
+                <div class="form-group col">
+                    <label for="index_link_blueprint_height_edit">{% trans 'Blueprint height' %}</label>
+                    <input type="text" class="form-control" id="index_link_blueprint_height_edit" readonly />
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="card-footer">
+        <button class="btn btn-primary" onclick="App.interactive_flyer.index.update_index_link()">
+            {% trans 'Salva' %}
+        </button>
+        <button class="btn btn-secondary" onclick="App.interactive_flyer.index.cancel_index_link_edit()">
+            {% trans 'Annulla' %}
+        </button>
+    </div>
+</div>
+
+<input type="hidden" id="edit-index-link-blueprint-top" value={{blueprint.top}}>
+<input type="hidden" id="edit-index-link-blueprint-left" value={{blueprint.left}}>
+<input type="hidden" id="edit-index-link-blueprint-width" value={{blueprint.width}}>
+<input type="hidden" id="edit-index-link-blueprint-height" value={{blueprint.height}}>

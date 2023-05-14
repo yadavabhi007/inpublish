@@ -1,0 +1,95 @@
+{% load i18n %}
+{% load static %}
+
+<div id="add-index-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="d-flex justify-content-around w-100">
+                    <div class="mr-2 " id="modal-title">
+                        <h5>       
+                            {% trans 'Indice' %}
+                        </h5>
+                    </div>
+                    <!-- <div class="sizes">
+                        {% trans 'Dimensioni' %}
+                        <br>
+                        {% trans 'Lunghezza' %}: flyer.image_page_width px - {% trans 'Altezza' %}:  flyer.image_page_height px
+                    </div> -->
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="row d-flex justify-content-center p-4">
+                <tag class="nav-link" href="#"><button type="button" id="upload-format" class="btn  btn-volantino btn-violet my-1 my-md-0" onclick="editInteractiveFlyer.openModalUploadIndex()">{% trans "Carica" %}</button></tag>
+                <a class="nav-link" href="#"><button type="button" class="polotno-create btn btn-volantino btn-violet my-1 my-md-0" data-type="4" data-format="{% if settings %}{{settings.format}}{% endif %}">{% trans "Crea" %}</button></a>
+                <a class="nav-link" href="#"><button type="button" class="polotno-choose-edit btn btn-volantino btn-violet my-1 my-md-0" data-type="4" data-format="{% if settings %}{{settings.format}}{% endif %}">{% trans "Scegli/Modifica" %}</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="upload-index-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="d-flex justify-content-around w-100">
+                    <div class="mr-2">
+                        <h5>       
+                            {% trans 'Carica indice' %}
+                        </h5>
+                    </div>
+                    
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+            <div class="pl-4">
+                <!-- <div class="">
+                    {% trans 'Dimensioni' %}
+                    <br>
+                    {% trans 'Lunghezza' %}: flyer.image_page_width px 
+                    <br>
+                    {% trans 'Altezza' %}: flyer.image_page_heightpx
+                </div> -->
+            </div>
+            <form action="{% if flyer %}{% url "builder:interactive_flyer_create_index" interactive_flyer_id=flyer.id %}{% endif %}" enctype="multipart/form-data" method="POST">
+                {% csrf_token %}
+                <div class="container pb-2">
+                    <div class="row">
+                        <div class="pl-4 pt-4 col-8">
+                            <label class="btn btn-volantino btn-yellow">
+                                {% trans "Scegli file" %}
+                                <input type="file" data-target="#index_img" data-type="img" class="my-custom-file-input form-control-file d-none" id="index_image_input" accept="image/*" name="image" onchange="updateField('index_span', this)" required>
+                            </label>
+                            <span id="index_span"></span>
+                            <div id="index_img"></div>
+                        </div>
+                        <div class="col-4 d-flex justify-content-end align-items-end">
+                            <button class="btn btn-volantino btn-red" data-dismiss="modal">{% trans "Annulla" %}</button>
+                            <button class="btn btn-volantino btn-violet" type="submit">{% trans "Carica" %}</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('.index-div .index-div-button').hide()
+    $('.index-div img').on('click', function(){
+        $('.index-div img').css("border", "none");
+        $(this).css("border", "5px solid red");
+        $('.index-div-button').hide()
+        $(this).siblings('.index-div-button').show()
+    });
+
+    function updateField(id, trigger){
+    var filename = trigger.value.split(/(\\|\/)/g).pop()
+    document.getElementById(id).innerText = filename;
+}
+</script>

@@ -1,0 +1,39 @@
+{% load static %}
+{% load i18n %}
+{% load pipeline %}
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% trans 'Login | Gestionale interattivo' %}</title>
+    <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700,800,900" rel="stylesheet">
+    {% stylesheet "login_styles" %}
+</head>
+<div class="auth-layout-wrap" style="background-image: url()">
+    <div style="min-width: 350px;">
+        <div class="card o-hidden">
+            <div class="row">
+                <div class="col-md-12 mx-auto">
+                    <div class="p-4">
+                        <div class=" text-center mb-4"><img class="mx-4 mt-2" style="width:300px" src="{% static "icons/logo.png" %}" alt=""></div>
+                        <h1 class="mb-3 text-18">{% trans "Accedi" %}</h1>
+                        <form method="post" action="{% url 'builder:login' %}">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="email">{% trans "Nome" %}</label>
+                                <input class="form-control form-control-rounded" id="email" name="username" type="text">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">{% trans "Password" %}</label>
+                                <input class="form-control form-control-rounded" id="password" name="password" type="password">
+                            </div>
+                            <input type="hidden" name="next" value="{{ next }}">
+                            <button type="submit" class="btn btn-rounded btn-primary btn-block mt-4">{% trans "Accedi" %}</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

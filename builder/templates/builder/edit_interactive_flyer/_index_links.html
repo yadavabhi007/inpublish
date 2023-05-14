@@ -1,0 +1,36 @@
+{% load i18n %}
+
+{# TODO cancella #}
+
+<div class="card mb3" id="index-links-card">
+    <div class="card-header bg-secondary text-light">
+        {% trans 'Indice' %}: links
+    </div>
+    <div class="card-body">
+        {% if flyer.index.links.count > 0 %}
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">{% trans 'Pagina' %}</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for link in flyer.index.links.all|dictsort:"page" %}
+                <tr>
+                    <td>{{link.page}}</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm mb-1"
+                            onclick="App.interactive_flyer.index.edit_index_link({{link.id}})">Modifica</button>
+                        <button class="btn btn-danger btn-sm mb-1"
+                            onclick="App.interactive_flyer.index.delete_index_link({{link.id}})">Elimina</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="text-center">{% trans 'Nessun link' %}</div>
+        {% endif %}
+    </div>
+</div>

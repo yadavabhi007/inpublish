@@ -1,0 +1,78 @@
+{% load i18n %}
+
+<div class="card mb3" id="products-card">
+    <div class="card-header bg-secondary text-light">
+        {% trans 'Prodotti interattivi' %}
+    </div>
+    <div class="card-body">
+        {% if flyer.products.count > 0 %}
+        <div class="table-responsive">
+            <table class="table table-hover" id="flyer-products-table">
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">{% trans 'Descrizione' %}</th>
+                        <th scope="col">{% trans 'Interattività' %}</th>
+                        <th scope="col">{% trans 'Categoria' %}/<br>{% trans 'Sottocategoria' %}</th>
+                        <th scope="col">{% trans 'Prezzo' %}</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in flyer.products.all %}
+                    <tr>
+                        <td>
+                            {% if product.images.count > 0 %}
+                            <img src="{{product.default_image_url}}" style="max-width: 60px; max-height: 60px;">
+                            {% endif %}
+                        </td>
+                        <td style="word-break: break-all;">{{product.description}}</td>
+                        <td>
+                            {% if product.has_link_interactivity %}
+                            <i class="material-icons">
+                                {% trans 'language' %}
+                            </i>
+                            {% endif %}
+                            {% if product.has_video_interactivity %}
+                            <i class="material-icons">
+                                {% trans 'play_arrow' %}
+                            </i>
+                            {% endif %}
+                            {% if product.has_recipe_interactivity %}
+                            <i class="material-icons">
+                                {% trans 'restaurant_menu' %}
+                            </i>
+                            {% endif %}
+                            {% if product.has_info_interactivity %}
+                            <i class="material-icons">
+                                {% trans 'info' %}
+                            </i>
+                            {% endif %}
+                            {% if product.has_specs_interactivity %}
+                            <i class="material-icons">
+                                {% trans 'list_alt' %}
+                            </i>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {{product.category|default:"--"}}<br>{{product.subcategory|default:"--"}}
+                        </td>
+                        <td>
+                            {{product.price_label}}
+                        </td>
+                        <td>
+                            <button class="btn btn-primary btn-sm mb-1"
+                                onclick="App.edit_iflyer_wpag.edit_interactive_product({{product.id}})">{% trans 'Modifica' %}</button>
+                            <button class="btn btn-danger btn-sm mb-1"
+                                onclick="App.edit_iflyer_wpag.delete_interactive_product({{product.id}})">{% trans 'Elimina' %}</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="text-center">{% trans 'Nessun prodotto' %}</div>
+        {% endif %}
+    </div>
+</div>

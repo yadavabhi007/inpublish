@@ -1,0 +1,55 @@
+version: "3"
+
+services:
+
+    generatore_interattivo_django:
+        container_name: generatore_interattivo_django
+        hostname: generatore_interattivo_django
+        build: .
+        depends_on:
+            - generatore_db
+            - aeb_db
+        volumes:
+            - ../:/app
+        command: "/bin/bash /app/docker/dev/entrypoint.sh"
+        deploy:
+            resources:
+                limits:
+                    cpus: '0.90'
+                    memory: 10240M  # 10gb
+                reservations:
+                    cpus: '0.10'
+                    memory: 100M
+        ports:
+            - "80:80"
+        links:
+            - "generatore_db"
+            - "aeb_db"
+        env_file: "dev/envs/generatore_interattivo_django.env"
+
+    generatore_db:
+        container_name: generatore_db
+        env_file: "dev/envs/generatore_db.env"
+        image: mysql:5.7
+        volumes:
+            - ./dev/mysql-data:/var/lib/mysql
+
+    aeb_db:
+        container_name: aeb_db
+        env_file: "dev/envs/aeb_db.env"
+        image: mysql:5.7
+        volumes:
+            - ./dev/mysql-aeb-data:/var/lib/mysql
+            - ./dev/dump_aeb.sql:/docker-entrypoint-initdb.d/dump_aeb.sql
+
+    inpublish_phpmyadmin:
+        container_name: inpublish_phpmyadmin
+        image: phpmyadmin/phpmyadmin:5.0.1
+        ports:
+            - "5000:80"
+        environment:
+            PMA_HOST: generatore_db
+            PMA_USER: root
+            UPLOAD_LIMIT: 100M
+            UPLOAD_LIMIT_INI_FILE: 100M
+            PMA_PASSWORD: 'xoxhenSy9V5oduxiCJmMFiQueRf5'

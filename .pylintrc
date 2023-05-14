@@ -1,0 +1,21 @@
+[MASTER]
+ignore=
+    tests.py,
+    urls.py,
+    migrations,
+    settings.py,
+    local_settings.py,
+    docker_settings.py,
+    manage.py,
+    asgi.py,
+    wsgi.py,
+    lint.py,
+    old.py
+disable=
+    C0114,  # missing-module-docstring
+    C0115,  # missing-class-docstring
+    C0116   # missing-function-docstring
+[TYPECHECK]
+generated-members=REQUEST,acl_users,aq_parent,objects,_meta,id,[a-zA-Z]+_set
+[BASIC]
+good-names=generatore-interattivo  #names to be considered ok

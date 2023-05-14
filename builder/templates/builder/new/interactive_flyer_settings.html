@@ -1,0 +1,1020 @@
+{% extends "builder/new/base.html" %}
+{% load static %}
+{% load basename %}
+{% load i18n %}
+
+{% block content %}
+    <div class="col-lg-9 col-12 mx-auto">
+        <div class="card mt-2 mb-4">
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data" action="{% url 'builder:interactive_flyer_settings' interactive_flyer_id=flyer.id %}">
+                    {% csrf_token %}
+                    <nav>
+                        <div class="nav nav-tabs font-weight-bold" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link active" id="nav-general-tab" href="#nav-general" data-toggle="tab" role="tab" aria-controls="nav-general" aria-selected="true" >{% trans "Note generali" %}</a>
+                            <a class="nav-item nav-link"        id="nav-config-tab"  href="#nav-config"  data-toggle="tab" role="tab" aria-controls="nav-config"  aria-selected="false">{% trans "Configurazione & Grafica" %}</a>
+                            <a class="nav-item nav-link {{ request.user.grocery_list_create|no_permission_class }}" {{ request.user.grocery_list_create|no_permission_tags|safe }} id="{{ request.user.grocery_list_create|no_permission_name:"nav-grocery-tab" }}" href="#nav-grocery" data-toggle="tab" role="tab" aria-controls="nav-grocery" aria-selected="false">{% trans "Lista spesa" %}</a>
+                            <a class="nav-item nav-link"        id="nav-seo-tab"     href="#nav-seo"     data-toggle="tab" role="tab" aria-controls="nav-seo"     aria-selected="false">{% trans "SEO & Condivisione" %}</a>
+                        </div>
+                    </nav>
+
+                    <div class="tab-content ul-tab__content" id="nav-tabContent">
+
+<!--TAB 1 Note generali-->
+                        <div class="tab-pane fade show active" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab">
+                            <input type="text" value="{{from_flyer}}" name="from_flyer" hidden>
+                            <div class="form-row mb-1">
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 mb-3">
+                                    <label class="font-weight-bold badil-color-gray mb-0" for="name">{% trans 'Nome pubblicazione' %}</label>
+                                    <i class="ml-1 text-12 i-Information position-absolute" data-toggle="tooltip" data-placement="top" title="" data-original-title="{% trans 'Non viene visualizzato nell\'anteprima cliente' %}"></i>
+                                    <input type="hidden" id="previous" name="previous" value="{% if request.GET.previous %}{{request.GET.previous}}{%else%}{{flyer.pk}}{%endif%}" required>
+                                    <input type="text" id="name" name="name" value="{{ flyer.name }}" class="textinput textInput form-control badil-rounded badil-color-gray badil-shadow" placeholder="{% trans 'Volantino Interattivo' %}">
+                                </div>
+
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 mb-3" id="project-container">
+                                    <label class="font-weight-bold badil-color-gray mb-0" for="projects-select">{% trans 'Progetto collegato' %}</label>
+                                    <i class="ml-1 text-12 i-Information position-absolute" data-toggle="tooltip" data-placement="top" title="" data-original-title="{% trans 'Rende disponibili al volantino tutti i prodotti del progetto selezionato'  %}"></i>
+                                    
+                                    <select class="form-control badil-rounded badil-color-gray badil-shadow " id="projects-select" name="projects"> <!-- id="project-select" TODO imposta il select2 -->
+                                        <option value="">{% trans "Seleziona un progetto" %}</option>
+                                        {% for campaign in projects %}
+                                            <option value="{{ campaign.id }}" {% if campaign.id in flyer_projects %}selected{% endif %}>{{ campaign.nome }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-row mb-1">
+<!--                                <div class="col-12 col-md-12 col-lg-6 mb-3">-->
+<!--                                    <label class="font-weight-bold badil-color-gray" for="seller-select">{% trans 'Cliente' %}</label>-->
+<!--                                    <select class="form-control badil-rounded badil-color-gray badil-shadow" name="seller" id="seller-select">-->
+<!--                                        <option value=""></option>-->
+<!--                                        {% for seller in sellers %}-->
+<!--                                            <option value="{{ seller.id }}" {% if flyer.seller_id|floatformat:"0" == seller.id|floatformat:"0" %}selected{% endif %}>{{ seller.name }}</option>-->
+<!--                                        {% endfor %}-->
+<!--                                    </select>-->
+<!--                                </div>-->
+
+                                <div id="perm-custom_domain" {{ request.user.custom_domain|no_permission_tags|safe }} class="col-12 col-md-12 col-lg-6 col-sm-12 mb-3 {{ request.user.custom_domain|no_permission_class }}">
+                                    <label class="font-weight-bold badil-color-gray mb-0" for="shareFlyerURL">{% trans 'URL pubblicazione' %}</label>
+                                    <i class="ml-1 text-12 i-Information position-absolute" data-toggle="tooltip" data-placement="top" title="" data-original-title="{% trans 'Inserisci un url personalizzato alla tua pubblicazione'  %}"></i>
+                                    <div class="d-flex">
+                                        <input type="text" id="shareFlyerURL"
+                                               name="{{ request.user.custom_domain|no_permission_name:"shareFlyerURL" }}"
+                                               value="{{flyer.settings.shareFlyerURL}}"
+                                               placeholder="{% trans 'tuonome' %}"
+                                               class="textinput textInput form-control badil-rounded badil-color-gray badil-shadow">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" style="background-color: initial; border: initial;"><strong>.interattivo.net</strong></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 mb-3">
+                                    <label class="font-weight-bold badil-color-gray mb-0">{% trans "Cambia PDF" %}</label>
+                                    <i class="ml-1 text-12 i-Information position-absolute" data-toggle="tooltip" data-placement="top" title="" data-original-title="{% trans 'Sostituisci il pdf scaricabile'  %}"></i>
+
+                                    <div class="badil-file-picker">
+                                        <input type="file" name="flyer_pdf" id="flyer_pdf" accept="application/pdf" onchange="updateField('flyer_pdfPlaceholder', this)">
+                                        <span id="flyer_pdfPlaceholder">{% if flyer.flyer_pdf_file %}{{ flyer.flyer_pdf_file.url|basename }}{% endif %}</span>
+                                        <label for="flyer_pdf">{% trans "Scegli" %}</label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="form-row mb-1">
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 mb-3">
+                                    <label class="font-weight-bold badil-color-gray mb-0" >{% trans "Stato pubblicazione" %}</label>
+                                    <div>
+                                        <div class="mb-2">
+                                            <input type="radio" class="badil-radio d-inline" id="publicationStatus_True" name="publicationStatus" value="True" onchange="disableFieldDate('publicationDate',this);" {% if not flyer.settings.publicationDate %}checked{% endif %}>
+                                            <label class="badil-color-gray d-inline mb-0" for="publicationStatus_True">{% trans 'Pubblica manualmente' %}</label>
+                                        </div>
+                                        <div id="perm-publication_date1" {{ request.user.publication_date|no_permission_tags|safe }} class="mb-2 {{ request.user.publication_date|no_permission_class }}">
+                                            <input
+                                                    type="radio"
+                                                    class="badil-radio d-inline"
+                                                    id="publicationStatus_False"
+                                                    name="{{ request.user.publication_date|no_permission_name:"publicationStatus" }}" value="False"
+                                                    onchange="disableFieldDate('publicationDate',this);"
+                                                    {% if flyer.settings.publicationDate %}checked{% endif %}>
+                                            <label
+                                                    class="badil-color-gray d-inline mb-0"
+                                                    for="{{ request.user.publication_date|no_permission_name:"publicationStatus_False" }}">{% trans 'Pianifica pubblicazione' %}</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="perm-publication_date2" {{ request.user.publication_date|no_permission_tags|safe }} class="col-12 col-md-6 col-lg-3 col-sm-12 mb-3 {{ request.user.publication_date|no_permission_class }}">
+                                    <label class="font-weight-bold badil-color-gray d-block mb-0">{% trans "Data di pubblicazione" %}</label>
+                                    <input type="text" class="textinput textInput form-control badil-rounded badil-color-gray badil-shadow " autocomplete="off"
+                                           name="{{ request.user.publication_date|no_permission_name:"publicationDate" }}" id="publicationDate"
+                                       {% if flyer.settings.publicationDate %}value="{{ flyer.settings.publicationDate|date:'d/m/Y H:i' }}" placeholder="{% trans 'Inserisci data di pubblicazione' %}"{% else %}disabled placeholder="{% trans 'Disabilitato' %}"{% endif %}>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-3 col-sm-12 mb-3">
+                                    <label class="font-weight-bold badil-color-gray d-block mb-0">{% trans "Data di scadenza" %}</label>
+                                    <input type="text" class="textinput textInput form-control  badil-rounded badil-color-gray badil-shadow" autocomplete="off" name="expirationDate" id="expirationDate"
+                                       {% if flyer.settings.expirationDate %}value="{{ flyer.settings.expirationDate|date:'d/m/Y H:i' }}"{% endif %} placeholder="{% trans 'Inserisci data di scadenza' %}">
+                                </div>
+
+                            </div>
+                        </div>
+
+<!--TAB 2 Configurazione e Grafica-->
+
+                        <div class="tab-pane fade" id="nav-config" role="tabpanel" aria-labelledby="nav-config-tab">
+                            <h3 class="font-weight-bold badil-color-gray mb-3 ">{% trans "Colori" %}</h3>
+                            <div class="form-row mb-1">
+
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 mb-3">
+                                    <label class="font-weight-bold badil-color-gray mb-0" for="primary_color">{% trans "Primario" %}</label>
+                                    <div class="input-group">
+                                        <input type="text" id="primary_color" name="primary_color" value="{{ flyer.settings.primary_color }}" class="form-control textinput textInput badil-rounded badil-color-gray badil-shadow zindex-one color-picker-next-child">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text textinput textInput badil-rounded badil-color-gray badil-shadow zindex-one color-picker-child color-picker-previous" value="{{ flyer.settings.primary_color }}">
+                                                <div class='badil-shadow badil-square' style="{% if flyer.settings.primary_color %}background-color: {{ flyer.settings.primary_color }};{% endif %}"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 mb-3">
+                                    <label class="font-weight-bold badil-color-gray mb-0" for="secondary_color">{% trans "Secondario" %}</label>
+                                    <div class="input-group">
+                                        <input type="text" id="secondary_color" name="secondary_color" value="{{ flyer.settings.secondary_color }}" class="form-control textinput textInput badil-rounded badil-color-gray badil-shadow zindex-one color-picker-next-child">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text textinput textInput badil-rounded badil-color-gray badil-shadow zindex-one color-picker-child color-picker-previous" value="{{ flyer.settings.secondary_color }}">
+                                                <div class='badil-shadow badil-square' style="{% if flyer.settings.secondary_color %}background-color: {{ flyer.settings.secondary_color }};{% endif %}"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="form-row mb-1">
+
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 mb-3">
+                                    <label class="font-weight-bold badil-color-gray mb-0" for="tertiary_color">{% trans "Terziario" %}</label>
+                                    <div class="input-group">
+                                        <input type="text" id="tertiary_color" name="tertiary_color" value="{{ flyer.settings.tertiary_color }}" class="form-control textinput textInput badil-rounded badil-color-gray badil-shadow zindex-one color-picker-next-child">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text textinput textInput badil-rounded badil-color-gray badil-shadow zindex-one color-picker-child color-picker-previous" value="{{ flyer.settings.tertiary_color }}">
+                                                <div class='badil-shadow badil-square' style="{% if flyer.settings.tertiary_color %}background-color: {{ flyer.settings.tertiary_color }};{% endif %}"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 mb-3">
+                                    <label class="font-weight-bold badil-color-gray mb-0" for="hover_color">{% trans "Hover" %}</label>
+                                    <i class="ml-1 text-12 i-Information position-absolute" data-toggle="tooltip" data-placement="top" title="" data-original-title="{% trans 'L’Hover è un elemento che si attiva al passaggio del mouse.'  %}"></i>
+                                    <div class="input-group">
+                                        <input type="text" id="hover_color" name="hover_color" value="{{ flyer.settings.hover_color }}" class="form-control textinput textInput badil-rounded badil-color-gray badil-shadow zindex-one color-picker-next-child">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text textinput textInput badil-rounded badil-color-gray badil-shadow zindex-one color-picker-child color-picker-previous" value="{{ flyer.settings.hover_color }}">
+                                                <div class='badil-shadow badil-square' style="{% if flyer.settings.hover_color %}background-color: {{ flyer.settings.hover_color }};{% endif %}"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 mb-3">
+                                    <label class="font-weight-bold badil-color-gray mb-0" for="background_color">{% trans "Sfondo" %}</label>
+                                    <div class="input-group">
+                                        <input type="text" id="background_color" name="background_color" value="{{ flyer.settings.background_color }}" class="form-control textinput textInput badil-rounded badil-color-gray badil-shadow zindex-one color-picker-next-child">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text textinput textInput badil-rounded badil-color-gray badil-shadow zindex-one color-picker-child color-picker-previous" value="{{ flyer.settings.background_color }}">
+                                                <div class='badil-shadow badil-square' style="{% if flyer.settings.background_color %}background-color: {{ flyer.settings.background_color }};{% endif %}"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <hr class="mt-1 mb-1">
+
+                            <h3 class="font-weight-bold badil-color-gray ">{% trans "Layout" %}</h3>
+                            <div class="form-row mb-1">
+                                <div class="col-12 col-md-4 col-lg-4 col-sm-12 ">
+                                    <div>
+                                        <label class="font-weight-bold badil-color-gray d-inline mb-0">{% trans "Layout pubblicazione" %}</label>
+                                        <i class="ml-1 text-12 i-Information position-absolute" data-toggle="tooltip" data-placement="top" title="" data-original-title="{% trans 'Modalità di visualizzazione pubblicazione.'  %}"></i>
+                                    </div>
+                                    
+                                    <div>
+                                        <div class="mb-1">
+                                            <input type="radio" class="badil-radio d-inline" id="singlePageId" name="show_one_page" value="True" onchange="" {% if flyer.settings.show_one_page %} checked {% endif %}>
+                                            <img class="img-fluid d-inline" src='{% static "builder/img/formato_singola.svg" %}' alt="{% trans 'Pagina singola' %}">
+                                            <label class="badil-color-gray d-inline" for="singlePageId">{% trans 'Pagina singola' %}</label>
+                                        </div>
+                                        <div class="mb-1">
+                                            <input type="radio" class="badil-radio d-inline" id="bookFormatId" name="show_one_page" value="False" onchange="" {% if not flyer.settings.show_one_page %} checked {% endif %}>
+                                            <img class="img-fluid d-inline" src='{% static "builder/img/formato_libro.svg" %}' alt="{% trans 'Formato libro' %}">
+                                            <label class="badil-color-gray d-inline" for="bookFormatId">{% trans 'Formato libro' %}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4 col-sm-12 mb-3">
+                                    <div>
+                                        <label class="font-weight-bold badil-color-gray d-inline mb-0">{% trans "Layout paginatore" %}</label>
+                                        <i class="ml-1 text-12 i-Information position-absolute" data-toggle="tooltip" data-placement="top" title="" data-original-title="{% trans 'Modalità di visualizzazione paginatore.'  %}"></i>
+                                    </div>
+                                    
+                                    <div>
+                                        <div class="mb-1">
+                                            <input type="radio" class="badil-radio d-inline" name="pager" id="pagerButtons" value="buttons" {% if flyer.settings.pager == 'buttons' %} checked {% endif %}>
+                                            <label class="badil-color-gray d-inline mb-0" for="pagerButtons">{% trans 'Bottoni' %}</label>
+                                        </div>
+                                        <div class="mb-1">
+                                            <input type="radio" class="badil-radio d-inline" name="pager" id="pagerSlider" value="slider" {% if flyer.settings.pager == 'slider' %} checked {% endif %}>
+                                            <label class="badil-color-gray d-inline mb-0" for="pagerSlider">{% trans 'Slider' %}</label>
+                                        </div>
+                                        <div class="mb-1">
+                                            <input type="radio" class="badil-radio d-inline" name="pager" id="pagerIndex" value="index" {% if flyer.settings.pager == 'index' %} checked {% endif %}>
+                                            <label class="badil-color-gray d-inline mb-0" for="pagerIndex">{% trans 'Indice' %}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="perm-search_product" {{ request.user.search_product|no_permission_tags|safe }} class="col-12 col-md-4 col-sm-12 col-lg-4 mb-3 {{ request.user.search_product|no_permission_class }}">
+                                    <label class="font-weight-bold badil-color-gray d-block mb-0">{% trans "Barra di ricerca" %}</label>
+                                    <div>
+                                        <div class="mb-1">
+                                            <input type="radio" id="searchBarShowId" name="{{ request.user.search_product|no_permission_name:"hide_searchbar" }}" value="False" class="badil-radio d-inline" {% if  not flyer.settings.hide_searchbar %} checked {% endif %}>
+                                            <label class="badil-color-gray d-inline mb-0" for="searchBarShowId">{% trans 'Mostra' %}</label>
+                                        </div>
+                                        <div class="mb-1">
+                                            <input type="radio" id="searchBarHideId" name="{{ request.user.search_product|no_permission_name:"hide_searchbar" }}" value="True" class="badil-radio d-inline" {% if flyer.settings.hide_searchbar %} checked {% endif %}>
+                                            <label class="badil-color-gray d-inline mb-0" for="searchBarHideId">{% trans 'Nascondi' %}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-sm-12 col-lg-4 mb-3">
+                                    <div class="">
+                                        <label class="font-weight-bold badil-color-gray d-inline" for="show_right_index">{% trans "Mostra indice destro" %}</label>
+                                        <input type="checkbox" {% if flyer.settings.show_right_index %}checked{% endif %} value="True" id="show_right_index" name="show_right_index" class="checkmark badil-rounded badil-shadow d-inline">
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <!-- <div class="form-row mb-1">
+                                <div id="perm-video_in_page" {{ request.user.video_in_page|no_permission_tags|safe }} class="col-12 col-md-12 col-lg-6 col-sm-12 mb-3 {{ request.user.video_in_page|no_permission_class }}">
+                                    <div>
+                                        <label class="font-weight-bold badil-color-gray d-inline mb-0">{% trans "Video all'apertura" %}</label>
+                                        <i class="ml-1 text-12 i-Information position-absolute" data-toggle="tooltip" data-placement="top" title="" data-original-title="{% trans 'Consente la creazione di un banner video all\'apertura della Pubblicazione.'  %}"></i>
+                                    </div>
+                                    
+                                    <div class="badil-file-picker">
+                                        <input type="file" name="{{ request.user.video_in_page|no_permission_name:"videoInPage" }}" accept="video/*" style="display: none;" id="videoInPage"onchange="updateField('videoInPagePlaceholder', this)">
+                                        <span id="videoInPagePlaceholder">{% if flyer.settings.videoInPage %}{{ flyer.settings.videoInPage.url | basename}}{% endif %}</span>
+                                        <label for="videoInPage">{% trans "Scegli" %}</label>
+                                    </div>
+                                </div>
+                                
+                            </div> -->
+
+                            <hr class="mt-1 mb-1">
+                            <div>
+                                <h3 class="font-weight-bold badil-color-gray mb-1 d-inline">{% trans "Sidebar" %}</h3>
+                                <i class="ml-1 text-12 i-Information position-absolute" data-toggle="tooltip" data-placement="top" title="" data-original-title="{% trans 'Seleziona le sezioni da inserire nella sidebar'  %}"></i>
+                            </div>
+                            
+                            {{ flyer.settings.sidebar|json_script:"json-sidebar" }}
+                            <div class="row">
+                                <div class="form-row mb-1 col-12 col-md-6 col-lg-6">
+                                    <div class="col-12 col-md-6 col-lg-6 col-sm-12 mb-0">
+                                        <input id="sidebar_type" type="checkbox" name="sidebar[]" value="" class="checkmark badil-rounded badil-shadow d-none" checked>
+                                        <input type="checkbox" class="checkmark badil-rounded badil-shadow d-inline" disabled checked>
+                                        <label class="ml-3 font-weight-bold badil-color-gray d-inline " for="sidebar_type">{% trans "Pubblicazione" %}</label>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6 col-sm-12 mb-0">
+                                        <input id="sidebar_products" type="checkbox" value="products" name="sidebar[]" class="checkmark badil-rounded badil-shadow d-inline">
+                                        <label class="ml-3 font-weight-bold badil-color-gray d-inline mb-0" for="sidebar_products">{% trans "Prodotti" %}</label>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6 col-sm-12 mb-0">
+                                        <input id="sidebar_pages" type="checkbox" value="pages" name="sidebar[]" class="checkmark badil-rounded badil-shadow d-inline">
+                                        <label class="ml-3 font-weight-bold badil-color-gray d-inline mb-0" for="sidebar_pages">{% trans "Pagine" %}</label>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6 col-sm-12 mb-0">
+                                        <input id="sidebar_pdf" type="checkbox" value="pdf" name="sidebar[]" class="checkmark badil-rounded badil-shadow d-inline">
+                                        <label class="ml-3 font-weight-bold badil-color-gray d-inline" for="sidebar_pdf">{% trans "Pdf" %}</label>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6 col-sm-12 mb-0">
+                                        <input id="sidebar_full_screen" type="checkbox" value="full_screen" name="sidebar[]" class="checkmark badil-rounded badil-shadow d-inline">
+                                        <label class="ml-3 font-weight-bold badil-color-gray d-inline" for="sidebar_full_screen">{% trans "Schermo intero" %}</label>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6 col-sm-12 mb-0">
+                                        <input id="sidebar_share" type="checkbox" value="share" name="sidebar[]" class="checkmark badil-rounded badil-shadow d-inline" >
+                                        <label class="ml-3 font-weight-bold badil-color-gray d-inline" for="sidebar_share">{% trans "Condivisione" %}</label>
+                                    </div>
+                                    
+                                </div>
+                                <div id="perm-filterUnderprice" {{ request.user.product_page|no_permission_tags|safe }} class="mb-1 col-12 col-md-6 col-lg-6 d-none {{ request.user.product_page|no_permission_class }}">
+                                    <label class="font-weight-bold badil-color-gray mb-0" for="filterUnderprice">{% trans 'Filtro prodotti scontati' %}</label>
+                                    <div>
+                                        <div class="mb-1">
+                                            <input type="radio" id="show_filterUnderprice" value="1" name="{{ request.user.product_page|no_permission_name:"filterUnderprice" }}"  class="badil-radio d-inline" {% if flyer.settings.filterUnderprice %} checked {% endif %}>
+                                            <label class="badil-color-gray d-inline mb-0" for="show_filterUnderprice">{% trans "Mostra" %}</label>
+                                        </div>
+                                        <div class="mb-1">
+                                            <input type="radio" id="hide_filterUnderprice" value="0" name="{{ request.user.product_page|no_permission_name:"filterUnderprice" }}" class="badil-radio d-inline"  {% if not flyer.settings.filterUnderprice %} checked {% endif %}>
+                                            <label class="badil-color-gray d-inline mb-0" for="hide_filterUnderprice">{% trans "Nascondi" %}</label>
+                                        </div>
+                                    </div>
+                                    <!-- <input type="number" id="filterUnderprice" name="filterUnderprice" value="{{ flyer.settings.filterUnderprice }}" min="0" max="1" class="textinput textInput form-control badil-rounded badil-color-gray badil-shadow" placeholder="{% trans 'Prodotti sottocosto' %}"> -->
+                                </div>
+                            </div>
+                            
+
+                            <hr class="mt-1 mb-1">
+                            <div>
+                                <h3 class="font-weight-bold badil-color-gray mb-0 d-inline">{% trans "Icone interattività" %}</h3>
+                                <i class="ml-1 text-12 i-Information position-absolute" data-toggle="tooltip" data-placement="top" title="" data-original-title="{% trans 'Decidi come visualizzare le icone delle interattività'  %}"></i>
+                            </div>
+                            
+                            <div id="perm-interactivityIcon">
+                                <div class="form-row mb-1">
+                                    <div class="col-12 col-md-4 col-lg-4 col-sm-12 mb-0">
+                                        <label class="font-weight-bold badil-color-gray d-block">{% trans "Animazione icone" %}</label>
+                                        <div>
+                                            <div class="mb-1">
+                                                <input type="radio" id="animation1" class="d-inline" name="iconAnimation" value="" {% if flyer.settings.iconAnimation == '' %}checked{% endif %}>
+                                                <img class="img-fluid badil-radio d-inline" src='{% static "builder/img/icona_grande.svg" %}'  alt="{% trans 'Fissa' %}">
+                                                <label class="badil-color-gray d-inline" for="animation1">{% trans 'Fissa' %}</label>
+                                            </div>
+                                            <div class="mb-1">
+                                                <input type="radio" id="animation2" class="d-inline" name="iconAnimation" value="verticalListaSpesa" {% if flyer.settings.iconAnimation == 'verticalListaSpesa' %}checked{% endif %}>
+                                                <img class="img-fluid badil-radio badil-jumping d-inline" src='{% static "builder/img/icona_grande.svg" %}'  alt="{% trans 'Salto' %}">
+                                                <label class="badil-color-gray d-inline" for="animation2">{% trans 'Salto' %}</label>
+                                            </div>
+                                            <div class="mb-1">
+                                                <input type="radio" id="animation3" class="d-inline" name="iconAnimation" value="vertical" {% if flyer.settings.iconAnimation == 'vertical' %}checked{% endif %}>
+                                                <img class="img-fluid badil-radio badil-fading d-inline" src='{% static "builder/img/icona_grande.svg" %}'  alt="{% trans 'Scomparsa' %}">
+                                                <label class="badil-color-gray d-inline" for="animation3">{% trans 'Scomparsa' %}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4 col-lg-4 col-sm-12 mb-0">
+                                        <label class="font-weight-bold badil-color-gray d-block">{% trans "Dimensione icone" %}</label>
+                                        <div>
+                                            <div class="mb-1">
+                                                <input type="radio" id="largeIconFalse" class="d-inline" name="largeIcon" value="False"  {% if not flyer.settings.largeIcon %} checked {% endif %}>
+                                                <img class="img-fluid badil-radio d-inline" src='{% static "builder/img/icona_piccola.svg" %}'  alt="{% trans 'Icona piccola' %}">
+                                                <label class="badil-color-gray d-inline" for="searchBarShowId">{% trans 'Piccola' %}</label>
+                                            </div>
+                                            <div class="mb-1">
+                                                <input type="radio" id="largeIconTrue" class="d-inline" name="largeIcon" value="True" {% if flyer.settings.largeIcon %} checked {% endif %}>
+                                                <img class="img-fluid badil-radio d-inline" src='{% static "builder/img/icona_grande.svg" %}'  alt="{% trans 'Icona grande' %}">
+                                                <label class="badil-color-gray d-inline" for="largeIconTrue">{% trans 'Grande' %}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row mb-1">
+                                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 mb-3">
+                                        <label class="font-weight-bold badil-color-gray d-block">{% trans "Icona personalizzata" %}</label>
+                                        <div class="badil-file-picker">
+                                            <input class="live_preview" data-target="#clientIcon_preview" type="file" name="clientIcon" accept="image/*" style="display: none;" id="clientIcon" onchange="updateField('clientIconPlaceholder', this)">
+
+                                            <span id="clientIconPlaceholder" >{% if flyer.settings.clientIcon %}{{ flyer.settings.clientIcon.url | basename}}{% endif %}</span>
+                                            <label  ><a onclick="uploadModal('clientIcon','nav-config-tab','Icona personalizzata')">{% trans "Scegli" %}</a></label>
+                                            <label for="clientIcon" class="d-none" id="for-clientIcon">{% trans "Scegli" %}</label>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 mb-3">
+                                        <label class="font-weight-bold badil-color-gray d-block mb-0" for="clientIcon_preview">{% trans "Anteprima icona" %} </label>
+                                        <img id="clientIcon_preview" class="img-thumbnail badil-rounded" style="max-width:120px; max-height: 120px"
+                                             {% if flyer.settings.clientIcon %}
+                                                src="{{ flyer.settings.clientIcon.url }}"
+                                             {% else %}
+                                                src="{% static "gull-admin/images/faces/1.jpg" %}"
+                                             {% endif %}
+                                        >
+                                    </div>
+
+                                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 mb-3">
+                                        <label class="font-weight-bold badil-color-gray d-block">{% trans "Logo all'apertura" %}</label>
+                                        <div class="badil-file-picker">
+                                            <input class="live_preview" data-target="#logo_full_preview" type="file" name="logo_full" accept="image/*" style="display: none;" id="logo_full" onchange="updateField('logo_fullPlaceholder', this)">
+
+                                            <span id="logo_fullPlaceholder" >{% if flyer.settings.logo_full %}{{ flyer.settings.logo_full.url | basename}}{% endif %}</span>
+                                            <label><a onclick="uploadModal('logo_full','nav-config-tab','logo_full')">{% trans "Scegli" %}</a></label>
+                                            <label for="logo_full" class="d-none" id="for-logo_full">{% trans "Scegli" %}</label> 
+
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 mb-3">
+                                        <label class="font-weight-bold badil-color-gray d-block mb-0" for="logo_full_preview">{% trans "Anteprima icona" %} </label>
+                                        <img id="logo_full_preview" class="img-thumbnail badil-rounded" style="max-width:120px; max-height: 120px"
+                                             {% if flyer.settings.logo_full %}
+                                                src="{{ flyer.settings.logo_full.url }}"
+                                             {% else %}
+                                                src="{% static "gull-admin/images/faces/1.jpg" %}"
+                                             {% endif %}
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr class="mt-1 mb-1">
+
+                            <h3 class="font-weight-bold badil-color-gray mb-0">{% trans "Banner pagina prodotti" %}</h3>
+                            <div id="perm-banners" {{ request.user.product_page|no_permission_tags|safe }} class="{{ request.user.product_page|no_permission_class }}">
+                                <div class="form-row mb-0">
+                                    <div class="col-12 col-lg-4 col-md-12 col-sm-12 mb-0">
+                                        <label class="font-weight-bold badil-color-gray d-block mb-0">{% trans "Desktop" %}</label>
+                                        <div class="badil-file-picker">
+                                            <input type="file" class="live_preview" data-target="#category_banner_preview" name="{{ request.user.product_page|no_permission_name:"category_banner" }}" accept="image/*" style="display: none;" id="category_banner" onchange="updateField('category_bannerPlaceholder', this)">
+                                            <span id="category_bannerPlaceholder">{% if flyer.settings.category_banner %}{{ flyer.settings.category_banner.url | basename }}{% endif %}</span>
+                                            <label for="category_banner_preview" ><a onclick="uploadModal('category_banner','nav-config-tab','Desktop')">{% trans "Scegli" %}</a></label>
+                                            <label for="category_banner" class="d-none" id="for-category_banner">{% trans "Scegli" %}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-lg-2 col-md-12 col-sm-12 mb-0">
+                                        <label class="font-weight-bold badil-color-gray d-block mb-0" for="category_banner_preview">{% trans "Anteprima banner" %}</label>
+                                        <img id="category_banner_preview" class="img-thumbnail badil-rounded" style="max-width:120px; max-height: 60px"
+                                             {% if flyer.settings.category_banner %}
+                                                src="{{ flyer.settings.category_banner.url }}"
+                                             {% else %}
+                                                src="{% static "gull-admin/images/faces/1.jpg" %}"
+                                             {% endif %}
+                                        >
+                                    </div>
+
+                                    <div class="col-12 col-lg-4 col-md-12 col-sm-12 mb-0">
+                                        <label class="font-weight-bold badil-color-gray d-block mb-0">{% trans "Mobile" %}</label>
+                                        <div class="badil-file-picker">
+                                            <input type="file" class="live_preview" data-target="#category_banner_mobile_preview" name="{{ request.user.product_page|no_permission_name:"category_banner_mobile" }}" accept="image/*" style="display: none;" id="category_banner_mobile" onchange="updateField('category_banner_mobilePlaceholder', this)">
+                                            <span id="category_banner_mobilePlaceholder">{% if flyer.settings.category_banner_mobile %}{{ flyer.settings.category_banner_mobile.url | basename }}{% endif %}</span>
+                                            <label ><a onclick="uploadModal('category_banner_mobile','nav-config-tab','Mobile')">{% trans "Scegli" %}</a></label>
+                                            <label for="category_banner_mobile" class="d-none" id="for-category_banner_mobile">{% trans "Scegli" %}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-lg-2 col-md-12 col-sm-12 mb-0">
+                                        <label class="font-weight-bold badil-color-gray d-block mb-0" for="category_banner_mobile_preview">{% trans "Anteprima banner" %}</label>
+                                        <img id="category_banner_mobile_preview" class="img-thumbnail badil-rounded" style="max-width:120px; max-height: 60px"
+                                             {% if flyer.settings.category_banner_mobile %}
+                                                src="{{ flyer.settings.category_banner_mobile.url }}"
+                                             {% else %}
+                                                src="{% static "gull-admin/images/faces/1.jpg" %}"
+                                             {% endif %}
+                                        >
+                                    </div>
+                                </div>
+                                <div class="form-row mb-0">
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 mb-0">
+                                {% with internal=flyer.settings.internal_banner_click external=flyer.settings.external_banner_click %}
+                                    <label class="font-weight-bold badil-color-gray d-inline mb-0" for="choise_banner">{% trans "Attiva click su banner" %}</label>
+                                    <input type="checkbox" name="choise_banner" id="choise_banner" class="d-inline" {% if internal or external %}checked{% endif %} onchange="banner_click_switch()">
+                                    <div {% if internal or external %}class=""{% else %}class="d-none"{% endif %} id="banner_click_switch">
+                                        <div class="mb-0">
+                                            <input type="radio" id="internal_banner_click" value="1" name="{{ request.user.product_page|no_permission_name:"banner_click" }}" {% if internal %}checked{% endif %} class="badil-radio d-inline" onchange="change_banner_click()">
+                                            <label class="badil-color-gray mr-3 d-inline" for="internal_banner_click">{% trans "Click sul banner interno" %}</label>
+                                            <select type="text" id="product_banner" name="product_banner" class="textInput form-control badil-rounded badil-color-gray badil-shadow w-50 " style =" {% if not internal %}display:none;{%else%}display:inline-block; {% endif %} " >
+                                                <option value="0">{% trans "Scegli prodotto" %}</option>
+                                                {% for product in flyer.products.all %}
+                                                    {% if product.type == 'product' %}
+                                                        <option {% if product.id == flyer.settings.product_banner.id %}selected="selected"{% endif %} value="{{ product.id }}">{{ product.description }}</option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="mb-0">
+                                            <input type="radio" id="external_banner_click" value="2" name="banner_click" {% if external %}checked{% endif %} class="badil-radio d-inline" onchange="change_banner_click()">
+                                            <label class="badil-color-gray mr-3 d-inline" for="external_banner_click">{% trans "Click sul banner esterno" %}</label>
+                                            <input name="href_banner" id="href_banner" value="{{ flyer.settings.href_banner }}" class="form-control badil-rounded badil-color-gray badil-shadow w-50" style="{% if not external %}display:none; {% else %}display:inline-block; {% endif %} " placeholder="Inserisci link" >
+                                        </div>
+                                    </div>
+                                {% endwith %}
+                                </div>
+                                <!-- <div class="col-12 col-md-12 col-lg-4 col-sm-12 mb-3">
+                                    <label class="font-weight-bold badil-color-gray d-block">{% trans "Banner dettaglio prodotto" %}</label>
+                                    <div class="badil-file-picker">
+                                        <input type="file" accept="image/*" name="product_banner" id="product_banner" data-target="#product_banner_preview" onchange="updateField('product_bannerPlaceholder', this)">
+                                        <span id="product_bannerPlaceholder">{% if flyer.settings.product_banner %}{{ flyer.settings.product_banner.url | basename}}{% endif %}</span>
+                                        <label ><a onclick="uploadModal('product_banner')">{% trans "Scegli" %}</a></label>
+                                        <label for="product_banner" class="d-none" id="for-product_banner">{% trans "Scegli" %}</label>
+
+                                    </div>
+                                </div> -->
+                                <!-- <div class="col-12 col-lg-2 col-md-12 col-sm-12 mb-3">
+                                    <label class="font-weight-bold badil-color-gray d-block" for="product_banner_preview">{% trans "Anteprima banner" %}</label>
+                                    <img id="product_banner_preview" class="img-thumbnail badil-rounded" style="max-width:120px; max-height: 60px"
+                                         {% if flyer.settings.product_banner %}
+                                            src="{{ flyer.settings.product_banner.url }}"
+                                         {% else %}
+                                            src="{% static "gull-admin/images/faces/1.jpg" %}"
+                                         {% endif %}
+                                    >
+                                </div> -->
+                                <!--todo tendina dettaglio prodotto "Inserisci dettaglio" -> "Dettaglio 1 (ID: 10101)" ecc.-->
+                            </div>
+                            </div>
+
+                           <hr class="mt-1 mb-1">
+                            <div>
+                                <h3 class="font-weight-bold badil-color-gray mb-3 d-inline">{% trans "Labels" %}</h3>
+                                <i class="ml-1 text-12 i-Information position-absolute" data-toggle="tooltip" data-placement="top" title="" data-original-title="{% trans 'Etichette utilizzate per i tuoi prodotti.'  %}"></i>
+                            </div>
+                            
+                            <div id="perm-labels">
+                                <div class="form-row mb-1">
+                                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 mb-2">
+                                        <label class="font-weight-bold badil-color-gray mb-0" for="piece_label">{% trans "Etichetta peso" %}</label>
+                                        <input type="text" id="piece_label" name="piece_label" {% if flyer.settings.piece_label %}value="{{ flyer.settings.piece_label }}"{% endif %} class="textinput textInput form-control badil-rounded badil-color-gray badil-shadow">
+                                    </div>
+                                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 mb-2">
+                                        <label class="font-weight-bold badil-color-gray" for="gr_label">{% trans "Etichetta gr" %}</label>
+                                        <input type="text" id="gr_label" name="gr_label" {% if flyer.settings.gr_label %}value="{{ flyer.settings.gr_label }}"{% endif %} class="textinput textInput form-control badil-rounded badil-color-gray badil-shadow">
+                                    </div>
+                                </div>
+                                <div class="form-row mb-1">
+                                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 mb-2">
+                                        <label class="font-weight-bold badil-color-gray mb-0" for="hectogram_label">{% trans "Etichetta hg" %}</label>
+                                        <input type="text" id="hectogram_label" name="hectogram_label" {% if flyer.settings.hectogram_label %}value="{{ flyer.settings.hectogram_label }}"{% endif %} class="textinput textInput form-control badil-rounded badil-color-gray badil-shadow">
+                                    </div>
+                                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 mb-1">
+                                        <label class="font-weight-bold badil-color-gray mb-0" for="kg_label">{% trans "Etichetta kg" %}</label>
+                                        <input type="text" id="kg_label" name="kg_label" {% if flyer.settings.kg_label %}value="{{ flyer.settings.kg_label }}"{% endif %} class="textinput textInput form-control badil-rounded badil-color-gray badil-shadow">
+                                    </div>
+                                </div>
+                                <div class="form-row mb-1">
+                                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 mb-2">
+                                        <label class="font-weight-bold badil-color-gray mb-0" for="kg_price_label">{% trans "Etichetta prezzo al kg" %}</label>
+                                        <input  type="text" id="kg_price_label" name="kg_price_label" {% if flyer.settings.kg_price_label %}value="{{ flyer.settings.kg_price_label }}"{% endif %} class="textinput textInput form-control badil-rounded badil-color-gray badil-shadow">
+                                    </div>
+                                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 mb-2">
+                                        <label class="font-weight-bold badil-color-gray mb-0" for="hectogram_price_label">{% trans "Etichetta prezzo l'etto" %}</label>
+                                        <input type="text" id="hectogram_price_label"  name="hectogram_price_label" {% if flyer.settings.hectogram_price_label %}value="{{ flyer.settings.hectogram_price_label }}"{% endif %} class="textinput textInput form-control badil-rounded badil-color-gray badil-shadow">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+<!--TAB 3 Lista spesa-->
+
+                        <div class="tab-pane fade" id="nav-grocery" role="tabpanel" aria-labelledby="nav-grocery-tab">
+                            <h3 class="font-weight-bold badil-color-gray mb-1">{% trans "Lista della spesa" %}</h3>
+                            <div class="form-row mb-1">
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 mb-0">
+                                    <input type="checkbox" {% if not flyer.settings.hide_grocery_list  %}checked{% endif %} value="True" id="hide_grocery_list" name="hide_grocery_list"
+                                      onchange="disableFieldCheckboxToCheckbox('marker_product_in_list',this); disableFieldCheckboxToCheckbox('send_grocery_list_to_market',this); disableFieldCheckboxPlaceholder2('grocery_list_min_value',this);" class="checkmark badil-rounded badil-shadow d-inline">
+                                    <label class="ml-2 font-weight-bold badil-color-gray d-inline"  for="hide_grocery_list">{% trans "Attiva lista spesa" %}</label>
+                                    
+                                </div>
+                            </div>
+                            <div class="form-row mb-1">
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 mb-0">
+                                    <input type="checkbox" {% if flyer.settings.hide_plus_product %}checked{% endif %} value="True" id="hide_plus_product" name="hide_plus_product" class="checkmark badil-rounded badil-shadow d-inline">
+
+                                    <label class="ml-2 font-weight-bold badil-color-gray d-inline" for="hide_plus_product">{% trans "Nascondi sezione prodotti Extra" %}</label>
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 mb-0">
+                                    <input type="checkbox" {% if flyer.settings.hide_plus_product_price %}checked{% endif %} value="True" id="hide_plus_product_price" name="hide_plus_product_price" class="checkmark badil-rounded badil-shadow d-inline">
+                                    <label class="ml-2 font-weight-bold badil-color-gray d-inline" for="hide_plus_product_price">{% trans "Nascondi prezzo prodotti Extra" %}</label>
+                                    
+                                </div>
+                            </div>
+                            <div class="form-row mb-3">
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 mb-0">
+                                    <input type="checkbox" {% if flyer.settings.show_list_check %}checked{% endif %} value="True" id="show_list_check" name="show_list_check" class="checkmark badil-rounded badil-shadow d-inline">
+                                    <label class="ml-2 font-weight-bold badil-color-gray d-inline" for="show_list_check">{% trans "Spunta prodotti nella checklist" %}</label>
+                                </div>
+                            </div>
+                            <hr class="mt-1 mb-1">
+
+                            <div class="form-row mb-0 mt-3">
+                                
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 mb-0 d-none">
+                                    <label class="font-weight-bold badil-color-gray d-inline" for="manager_stock">{% trans "manager_stock" %}</label>
+                                    <input type="checkbox" {% if flyer.settings.manager_stock %}checked{% endif %} value="True" id="manager_stock" name="manager_stock" class="checkmark badil-rounded badil-shadow d-inline">
+                                </div>
+                            </div>
+
+                            <div class="form-row mb-0">
+                                <div class="col-12 mb-0 {{ request.user.highlight_product_added_to_grocery_list|no_permission_class }}" {{ request.user.highlight_product_added_to_grocery_list|no_permission_tags|safe }} id="perm-highlight_product_added_to_grocery_list">
+                                    <input type="checkbox" {% if flyer.settings.marker_product_in_list %}checked{% endif %} value="True" name="{{ request.user.highlight_product_added_to_grocery_list|no_permission_name:"marker_product_in_list" }}" id="marker_product_in_list"
+                                          {% if flyer.settings.hide_grocery_list %}disabled{% endif %} class="checkmark badil-rounded badil-shadow d-inline"><span class="checkmark">
+                                          </span>
+                                    </label>
+                                    <label class="ml-2 font-weight-bold badil-color-gray d-inline" for="marker_product_in_list">{% trans "Evidenzia prodotti aggiunti alla lista" %}</label>
+                                    <i class=" text-12 i-Information position-absolute" data-toggle="tooltip" data-placement="top" title="" data-original-title="{% trans 'Permetti ai tuoi clienti di evidenziare i prodotti già in lista.'  %}"></i>
+                                    
+                                </div>
+                            </div>
+
+                            <div class="form-row mb-1" id="perm-highlight_product_added_to_grocery_list2">
+                                <div class="col-12 col-md-12 col-sm-12 mb-0">
+                                    <div class="form-row font-weight-bold badil-color-gray text-center text-nowrap marker-selector">
+                                        <div class="col-12 col-md-12 col-xl-3">
+                                            <label class="cursor-pointer mb-0" for="circle_black">
+                                                <figure class="img-thumbnail img-thumbnail-figure mb-0">
+                                                    <input id="circle_black" type="radio" name="marker" value="circle_black"
+                                                      {% if flyer.settings.marker == 'circle_black' %}checked{% endif %} />
+                                                    <span class="drinkcard-marker img-fluid circle_black"></span>
+                                                    <figcaption class="text-center font-weight-bold badil-color-gray">{% trans "Cerchio nero" %}</figcaption>
+                                                </figure>
+                                            </label>
+                                        </div>
+
+                                        <div class="col-12 col-md-12 col-xl-3">
+                                            <label class="cursor-pointer" for="circle_blue">
+                                                <figure class="img-thumbnail img-thumbnail-figure mb-0">
+                                                    <input id="circle_blue" type="radio" name="marker" value="circle_blue"
+                                                      {% if flyer.settings.marker == 'circle_blue' %}checked{% endif %} />
+                                                    <span class="drinkcard-marker img-fluid circle_blue"></span>
+                                                    <figcaption class="text-center font-weight-bold badil-color-gray">{% trans "Cerchio azzurro" %}</figcaption>
+                                                </figure>
+                                            </label>
+                                        </div>
+
+                                        <div class="col-12 col-md-12 col-xl-3">
+                                            <label class="cursor-pointer" for="ellipse_black">
+                                                <figure class="img-thumbnail img-thumbnail-figure mb-0">
+                                                    <input id="ellipse_black" type="radio" name="marker" value="ellipse_black"
+                                                      {% if flyer.settings.marker == 'ellipse_black' %}checked{% endif %} />
+                                                    <span class="drinkcard-marker img-fluid ellipse_black"></span>
+                                                    <figcaption class="text-center font-weight-bold badil-color-gray">{% trans "Ellisse" %}</figcaption>
+                                                </figure>
+                                            </label>
+                                        </div>
+
+                                        <div class="col-12 col-md-12 col-xl-3">
+                                            <label for="highlighted_yellow">
+                                                <figure class="img-thumbnail img-thumbnail-figure mb-0">
+                                                    <input id="highlighted_yellow" type="radio" name="marker" value="highlighted_yellow"
+                                                      {% if flyer.settings.marker == 'highlighted_yellow' %}checked{% endif %} />
+                                                    <span class="drinkcard-marker img-fluid highlighted_yellow"></span>
+                                                    <figcaption class="text-center font-weight-bold badil-color-gray">{% trans "Evidenziatore" %}</figcaption>
+                                                </figure>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr class="mt-1 mb-1">
+
+                            <h3 class="font-weight-bold badil-color-gray mb-3">{% trans "InShop" %}</h3>
+
+                            <div id="perm-grocery_list_to_market_integration" {{ request.user.grocery_list_to_market_integration|no_permission_tags|safe }} class="form-row mb-1 {{ request.user.grocery_list_to_market_integration|no_permission_class }}">
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 mb-3">
+                                    <label class="font-weight-bold badil-color-gray d-inline" for="send_grocery_list_to_market">{% trans "Attiva invio lista al punto vendita*" %}</label>
+                                    <input type="checkbox" {% if flyer.settings.send_grocery_list_to_market %}checked{% endif %} value="True" onchange="disableFieldCheckboxPlaceholder('grocery_list_min_value',this);" id="send_grocery_list_to_market" name="send_grocery_list_to_market" class="checkmark badil-rounded badil-shadow d-inline">
+                                    </br>
+                                    <label class="badil-color-gray">{% trans "*Opzione valida solo se nel piano è incluso il servizio InShop" %}</label>
+                                </div>
+
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 mb-3">
+                                    <label class="font-weight-bold badil-color-gray" for="grocery_list_min_value">{% trans "Valore minimo lista della spesa" %}</label>
+                                    <i class="ml-1 text-12 i-Information position-absolute" data-toggle="tooltip" data-placement="top" title="" data-original-title="{% trans 'Valore minimo sotto il quale non sarà possibile completare l\'ordine'  %}"></i>
+                                    <div class="badil-currency-input" style="{% if not flyer.settings.send_grocery_list_to_market %}background-color: #eeeeee !important;{% endif %}">
+                                        <label for="grocery_list_min_value">€</label>
+                                        <input type="number" step="1" {% if not flyer.settings.send_grocery_list_to_market %}disabled{% endif %} id="grocery_list_min_value" name="{{ request.user.grocery_list_to_market_integration|no_permission_name:"grocery_list_min_value" }}"
+                                          min="0" value="{% if flyer.settings.send_grocery_list_to_market %}{{ flyer.settings.grocery_list_min_value }}{% endif %}"
+                                            placeholder="{% if flyer.settings.send_grocery_list_to_market %}50{% else %}{% trans 'Disabilitato' %}{% endif %}"
+                                            style="{% if not flyer.settings.send_grocery_list_to_market %}background-color: #eeeeee !important;{% endif %}"
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+<!--TAB 4 SEO-->
+
+                        <div class="tab-pane fade" id="nav-seo" role="tabpanel" aria-labelledby="nav-seo-tab">
+                            <h3 class="font-weight-bold badil-color-gray mb-3">{% trans "SEO" %}</h3>
+                            <div class="form-row mb-1">
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 mb-3">
+                                    <div>
+                                        <label class="font-weight-bold badil-color-gray d-inline" for="ogTitleMeta">{% trans 'Titolo SEO' %}</label>
+                                        <i class="ml-1 text-12 i-Information position-absolute" data-toggle="tooltip" data-placement="top" title="" data-original-title="{% trans 'Imposta il titolo per l’ottimizzazione dei motori di ricerca'  %}"></i>
+                                    </div>
+                                    
+                                    <input type="text" id="ogTitleMeta" name="ogTitleMeta" value="{{flyer.settings.ogTitleMeta}}" class="textinput textInput form-control badil-rounded badil-color-gray badil-shadow" placeholder="{% trans 'Inserisci il titolo SEO' %}">
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 mb-3">
+                                    <div>
+                                        <label class="font-weight-bold badil-color-gray" for="ogDescriptionMeta">{% trans 'Descrizione SEO (max 64 caratteri)' %}</label>
+                                        <i class="ml-1 text-12 i-Information position-absolute" data-toggle="tooltip" data-placement="top" title="" data-original-title="{% trans 'Imposta una descrizione per ottimizzare la tua indicizzazione sul web.'  %}"></i>
+                                    </div>                                    
+                                    <textarea type="text" id="ogDescriptionMeta" name="ogDescriptionMeta" class="textInput form-control badil-rounded badil-color-gray badil-shadow badil-textarea"
+                                      maxlength="64" rows="2" placeholder="{% trans 'Inserisci la descrizione SEO' %}">{{ flyer.settings.ogDescriptionMeta }}</textarea>
+                                    <div class="badil-color-gray badil-word-counter" id="ogDescriptionMeta_counter">
+                                        <script>
+                                        var maxlength = parseInt(document.getElementById('ogDescriptionMeta').getAttribute('maxlength'));
+                                        {% if not flyer.settings.ogDescriptionMeta %}
+                                            document.write('-' + maxlength.toString());
+                                        {% else %}
+                                            document.write('-' + (maxlength - {{ flyer.settings.ogDescriptionMeta | length }}).toString());
+                                        {% endif %}
+                                        </script>
+                                    </div>
+                                </div>
+                                <script>
+                                    document.getElementById('ogDescriptionMeta').addEventListener('input', function(e) {
+                                        const target = e.target;
+
+                                        // Get the `maxlength` attribute
+                                        const maxLength = target.getAttribute('maxlength');
+
+                                        // Count the current number of characters
+                                        const currentLength = target.value.length;
+
+                                        document.getElementById('ogDescriptionMeta_counter').innerHTML = `-${maxLength-currentLength}`;
+                                    });
+                                </script>
+
+                            </div>
+
+                            <!--
+                            <div class="form-row mb-1" id="perm-analytics">
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 mb-3">
+                                    <label class="font-weight-bold badil-color-gray d-inline" for="ga_active">{% trans "Attiva Analytics" %}</label>
+                                    <input type="checkbox" {% if flyer.settings.ga_active %}checked{% endif %} value="True" onchange="disableFieldCheckbox('ga_tracking_id',this);" id="ga_active" name="ga_active" class="checkmark d-inline badil-rounded badil-shadow">
+                                    <input type="text" {% if not flyer.settings.ga_active %}disabled{% endif %} id="ga_tracking_id" name="ga_tracking_id" {% if flyer.settings.ga_tracking_id %}value="{{flyer.settings.ga_tracking_id}}"{% endif %} class="textinput textInput form-control badil-rounded badil-color-gray badil-shadow" placeholder="{% trans 'Inserisci link Tracking' %}">
+                                </div>
+                            </div>
+                            -->
+
+                            <hr class="mt-1 mb-1">
+
+                            <h3 class="font-weight-bold badil-color-gray mb-3">{% trans "Condivisione" %}</h3>
+
+                            <div id="perm-custom_opengraph_image_meta" {{ request.user.custom_opengraph_image_meta|no_permission_tags|safe }} class="form-row mb-1 {{ request.user.custom_opengraph_image_meta|no_permission_class }}">
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-row mb-1">
+                                        <div class="col-12 col-lg-8 col-md-12 col-sm-12 mb-3">
+                                            <div>
+                                                <label class="font-weight-bold badil-color-gray d-inline">{% trans "Immagine condivisione social" %}</label>
+                                                <i class="ml-1 text-12 i-Information position-absolute" data-toggle="tooltip" data-placement="top" title="" data-original-title="{% trans 'Imposta un’immagine per la condivisione della tua pubblicazione sui social (Facebook, Instagram, blog)'  %}"></i>
+                                            </div>
+                                            
+                                            <div class="badil-file-picker">
+                                                <input type="file" class="live_preview" data-target="#ogImageMeta_preview" name="{{ request.user.custom_opengraph_image_meta|no_permission_name:"ogImageMeta" }}" accept="image/*" style="display: none;" id="ogImageMeta" onchange="updateField('ogImageMetaPlaceholder', this)">
+                                                <span id="ogImageMetaPlaceholder">{% if flyer.settings.ogImageMeta %}{{ flyer.settings.ogImageMeta.url | basename }}{% else %}Share_img.png{% endif %}</span>
+                                                <label ><a onclick="uploadModal('ogImageMeta','nav-seo-tab','Immagine condivisione social')">{% trans "Scegli" %}</a></label>
+                                                <label for="ogImageMeta" class="d-none" id="for-ogImageMeta">{% trans "Scegli" %}</label>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-4 col-md-12 col-sm-12 mb-3">
+                                            <div>
+
+                                            </div>
+                                            <label class="font-weight-bold badil-color-gray d-block" for="ogImageMeta_preview">{% trans "Anteprima immagine" %}</label>
+                                            <img id="ogImageMeta_preview" class="img-thumbnail badil-rounded" style="max-width:120px; max-height:60px"
+                                                 {% if flyer.settings.ogImageMeta %}
+                                                    src="{{ flyer.settings.ogImageMeta.url }}"
+                                                 {% else %}
+                                                    src="{% static "gull-admin/images/faces/1.jpg" %}"
+                                                 {% endif %}
+                                            >
+                                        </div>
+                                    </div>
+                                    <div class="form-row mb-1">
+                                        <div class="col-12 mb-3">
+                                            <label class="font-weight-bold badil-color-gray d-block">{% trans "Dimensioni consigliate: 1200x630 px, formato immagine: .png" %}</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-row mb-1">
+                                        <div class="col-12 col-lg-8 col-md-12 col-sm-12 mb-3">
+                                            <div>
+                                                <label class="font-weight-bold badil-color-gray d-inline">{% trans "Immagine condivisione Whatsapp/Telegram" %}</label>
+                                                <i class="ml-1 text-12 i-Information position-absolute" data-toggle="tooltip" data-placement="top" title="" data-original-title="{% trans 'Imposta un’immagine per la condivisione della tua pubblicazione su Whatsapp e Telegram)'  %}"></i>
+                                            </div>
+                                            <div class="badil-file-picker">
+                                                <input type="file" class="live_preview" data-target="#ogImageMeta_mobile_preview"  name="ogImageMeta_mobile" accept="image/*" style="display: none;" id="ogImageMeta_mobile" onchange="updateField('ogImageMeta_mobilePlaceholder', this)">
+                                                <span id="ogImageMeta_mobilePlaceholder">{% if flyer.settings.ogImageMeta_mobile %}{{ flyer.settings.ogImageMeta_mobile.url | basename }}{% else %}Share_img.jpeg{% endif %}</span>
+                                                <label ><a onclick="uploadModal('ogImageMeta_mobile','nav-seo-tab','Immagine condivisione Whatsapp/Telegram')">{% trans "Scegli" %}</a></label>
+                                                <label for="ogImageMeta_mobile" class="d-none" id="for-ogImageMeta_mobile">{% trans "Scegli" %}</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-4 col-md-12 col-sm-12 mb-3">
+                                            <label class="font-weight-bold badil-color-gray d-block" for="ogImageMeta_mobile_preview">{% trans "Anteprima immagine" %}</label>
+                                            <img id="ogImageMeta_mobile_preview" class="img-thumbnail badil-rounded" style="max-width:120px; max-height: 60px"
+                                                 {% if flyer.settings.ogImageMeta_mobile %}
+                                                    src="{{ flyer.settings.ogImageMeta_mobile.url }}"
+                                                 {% else %}
+                                                    src="{% static "gull-admin/images/faces/1.jpg" %}"
+                                                 {% endif %}
+                                            >
+                                        </div>
+                                    </div>
+                                    <div class="form-row mb-1">
+                                        <div class="col-12 mb-3">
+                                            <label class="font-weight-bold badil-color-gray d-block">{% trans "Dimensioni consigliate: 300x300 px, formato immagine: .jpeg" %}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="text-right mt-0">
+                        <input type="submit" class="btn btn-primary" value="{% trans "Salva" %}"/>
+                        <a href="{% if request.GET.from %}{% url 'builder:edit_interactive_flyer' flyer.pk %} {% else %}/it/dashboard{% endif %}" class="btn btn-secondary">{% trans 'Annulla' %}</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block modals %}
+    {% include "builder/modals/edit_interactive_flyer/_add_index_modal.html" %}
+    {% include "builder/modals/edit_interactive_flyer/_polotno_integration_modal.html" %}
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'builder/new/live_preview.js' %}" type="text/javascript"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        let searchParams = new URLSearchParams(window.location.search);
+        
+        if (searchParams.has('tab_id')){
+            let tab_id = searchParams.get('tab_id');
+            tab_id='#'+tab_id
+            $(tab_id).click()
+        }
+        let jsonSidebar = JSON.parse(document.getElementById('json-sidebar').textContent);
+        jsonSidebar.forEach((item) => {
+            if ($(`#sidebar_${item}`).length > 0) {
+                $(`#sidebar_${item}`).prop('checked', true);
+            } else {
+                if (item == 'leaflet'){
+                    $('label[for="sidebar_type"]').html('Pubblicazione');
+                }else{
+                    $('label[for="sidebar_type"]').html(item);
+                }
+                
+                $('#sidebar_type').val(item);
+            }
+        });
+        
+        if('{{tab}}' != ''){
+            $('.tab-pane').removeClass('active show');
+            $('#nav-tab .nav-item').removeClass('active show');
+            $('#{{tab}}').addClass('active show');
+            $('a[href="#{{tab}}"]').addClass('active show');
+        }
+        // App.interactive_flyer.settings.init();
+        let polotnoIntegration = new PolotnoIntegrationClass({{ request.user.settings.client_id }}, {{ flyer.id }});
+        {% if request.GET.error %}
+            polotnoIntegration.errorMessage(`${gettext('{{request.GET.error}}')}`)
+        {% endif %}
+        const fields = ['#grocery_list_min_value'];
+        fields.forEach((fieldId) => {
+            $(document).find(fieldId).keyup(function(evt) {
+                $(this).val($(this).val().replaceAll(',', '.'));
+            });
+        });
+        if($('#sidebar_products').is(':checked')){
+            $('#perm-filterUnderprice').removeClass('d-none');
+        }
+        $('#sidebar_products').on('change', function(){
+            if($(this).is(':checked')){
+                $('#perm-filterUnderprice').removeClass('d-none');
+            }else{
+                $('#perm-filterUnderprice').addClass('d-none');
+
+            }
+        })
+    });
+</script>
+
+
+<script>
+function uploadModal(type,id="",name="") {
+    $('#add-index-modal').modal('show');
+    $('.polotno-create').attr('data-type',type);
+    $('.polotno-create').attr('data-id',id);
+    $('.polotno-choose-edit').attr('data-type',type);
+    $('#upload-format').attr('onclick','$("#add-index-modal").click();setTimeout(function(){ $("#for-'+ type +'").click() }, 300);');
+    $('.sizes').hide();
+    $('#modal-title h5').html(name);
+}
+
+function disableField(id, trigger){
+    if(trigger.value == "True"){
+        document.getElementById(id, trigger).disabled = true;
+    }
+    else {
+        document.getElementById(id, trigger).disabled = false;
+    }
+}
+
+function disableFieldDate(id, trigger){
+    if(trigger.value == "True"){
+        document.getElementById(id, trigger).disabled = true;
+        document.getElementById(id, trigger).placeholder = "{% trans 'Disabilitato' %}";
+        document.getElementById(id, trigger).style = "background-color: #eeeeee !important;";
+        document.getElementById(id, trigger).value = '';
+    }
+    else {
+        document.getElementById(id, trigger).disabled = false;
+        document.getElementById(id, trigger).placeholder = "{% trans 'Inserisci data di pubblicazione' %}";
+        document.getElementById(id, trigger).style = "background-color: #ffffff !important;";
+    }
+}
+
+function disableFieldCheckbox(id, trigger){
+    if(trigger.checked ){
+        document.getElementById(id, trigger).disabled = false;
+    }
+    else {
+        document.getElementById(id, trigger).disabled = true;
+    }
+}
+
+function disableFieldCheckboxToCheckbox(id, trigger){
+    if(trigger.checked ){
+        document.getElementById(id, trigger).disabled = false;
+    }
+    else {
+        document.getElementById(id, trigger).disabled = true;
+        document.getElementById(id, trigger).checked = false;
+    }
+}
+
+function disableFieldCheckboxPlaceholder(id, trigger){
+    if(trigger.checked ){
+        document.getElementById(id, trigger).disabled = false;
+        document.getElementById(id, trigger).placeholder = "50";
+        document.getElementById(id, trigger).style = "background-color: #ffffff !important;";
+        document.getElementById(id, trigger).parentNode.style = "background-color: #ffffff !important;";
+    }
+    else {
+        document.getElementById(id, trigger).disabled = true;
+        document.getElementById(id, trigger).placeholder = "{% trans 'Disabilitato' %}";
+        document.getElementById(id, trigger).style = "background-color: #eeeeee !important;";
+        document.getElementById(id, trigger).parentNode.style = "background-color: #eeeeee !important;";
+    }
+}
+function disableFieldCheckboxPlaceholder2(id, trigger){
+    if( !trigger.checked ){
+        document.getElementById(id, trigger).disabled = true;
+        document.getElementById(id, trigger).placeholder = "{% trans 'Disabilitato' %}";
+        document.getElementById(id, trigger).style = "background-color: #eeeeee !important;";
+        document.getElementById(id, trigger).parentNode.style = "background-color: #eeeeee !important;";
+    }
+}
+
+function enableField(id, trigger){
+    if(trigger.value == "True"){
+        document.getElementById(id, trigger).disabled = false;
+    }
+    else {
+        document.getElementById(id, trigger).disabled = true;
+    }
+}
+
+function updateField(id, trigger){
+    var filename = trigger.value.split(/(\\|\/)/g).pop()
+    document.getElementById(id).innerText = filename;
+}
+
+function change_banner_click(){
+    $('#product_banner').css('display','none');
+    $('#href_banner').css('display','none');
+    if($('input[name="banner_click"]:checked').val() == '1'){
+        $('#product_banner').css('display','inline');
+    }else if($('input[name="banner_click"]:checked').val() == '2' ){
+        $('#href_banner').css('display','inline');
+    };
+}
+
+function banner_click_switch(){
+    if($('#choise_banner').prop('checked') == true){
+        $('#banner_click_switch').removeClass('d-none');
+    }else{
+        $('#banner_click_switch').addClass('d-none');
+        $('#external_banner_click').prop('checked', false);
+        $('#internal_banner_click').prop('checked', false);
+        $('#href_banner').val('').css('display','none');
+        $('#product_banner').val('0').css('display','none');
+    }
+}
+
+function showValue(id, trigger){
+    document.getElementById(id).innerText = trigger.value;
+}
+
+$('.marker-selector input:radio').change(function() {
+    $(".marker-selector input:radio:checked").parents("figure").css('border', 'red solid 1px');
+    $(".marker-selector input:radio:not(:checked)").parents("figure").css('border', '#dee2e6 solid 1px');
+});
+
+</script>
+{% endblock %}

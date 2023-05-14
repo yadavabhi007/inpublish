@@ -1,0 +1,75 @@
+{% load i18n %}
+
+<div id="info-interactivity-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{% trans 'Interattività: info' %}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col">
+                        <label class="checkbox checkbox-primary">
+                            <input type="checkbox" value="True" name="edit-info-interactivity_active" id="edit-info-interactivity_active">
+                            <span>{% trans 'Attivo' %}</span>
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="edit-info-interactivity_title" class="col-sm-4 col-form-label">{% trans "Titolo" %}</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="edit-info-interactivity_title" name="edit-info-interactivity_title" value="">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="edit-info-interactivity_content-title" class="col-sm-4 col-form-label">{% trans "Titolo info" %}</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="edit-info-interactivity_content-title" name="edit-info-interactivity_content-title" value="">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="edit-info-interactivity_content-text" class="col-sm-4 col-form-label">{% trans "Testo info" %}</label>
+                    <div class="col-sm-8">
+                        <textarea class="form-control" id="edit-info-interactivity_content-text" name="edit-info-interactivity_content-text" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <div id="edit-info-interactivity_img" class="form-group row d-none">
+                    <div class="col-4">
+                        {% trans 'Immagine attuale' %}
+                    </div>
+                    <div class="col-4">
+                        <img class="img-fluid" src="">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="" class="col-sm-4 col-form-label">
+                        {% trans 'Immagine' %}
+                    </label>
+                    <div class="col-8">
+                        <div class="custom-file">
+                            <input type="file"
+                                   accept="image/*"
+                                   class="my-custom-file-input"
+                                   data-type="img" data-id="edit-info-interactivity_image_file"
+                                   data-target="#edit-info-interactivity_img_preview"
+                                   id="edit-info-interactivity_image_file" name="edit-info-interactivity_image_file">
+                            <label class="custom-file-label" for="edit-info-interactivity_image_file">{% trans 'Scegli file' %}</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row" id="edit-info-interactivity_img_preview"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="editInteractiveFlyer.saveProductInteraction('info');">{% trans 'Salva' %}</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans 'Chiudi' %}</button>
+            </div>
+        </div>
+    </div>
+</div>

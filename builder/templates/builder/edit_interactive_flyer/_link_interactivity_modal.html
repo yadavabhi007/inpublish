@@ -1,0 +1,50 @@
+{% load i18n %}
+
+{# TODO cancellami #}
+
+<div id="link-interactivity-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{% trans 'Interattività' %}: link</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="edit-link-interactivity_active"
+                                name="edit-link-interactivity_active" {% if marker.active %}checked{% endif %}>
+                            <label class="custom-control-label" for="edit-link-interactivity_active">{% trans 'Attivo' %}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="edit-link-interactivity_title" class="col-sm-4 col-form-label">{% trans 'Titolo' %}</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="edit-link-interactivity_title" name="edit-link-interactivity_link" value="{{ marker.title|default:'' }}">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="edit-link-interactivity_link" class="col-sm-4 col-form-label">{% trans 'Link' %}</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="edit-link-interactivity_link" name="edit-link-interactivity_link" value="{{ marker.link|default:'' }}">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary"
+                    onclick="App.edit_product_interactivity.save_link_interactivity()">{% trans 'Salva' %}</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans 'Chiudi' %}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        // App.edit_interactive_flyer.init_new_image_field();
+    });
+</script>

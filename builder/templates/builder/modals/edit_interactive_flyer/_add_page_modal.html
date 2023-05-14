@@ -1,0 +1,51 @@
+{% load i18n %}
+
+<div id="add-page-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{% trans 'Aggiungi pagina' %}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="POST" enctype="multipart/form-data" onsubmit="$('#add-page-modal').modal('hide'); App.show_loader();">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <!-- <p>
+                        {% trans 'Dimensioni' %}
+                        <br>
+                        {% trans 'Lunghezza' %}:  flyer.image_page_width px
+                        <br>
+                        {% trans 'Altezza' %}:  flyer.image_page_height px
+                    </p> -->
+
+                    <input type="hidden" name="action" value="add-page">
+
+                    <div class="form-group row">
+                        <!-- <label for="index_image">Immagine</label> -->
+                        <label for="index_image" class="col-sm-4 col-form-label">{% trans 'Immagine' %}</label>
+                        <div class="col-sm-8">
+                            <input type="file" class="form-control-file" accept="image/*" id="add-page-form_image" name="image" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="add-page-form_page" class="col-sm-4 col-form-label">Pagina</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id="add-page-form_page" name="page">
+                                <option value="0">{% trans 'Ultima pagina' %}</option>
+                                {% for page in flyer.pages.all %}
+                                    <option value="{{page.number}}">{{page.number}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans 'Chiudi' %}</button>
+                    <button type="submit" class="btn btn-primary">{% trans 'Aggiungi' %}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

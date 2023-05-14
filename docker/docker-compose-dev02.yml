@@ -1,0 +1,38 @@
+version: "3"
+
+services:
+
+  generatore_interattivo_django:
+    container_name: generatore_interattivo_django
+    restart: always
+    build: .
+    depends_on:
+      - generatore_db
+    volumes:
+      - ../:/app
+    command: "/bin/bash /app/docker/dev/entrypoint.sh"
+    links:
+      - "generatore_db"
+    env_file: "dev02/envs/generatore_interattivo_django_debug.env"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.generatoreinterattivo.entrypoints=websecure"
+      - "traefik.http.services.generatoreinterattivo.loadbalancer.server.port=80"
+      - "traefik.http.routers.generatoreinterattivo.rule=Host(`dev02.interattivo.net`)"
+      - "traefik.http.routers.generatoreinterattivo.tls.certresolver=lets-encr"
+
+  generatore_db:
+    container_name: generatore_db
+    restart: always
+    env_file: "prod/envs/generatore_db.env"
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    entrypoint: ['/entrypoint.sh', '--default-authentication-plugin=mysql_native_password']
+    volumes:
+      - ./prod/mysql-data:/var/lib/mysql
+
+networks:
+  default:
+    external:
+      name: traefik_net

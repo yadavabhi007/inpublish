@@ -1,0 +1,26 @@
+{% load i18n %}
+{% load static %}
+{% get_current_language as LANGUAGE_CODE %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}" dir="">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>{% trans "Oops... Si è verificato un errore" %} | {% trans "Generatore Interattivo" %}</title>
+
+    <link href="{% static "gull-admin/css/themes/lite-purple.min.css" %}" rel="stylesheet" type="text/css" media="all">
+
+    <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700,800,900" rel="stylesheet" />
+  </head>
+
+  <body class="text-center">
+    <div class="main-content">
+        <div>
+            <img src="{% static "gull-admin/images/error.jpg" %}" alt="error">
+            <h4>{% trans "Oops... Si è verificato un errore" %}</h4>
+        </div>
+    </div>
+  </body>
+
+</html>

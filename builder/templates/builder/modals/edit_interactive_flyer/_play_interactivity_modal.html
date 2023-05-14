@@ -1,0 +1,121 @@
+{% load i18n %}
+
+<div id="play-interactivity-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{% trans 'Interattività: video' %}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col">
+                        <label class="checkbox checkbox-primary">
+                            <input type="checkbox" value="True" name="edit-play-interactivity_active" id="edit-play-interactivity_active">
+                            <span>{% trans 'Attivo' %}</span>
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="edit-play-interactivity_title" class="col-sm-4 col-form-label">{% trans 'Titolo' %}</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="edit-play-interactivity_title"
+                            name="edit-play-interactivity_title" value="">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col">
+                        <label class="checkbox checkbox-primary">
+                            <input type="checkbox" value="True" name="edit-play-interactivity_show_icon" id="edit-play-interactivity_show_icon">
+                            <span>{% trans "Mostra l'icona interattività" %}</span>
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div id="edit-play-interactivity_video" class="form-group row d-none">
+                    <div class="col-4">
+                        {% trans 'Video attuale' %}
+                    </div>
+                    <div class="col-8">
+                        <video class="w-100" controls>
+                            <source src="" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div id="edit-play-interactivity_video_yt" class="form-group row d-none">
+                    <div class="col-4">
+                        {% trans 'Video attuale' %}
+                    </div>
+                    <div class="col-8">
+                        <iframe class="w-100"
+                            src="" frameborder="0"
+                            allowfullscreen></iframe>
+                    </div>
+                </div>
+                <label class="radio radio-secondary">
+                    <input type="radio" name="video_type" onclick="videoRadioClick(this)" value="video_file" id="vf_radio"><span>Carica video</span><span class="checkmark"></span>
+                </label>
+                <label class="radio radio-secondary">
+                    <input type="radio" name="video_type" onclick="videoRadioClick(this)" value="youtube" id="yt_radio"><span>Inserisci link YouTube</span><span class="checkmark"></span>
+                </label>
+                <div class="form-group row d-none" id="interaction-video_yt">
+                    <label for="edit-play-interactivity_link" class="col-sm-4 col-form-label">{% trans 'Link' %}</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="edit-play-interactivity_link" name="youtube" value="">
+                    </div>
+                </div>
+                <div class="form-group row d-none" id="interaction-video_vf">
+                    <label for="" class="col-sm-4 col-form-label">{% trans 'Video' %}</label>
+                    <div class="col-8">
+                        <div class="custom-file">
+                            <input type="file"
+                                   accept="video/*"
+                                   class="my-custom-file-input"
+                                   data-type="video" data-id="edit-play-interactivity_video_file"
+                                   data-target="#edit-play-interactivity_video_preview"
+                                   id="edit-play-interactivity_video_file"
+                                   name="video_file">
+                            <label class="custom-file-label text-truncate" for="edit-play-interactivity_video_file">{% trans 'Scegli file' %}</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row" id="edit-play-interactivity_video_preview"></div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="editInteractiveFlyer.saveProductInteraction('play');">{% trans 'Salva' %}</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" >{% trans 'Chiudi' %}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    
+    function videoRadioClick(obj) {
+        const radioValue = obj.getAttribute('value');
+        switch (radioValue) {
+            case 'video_file':
+                $('#interaction-video_vf').removeClass('d-none');
+                $('#interaction-video_yt').addClass('d-none');
+                $('#edit-play-interactivity_link').val(null);
+                break;
+
+            case 'youtube':
+                $('#edit-play-interactivity_video_preview').html('')
+                $('#edit-play-interactivity_video_file').val("");
+                // $('label[for="edit-play-interactivity_video_file"]').val("");
+                $('#interaction-video_yt').removeClass('d-none');
+                
+                $('#interaction-video_vf').addClass('d-none');
+                
+                break;
+        }
+    }
+</script>

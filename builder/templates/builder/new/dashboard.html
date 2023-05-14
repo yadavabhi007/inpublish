@@ -1,0 +1,332 @@
+{% extends "builder/new/base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="col-lg-9 col-12 mx-auto">
+    <div class="card text-left">
+        <div class="card-body" style="overflow-y:auto;max-height: 80vh;">
+            {% if flyers|length == 0 %}
+            <h4 class="card-title mb-3">{% trans "Crea" %} <a href="{% url "builder:new_interactive_flyer" %}">{% trans "nuova pubblicazione" %}</a></h4>
+            {% else %}
+            <!-- <h4 class="card-title mb-3" >{% trans "Lista Volantini interattivi" %}</h4> -->
+            <div class="table-responsive">
+                <table class="table" id="flyers" style="min-height:140px;">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="w-50">{% trans "Nome" %}</th>
+                            <th scope="col">{% trans "Stato" %}</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {% for flyer in flyers %}
+                        <tr>
+                            <td>{{ flyer.name }}</td>
+                            <td>
+                                {% if flyer.is_expired %}
+                                <div class="badge badge-warning m-2 p-1">{% trans "Scaduto" %}</div>
+                                {% elif flyer.is_scheduled %}
+                                <div class="badge badge-success m-2 p-1">{% trans "Pianificato" %}</div>
+                                {% elif flyer.is_published or flyer.is_scheduled_from_published %}
+                                <div class="badge badge-success m-2 p-1">{% trans "Pubblicato" %}</div>
+                                {% elif flyer.is_draft %}
+                                <div class="badge badge-light m-2 p-1">{% trans "Bozza" %}</div>
+                                {% elif flyer.is_error %}
+                                <div class="badge badge-danger m-2 p-1">{% trans "Errore" %}</div>
+                                {% elif flyer.is_forced_closure %}
+                                <div class="badge badge-danger m-2 p-1">{% trans "Chiusura forzata" %}</div>
+                                {% elif flyer.is_to_collect %}
+                                <div class="badge badge-danger m-2 p-1">{% trans "Da correggere" %}</div>
+                                {% endif %}
+                            </td>
+                            <td class="text-right">
+                                {% if flyer.initialization_error %}
+                                <div>
+                                    <span class="badge badge-danger">{% trans 'Errore nella generazione' %}</span>
+                                </div>
+                                <div>
+                                    <button type="button" class="mt-1 btn btn-outline-secondary btn-sm"
+                                        data-toggle="modal" data-target="#flyer_error_modal_{{ flyer.id }}">
+                                        {% trans 'Messaggio errore' %}
+                                    </button>
+                                    <a class="mt-1 btn btn-danger btn-sm"
+                                        onclick="return confirm({% trans 'Vuoi cancellare il volantino?' %})"
+                                        href="{% url 'builder:delete_interactive_flyer' interactive_flyer_id=flyer.pk %}">{% trans 'Elimina' %}</a>
+                                </div>
+                                <div class="modal fade" id="flyer_error_modal_{{ flyer.id }}" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                {{ flyer.initialization_error_message }}
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans 'Chiudi' %}</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% elif flyer.initialization_in_progress %}
+                                <p id="inizializzazione">{% trans 'Inizializzazione in corso...' %}</p>
+                                {% else %}
+                                {% if flyer.is_draft or flyer.is_to_collect %}
+                                <a class="btn btn-outline-success btn-sm"
+                                    href="{% url 'builder:manage_publication_interactive_flyer' interactive_flyer_id=flyer.pk new_state='publish' %}">
+                                    {% trans 'Pubblica' %}</a>
+                                {% elif flyer.is_published and flyer.publication_url or flyer.is_scheduled_from_published and flyer.publication_url%}
+                                <a class="btn btn-outline-info btn-sm" target="_blank"
+                                    href="{{ flyer.publication_url }}">{% trans 'Visualizza' %}</a>
+                                {% endif %}
+                                <a class="btn btn-primary btn-sm"
+                                    href="{% url 'builder:edit_interactive_flyer' interactive_flyer_id=flyer.pk %}">{%trans 'Modifica' %}</a>
+                                <div class="btn-group">
+                                    <button class="btn bg-white" type="button" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        <span class="_dot _r_block-dot bg-gray-500"></span>
+                                        <span class="_dot _r_block-dot bg-gray-500"></span>
+                                        <span class="_dot _r_block-dot bg-gray-500"></span>
+                                    </button>
+                                    <div class="dropdown-menu" x-placement="bottom-start">
+                                        <a class="dropdown-item"
+                                            href="{% url 'builder:share_flyer' interactive_flyer_id=flyer.pk  %}">{% trans 'Condividi' %}</a>
+                                        <a class="dropdown-item"
+                                            href="{% url 'builder:interactive_flyer_settings' interactive_flyer_id=flyer.pk  %}?previous=dashboard">{% trans 'Impostazioni' %}</a>
+                                        <!-- <a class="dropdown-item" onclick="App.clone_flyer({{flyer.id}})" href="#">{% trans 'Clona' %}</a> -->
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" style="cursor:pointer;"
+                                            onclick="deleteFlyer(this, '{% url 'builder:delete_interactive_flyer' interactive_flyer_id=flyer.pk %}')">{% trans 'Elimina' %}</a>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td></td>
+                            <td>{% trans "Crea un" %} <a href="{% url " builder:new_interactive_flyer" %}">{% trans
+                                    "nuovo volantino" %}</a> {% trans "per iniziare" %}</td>
+                            <td></td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript">
+    $(window).ready(function () {
+        
+        let dtable = reInitDataTable('#flyers');
+        setTimeout(() => {
+           
+            dtable.DataTable({
+                language: {
+                    url: '../../static/gull-admin/js/plugins/localization/italian.json'
+                },
+                searching: false,
+                paging: true,
+                order: [[1, "desc"]],
+
+            });
+            
+        }, 300);
+        setInterval(function () {
+            var refresh = $('#inizializzazione').html();
+            $.ajax({
+                method: "GET",
+                url: "{% url 'builder:dashboard' %}",
+                data: {
+                    'json': true,
+                    'class_stato':$('#flyers th:nth-child(2)').attr('class'),
+                    'class_nome': $('#flyers th:first-of-type').attr('class')
+                }
+            })
+                .done(function (data) {
+                    if (refresh == 'Inizializzazione in corso...'){
+                        $('#flyers').DataTable().destroy()
+                        $('#flyers tbody').html('');
+                        data.flyers.reverse().forEach(flyer => {
+                            
+                            var status = '';
+                            var manage_publication_interactive_flyer =`interactive-flyer/${flyer.id}/publish/`;
+                            var edit_interactive_flyer = `interactive-flyer/${flyer.id}/edit/`;
+                            var share_flyer = `interactive-flyer/${flyer.id}/share/`
+                            var interactive_flyer_settings = `interactive-flyers/${flyer.id}/settings/`
+                            switch (flyer.status) {
+                                case 4:
+                                    status = `<div class="badge badge-warning m-2 p-1">${gettext('Scaduto')}</div>`
+                                    break;
+                                case 2:
+                                    status = `<div class="badge badge-success m-2 p-1">${gettext('Pianificato')}</div>`
+                                    break;
+                                case 1:
+                                    status = `<div class="badge badge-success m-2 p-1">${gettext('Pubblicato')}</div>`
+                                    break;
+                                case 9:
+                                    status = `<div class="badge badge-success m-2 p-1">${gettext('Pubblicato')}</div>`
+                                    break;
+                                case 0:
+                                    status = `<div class="badge badge-light m-2 p-1">${gettext('Bozza')}</div>`
+                                    break;
+                                case 5:
+                                    status = `<div class="badge badge-danger m-2 p-1">${gettext('Errore')}</div>`
+                                    break;
+                                case 6:
+                                    status = `<div class="badge badge-danger m-2 p-1">${gettext('Chiusura forzata')}</div>`
+                                    break;
+                                case 3:
+                                    status = `<div class="badge badge-danger m-2 p-1">${gettext('Da correggere')}</div>`
+                                    break;
+                            }
+
+                            var initialization = ''
+                            if (flyer.initialization_error) {
+                                initialization = `<div>
+                                                <span class="badge badge-danger">${gettext('Errore nella generazione')}</span>
+                                            </div>
+                                            <div>
+                                                <button type="button" class="mt-1 btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#flyer_error_modal_${flyer.id}">
+                                                    ${gettext('Messaggio errore')}
+                                                </button>
+                                                <a class="mt-1 btn btn-danger btn-sm" onclick="return confirm({% trans 'Vuoi cancellare il volantino?' %})"
+                                                href="interactive-flyers/${flyer.id}/delete/">${gettext('Elimina')}</a>
+                                            </div>
+                                            <div class="modal fade" id="flyer_error_modal_${flyer.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                    <!-- <h5 class="modal-title" id="exampleModalLabel">Modal title</h5> -->
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                    ${flyer.initialization_error_message}
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">${gettext('Chiudi')}</button>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>`
+
+                            }else if(flyer.initialization_in_progress){
+                                initialization = `<p id="inizializzazione">${gettext('Inizializzazione in corso...')}</p>`
+                            }else{
+                                if(flyer.status == 3 || flyer.status == 0){
+                                    initialization = `<a class="btn btn-outline-success btn-sm mr-1" href="`+manage_publication_interactive_flyer+`">${gettext('Pubblica')}</a>`;
+                                }else if(flyer.status == 1 || flyer.status == 9 && flyer.publication_url){
+                                    initialization = `<a class="btn btn-outline-info btn-sm mr-1" target="_blank" href="${ flyer.publication_url }">${gettext('Visualizza')}</a>`
+                                }
+                                initialization += `<a class="btn btn-primary btn-sm"
+                                                    href="` + edit_interactive_flyer + `">${gettext('Modifica')}</a>
+                                                <div class="btn-group">
+                                                    <button class="btn bg-white" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <span class="_dot _r_block-dot bg-gray-500"></span>
+                                                        <span class="_dot _r_block-dot bg-gray-500"></span>
+                                                        <span class="_dot _r_block-dot bg-gray-500"></span>
+                                                    </button>
+                                                    <div class="dropdown-menu" x-placement="bottom-start">
+                                                        <a class="dropdown-item" href="`+share_flyer+`">${gettext('Condividi')}</a>
+                                                        <a class="dropdown-item" href="`+interactive_flyer_settings+`?previous=dashboard">${gettext('Impostazioni')}</a>
+                                                        
+                                                        <div class="dropdown-divider"></div>
+                                                        <a class="dropdown-item" style="cursor:pointer;"
+                                                        onclick="deleteFlyer(this, 'interactive-flyers/${flyer.id}/delete/')"
+                                                        >${gettext('Elimina')}</a>
+                                                    </div>
+                                                </div>`
+                            }
+                            // <a class="dropdown-item" onclick="App.clone_flyer(${flyer.id})" href="#">${gettext('Clona')}</a>
+                            if(data.flyers.length != 0){
+                                $('#flyers tbody').append(`
+                                    <tr>
+                                        <td>${flyer.name}</td>
+                                        <td>
+                                            ${status}
+                                        </td>
+                                        <td class="text-right">
+                                            ${initialization}
+                                        </td>
+                                    </tr>
+                                    `)
+                            }else{
+                                $('#flyers tbody').append(`
+                                    <tr>
+                                        <td></td>
+                                        <td>${gettext('Crea una')}<a href="{% url "builder:new_interactive_flyer" %}">${gettext('nuova pubblicazione')}</a> ${gettext('per iniziare"')}</td>
+                                        <td></td>
+                                    </tr>
+                                `)
+                            }
+
+                        });
+                        setTimeout(function(){
+                            dtable.DataTable({
+                                language: {
+                                    url: '../../static/gull-admin/js/plugins/localization/italian.json'
+                                },
+                                searching: false,
+                                paging: true,
+                                order: [[1, "desc"]],
+
+                            });
+                            // $('#flyers th:first-of-type').removeClass()
+                            // $('#flyers th:first-of-type').addClass(data.class_nome)
+                            // $('#flyers th:nth-child(2)').removeClass()
+                            // $('#flyers th:nth-child(2)').addClass(data.class_stato)
+                        },300)
+                        
+                };
+                })
+                .fail(function (data) {
+                    console.log(data)
+                })
+        }, 10000);
+
+        {% if flyers_initializing_count > 0 %}
+        {% endif %}
+    });
+    function reInitDataTable(tableId) {
+        const dtable = $(tableId);
+        if ($.fn.dataTable.isDataTable(tableId)) {
+            dtable.DataTable().destroy();
+        }
+
+        return dtable;
+    }
+
+    function deleteFlyer(element, link) {
+        Swal.fire({
+            title: `${gettext('Sei sicuro di voler eliminare la pubblicazione?')}`,
+            showDenyButton: true,
+            showCancelButton: false,
+            denyButtonText: `${gettext('Annulla')}`,
+            confirmButtonText: `${gettext('Si')}`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                location.href = link;
+            }
+        });
+    }
+</script>
+{% endblock %}
+
+{% block modals %}
+{% include "builder/modals/_clone_interactive_flyer_modal.html" %}
+{% endblock %}

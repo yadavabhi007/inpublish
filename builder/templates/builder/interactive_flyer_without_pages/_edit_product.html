@@ -1,0 +1,458 @@
+{% load i18n %}
+
+<div id="edit-product-card" class="card mb-3 mt-3">
+    <div class="card-header bg-secondary text-light">
+        <h5>{% trans 'Modifica prodotto interattivo' %}</h5>
+
+        <div class="mt-1">
+            <button class="btn btn-primary font-weight-bold"
+                onclick="App.edit_iflyer_wpag.update_interactive_product()">
+                {% trans 'SALVA' %}
+            </button>
+            <button class="btn btn-light font-weight-bold"
+                onclick="App.edit_iflyer_wpag.cancel_interactive_product_edit()">
+                {% trans 'ANNULLA' %}
+            </button>
+        </div>
+    </div>
+    <div class="card-body">
+        <form>
+            <h5>{% trans 'Immagini' %}</h5>
+            <div class="row">
+                <div class="col">
+                    <button class="btn btn-secondary" type="button"
+                        onclick="App.edit_iflyer_wpag.load_product_images_modal()">
+                        <i class="material-icons">photo_library</i>
+                        {% trans 'Gestisci immagini' %}
+                    </button>
+                </div>
+            </div>
+            <hr style="border-top: 4px solid #ddd;">
+            <h5>{% trans 'Interattività' %}</h5>
+            <div class="row mb-3">
+                <div class="col-auto">
+                    <button type="button" class="btn btn-info"
+                        onclick="App.edit_product_interactivity.load_edit_link_interactivity_modal()">
+                        <i class="material-icons">
+                            {% trans 'language' %}
+                        </i>
+                        Link
+                    </button>
+                </div>
+                <div class="col-auto">
+                    <div id="link-interactivity-badge-container">
+                        {% if product.has_link_interactivity %}
+                        <span class="badge badge-success">{% trans 'presente' %}</span>
+                        {% else %}
+                        <span class="badge badge-secondary">{% trans 'non presente' %}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-auto">
+                    <button type="button" class="btn btn-info"
+                        onclick="App.edit_product_interactivity.load_edit_video_interactivity_modal()">
+                        <i class="material-icons">
+                            {% trans 'play_arrow' %}
+                        </i>
+                        {% trans 'Video' %}
+                    </button>
+                </div>
+                <div class="col-auto">
+                    <div id="video-interactivity-badge-container">
+                        {% if product.has_video_interactivity %}
+                        <span class="badge badge-success">{% trans 'presente' %}</span>
+                        {% else %}
+                        <span class="badge badge-secondary">{% trans 'non presente' %}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-auto">
+                    <button class="btn btn-info" type="button"
+                        onclick="App.edit_product_interactivity.load_edit_recipe_interactivity_modal()">
+                        <i class="material-icons">
+                            {% trans 'restaurant_menu' %}
+                        </i>
+                        {% trans 'Ricetta' %}
+                    </button>
+                </div>
+                <div class="col-auto">
+                    <div id="recipe-interactivity-badge-container">
+                        {% if product.has_recipe_interactivity %}
+                        <span class="badge badge-success">{% trans 'presente' %}</span>
+                        {% else %}
+                        <span class="badge badge-secondary">{% trans 'non presente' %}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-auto">
+                    <button class="btn btn-info" type="button"
+                        onclick="App.edit_product_interactivity.load_edit_info_interactivity_modal()">
+                        <i class="material-icons">
+                            {% trans 'info' %}
+                        </i>
+                        {% trans 'Info' %}
+                    </button>
+                </div>
+                <div class="col-auto">
+                    <div id="info-interactivity-badge-container">
+                        {% if product.has_info_interactivity %}
+                        <span class="badge badge-success">{% trans 'presente' %}</span>
+                        {% else %}
+                        <span class="badge badge-secondary">{% trans 'non presente' %}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-auto">
+                    <button class="btn btn-info" type="button"
+                    onclick="App.edit_product_interactivity.load_edit_specs_interactivity_modal()">
+                        <i class="material-icons">
+                            {% trans 'list_alt' %}
+                        </i>
+                        {% trans 'Specifiche' %}
+                    </button>
+                </div>
+                <div class="col-auto">
+                    <div id="specs-interactivity-badge-container">
+                        {% if product.has_specs_interactivity %}
+                        <span class="badge badge-success">{% trans 'presente' %}</span>
+                        {% else %}
+                        <span class="badge badge-secondary">{% trans 'non presente' %}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <!-- <hr style="border-top: 4px solid #ddd;">
+            <div class="form-row">
+                <div class="form-group col">
+                    <label for="exampleInputEmail1">Blueprint top</label>
+                    <input type="text" class="form-control" id="blueprint_top_edit" readonly
+                        value="{{blueprint.top}}" />
+                </div>
+                <div class="form-group col">
+                    <label for="exampleInputEmail1">Blueprint left</label>
+                    <input type="text" class="form-control" id="blueprint_left_edit" readonly />
+                </div>
+                <div class="form-group col">
+                    <label for="exampleInputEmail1">Blueprint width</label>
+                    <input type="text" class="form-control" id="blueprint_width_edit" readonly />
+                </div>
+                <div class="form-group col">
+                    <label for="exampleInputEmail1">Blueprint height</label>
+                    <input type="text" class="form-control" id="blueprint_height_edit" readonly />
+                </div>
+            </div> -->
+        </form>
+        <!-- <div id="crop-preview-edit" class="mt-3 mb-3"
+            style="height: 400px; overflow: hidden; border:2px solid #007bff;"></div> -->
+        <hr style="border-top: 4px solid #ddd;">
+        <form>
+            <div class="form-group row">
+                <label for="edit-interactive-product-form_product_uid" class="col-sm-4 col-form-label">ITEM ID</label>
+                <div class="col-sm-8">
+                    <input type="text" name="field1" class="form-control" id="edit-interactive-product-form_product_uid"
+                        autocomplete="off" value="{{product.product_uid|default:''}}" readonly>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="edit-interactive-product-form_field1" class="col-sm-4 col-form-label">{% trans 'Descrizione' %}
+                    1</label>
+                <div class="col-sm-8">
+                    <input type="text" name="field1" class="form-control" id="edit-interactive-product-form_field1"
+                        autocomplete="off" value="{{product.field1}}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="edit-interactive-product-form_field2" class="col-sm-4 col-form-label">{% trans 'Descrizione' %}
+                    2</label>
+                <div class="col-sm-8">
+                    <input type="text" name="field2" class="form-control" id="edit-interactive-product-form_field2"
+                        autocomplete="off" value="{{product.field2}}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="edit-interactive-product-form_field3" class="col-sm-4 col-form-label">{% trans 'Descrizione' %}
+                    3</label>
+                <div class="col-sm-8">
+                    <input type="text" name="field3" class="form-control" id="edit-interactive-product-form_field3"
+                        autocomplete="off" value="{{product.field3}}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="edit-interactive-product-form_field4" class="col-sm-4 col-form-label">{% trans 'Descrizione' %}
+                    4</label>
+                <div class="col-sm-8">
+                    <input type="text" name="field4" class="form-control" id="edit-interactive-product-form_field4"
+                        autocomplete="off" value="{{product.field4}}">
+                </div>
+            </div>
+            <hr style="border-top: 4px solid #ddd;">
+            <div class="form-group row">
+                <label for="edit-interactive-product-form_category" class="col-sm-4 col-form-label">{% trans 'Categoria' %}</label>
+                <div class="col-sm-8">
+                    <select id="edit-interactive-product-form_category" name="category" class="form-control">
+                        <option value=""></option>
+                        {% for category in categories %}
+                        <option value="{{category.id}}" {% if product.category == category.name %}selected{% endif %}>
+                            {{category.name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="edit-interactive-product-form_subcategory"
+                    class="col-sm-4 col-form-label">{% 'Sottocategoria' %}</label>
+                <div class="col-sm-8">
+                    <select id="edit-interactive-product-form_subcategory" name="subcategory" class="form-control"
+                        disabled>
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+            {% if product.item_id is not None %}
+            <div class="form-group row">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-8">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox"
+                            id="edit-interactive-product-form_save_categories_on_catalog" name="save_categories_on_catalog" checked>
+                        <label class="form-check-label" for="edit-interactive-product-form_save_categories_on_catalog">
+                            {% tranbs 'Salva categoria e sottocategoria nel catalogo A&B' %}
+                        </label>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            <hr style="border-top: 4px solid #ddd;">
+            <div class="form-group row">
+                <label for="edit-interactive-product-form_price_computation_type"
+                    class="col-sm-4 col-form-label">{% 'CALCOLO PREZZO' %}</label>
+                <div class="col-sm-8">
+                    <select id="edit-interactive-product-form_price_computation_type" name="price_computation_type"
+                        class="form-control">
+                        <option value="pz" {% if product.grocery_label == "pz." %}selected{% endif %}>{% trans 'Prezzo al pezzo' %}
+                        </option>
+                        <option value="kg-kg" {% if product.grocery_label == "kg." %}selected{% endif %}>{% trans 'Prezzo al Kg' %},
+                            {% trans 'Calcolo al kg' %}</option>
+                        <option value="kg-etto"
+                            {% if product.grocery_label == "etto/i" and product.equivalence == 10 %}selected{% endif %}>
+                            {% trans 'Prezzo al Kg' %}, {% trans 'Calcolo in etto' %}</option>
+                        <option value="kg-gr" {% if product.grocery_label == "gr." %}selected{% endif %}>{% trans 'Prezzo al Kg' %},
+                            {% trans 'Calcolo in grammi' %}</option>
+                        <option value="etto-etto"
+                            {% if product.grocery_label == "etto/i" and product.equivalence == 1 %}selected{% endif %}>
+                            {% trans "Prezzo all'etto" %}, {% trans 'Calcolo in etto' %}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="edit-interactive-product-form_price_label" class="col-sm-4 col-form-label">{% trans 'Etichetta prezzo' %}</label>
+                <div class="col-sm-8">
+                    <input type="text" name="price_label" class="form-control"
+                        id="edit-interactive-product-form_price_label" autocomplete="off"
+                        value="{{product.price_label}}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="edit-interactive-product-form_grocery_label" class="col-sm-4 col-form-label">{% trans 'Etichetta quantità' %}</label>
+                <div class="col-sm-8">
+                    <input type="text" name="grocery_label" class="form-control"
+                        id="edit-interactive-product-form_grocery_label" autocomplete="off"
+                        value="{{product.grocery_label}}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="edit-interactive-product-form_equivalence"
+                    class="col-sm-4 col-form-label">{% trans 'Equivalenza' %}</label>
+                <div class="col-sm-8">
+                    <input type="number" name="equivalence" class="form-control"
+                        id="edit-interactive-product-form_equivalence" autocomplete="off"
+                        value="{{product.equivalence}}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="edit-interactive-product-form_quantity_step" class="col-sm-4 col-form-label">{% 'Misura quantità' %}</label>
+                <div class="col-sm-8">
+                    <input type="number" name="quantity_step" class="form-control"
+                        id="edit-interactive-product-form_quantity_step" autocomplete="off"
+                        value="{{product.quantity_step}}">
+                </div>
+            </div>
+            <hr style="border-top: 4px solid #ddd;">
+            <div class="form-group row">
+                <label for="edit-interactive-product-form_varieties" class="col-sm-4 col-form-label">{% 'Varietà' %}</label>
+                <div class="col-sm-8">
+                    <input type="text" name="varieties" class="form-control"
+                        id="edit-interactive-product-form_varieties" autocomplete="off"
+                        value="{{product.varieties_list|join:","}}">
+                    <small class="form-text text-muted">
+                        Virgola o invio per separare le varietà
+                    </small>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="edit-interactive-product-form_grammage" class="col-sm-4 col-form-label">{% 'Grammatura' %}</label>
+                <div class="col-sm-8">
+                    <input type="text" name="grammage" class="form-control" id="edit-interactive-product-form_grammage"
+                        autocomplete="off" value="{{product.grammage|default:""}}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="edit-interactive-product-form_price_with_iva" class="col-sm-4 col-form-label">{% 'Prezzo' %}</label>
+                <div class="col-sm-8">
+                    <input type="text" name="price_with_iva" class="form-control"
+                        id="edit-interactive-product-form_price_with_iva" autocomplete="off"
+                        value="{{product.price_with_iva}}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="edit-interactive-product-form_price_for_kg" class="col-sm-4 col-form-label">{% 'Prezzo al Kg' %}</label>
+                <div class="col-sm-8">
+                    <input type="text" name="price_for_kg" class="form-control"
+                        id="edit-interactive-product-form_price_for_kg" autocomplete="off"
+                        value="{{product.price_for_kg|default:""}}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="edit-interactive-product-form_available_pieces" class="col-sm-4 col-form-label">{% 'Pezzi disponibili' %}</label>
+                <div class="col-sm-8">
+                    <input type="text" name="available_pieces" class="form-control"
+                        id="edit-interactive-product-form_available_pieces" autocomplete="off"
+                        value="{{product.available_pieces|default:""}}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="edit-interactive-product-form_max_purchasable_pieces"
+                    class="col-sm-4 col-form-label">{% 'Massimo pezzi acquistabili' %}</label>
+                <div class="col-sm-8">
+                    <input type="text" name="max_purchasable_pieces" class="form-control"
+                        id="edit-interactive-product-form_max_purchasable_pieces" autocomplete="off"
+                        value="{{product.max_purchasable_pieces|default:""}}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="edit-interactive-product-form_points" class="col-sm-4 col-form-label">{% trans 'Punti' %}</label>
+                <div class="col-sm-8">
+                    <input type="text" name="max_purchasable_pieces" class="form-control"
+                        id="edit-interactive-product-form_points" autocomplete="off"
+                        value="{{product.punti|default:""}}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-8">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox"
+                            id="edit-interactive-product-form_fidelity_product" name="fidelity_product"
+                            {% if product.fidelity_product %}checked{% endif %}>
+                        <label class="form-check-label" for="edit-interactive-product-form_fidelity_product">
+                            {% trans 'Prodotto fedeltà' %}
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-8">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="edit-interactive-product-form_focus"
+                            name="focus" {% if product.focus %}checked{% endif %}>
+                        <label class="form-check-label" for="edit-interactive-product-form_focus">
+                            {% trans 'Focus' %}
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-8">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="edit-interactive-product-form_pam"
+                            name="pam" {% if product.pam %}checked{% endif %}>
+                        <label class="form-check-label" for="edit-interactive-product-form_pam">
+                            {% trans 'Pam' %}
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-8">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="edit-interactive-product-form_three_for_two"
+                            name="three_for_two" {% if product.three_for_two %}checked{% endif %}>
+                        <label class="form-check-label" for="edit-interactive-product-form_three_for_two">
+                            {% trans '3x2' %}
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-8">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox"
+                            id="edit-interactive-product-form_one_and_one_gratis" name="one_and_one_gratis"
+                            {% if product.one_and_one_gratis %}checked{% endif %}>
+                        <label class="form-check-label" for="edit-interactive-product-form_one_and_one_gratis">
+                            {% trans '1+1 gratis' %}
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-8">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox"
+                            id="edit-interactive-product-form_underpriced_product" name="underpriced_product"
+                            {% if product.underpriced_product %}checked{% endif %}>
+                        <label class="form-check-label" for="edit-interactive-product-form_underpriced_product">
+                            {% trans 'Sottocosto' %}
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="card-footer">
+        <button class="btn btn-primary font-weight-bold"
+            onclick="App.edit_iflyer_wpag.update_interactive_product()">
+            {% trans SALVA' %}
+        </button>
+        <button class="btn btn-secondary font-weight-bold"
+            onclick="App.edit_iflyer_wpag.cancel_interactive_product_edit()">
+            {% trans ANNULLA' %}
+        </button>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        App.edit_iflyer_wpag.init_edit_product_category_select();
+        $("#edit-interactive-product-form_price_computation_type").change(function () {
+            App.edit_iflyer_wpag.update_price_computation_edit();
+        });
+        $("#edit-interactive-product-form_varieties").tagsinput();
+
+        {% if product.category %}
+        App.edit_iflyer_wpag.get_subcategories_select_by_category("{{product.category}}").then(function (response) {
+            $("#edit-interactive-product-form_subcategory").empty();
+            $("#edit-interactive-product-form_subcategory").html('<option value=""></option>');
+            response.forEach(item => $("#edit-interactive-product-form_subcategory").append('<option value="' + item.id + '">' + item.name + '</option>'));
+            $("#edit-interactive-product-form_subcategory").prop('disabled', false);
+
+            $("#edit-interactive-product-form_subcategory").val("{{product.subcategory}}");
+        }).catch(function (message) {
+            console.log(message);
+        });
+        {% endif %}
+    });
+</script>

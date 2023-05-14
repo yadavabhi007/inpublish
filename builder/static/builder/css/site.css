@@ -1,0 +1,228 @@
+body,
+html {
+  height: 100%;
+  position: relative;
+}
+
+#header {
+  position: absolute;
+  top: 0;
+  left: 0px;
+  height: 60px;
+  right: 0;
+  color: #343a40;
+  z-index: 15;
+  /* box-shadow: 0px 0px 6px 0px #777; */
+  background: #ced6e1;
+}
+
+#wrapper {
+  position: absolute;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+}
+
+#sidebar{
+  position: absolute;
+  left: 0;
+  width: 240px;
+  bottom: 0;
+  top: 0;
+  overflow-y: auto;
+  background: #39485e;
+}
+
+.sidebar-header{
+  background: #25303e;
+  height: 60px;
+  padding: 10px 15px;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+#content {
+  position: absolute;
+  overflow: hidden;
+  left: 0px;
+  top: 60px;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+}
+
+i {
+  vertical-align: middle;
+  padding-bottom: 3px;
+}
+
+#flyer-header{
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 60px;
+  border-bottom: 2px solid #ddd;
+}
+
+#flyer-content{
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 60px;
+}
+
+#flyer-content #left {
+  position: absolute;
+  left: 0;
+  width: 160px;
+  bottom: 0;
+  top: 0;
+  overflow-y: auto;
+  border-right: 2px solid #ddd;
+}
+
+#flyer-content #center {
+  position: absolute;
+  left: 160px;
+  width: 50%;
+  bottom: 0;
+  top: 0;
+  overflow-y: auto;
+  border-right: 2px solid #ddd;
+}
+
+#flyer-content #right {
+  position: absolute;
+  left: 60%;
+  width: 40%;
+  bottom: 0;
+  top: 0;
+  overflow-y: auto;
+}
+
+.page-card {
+  border-radius: 20px;
+  border-width: 4px;  
+  cursor: pointer;
+  height: 11rem;
+  background-color: #222222;
+}
+
+.index-card {
+  border-width: 4px;
+  cursor: pointer;
+}
+
+#items-table td {
+  word-break: break-all;
+}
+
+#items-table td button{
+  word-break: keep-all;
+}
+
+.main-menu .nav-link{
+  color: #8ea1bb;
+  padding: 5px 15px;
+}
+
+.card-footer {
+  color: white;
+  font-weight: 600;
+  margin-top: -0.6rem;
+  text-align: center;
+}
+
+.card-img-top {
+  border-radius: 15px;
+  margin-top: 0.05rem;
+}
+
+.main-menu .nav-link.l1{
+  padding-left: 1.5rem;
+}
+
+.main-menu .nav-link i{
+  margin-right: 5px;
+}
+
+.main-menu .nav-link:hover{
+  background: transparent;
+  color: #fff;
+}
+
+.main-menu .nav-link.active{
+  background: transparent;
+  color: #fff;
+}
+
+.main-menu .nav-link.active i{
+  color: #007bff;
+}
+
+#flyer-wp-header{
+  border-bottom: 2px solid #ddd;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 60px;
+}
+
+#flyer-wp-content{
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 60px;
+}
+
+#flyer-wp-content #left {
+  position: absolute;
+  left: 0;
+  width: 50%;
+  bottom: 0;
+  top: 0;
+  overflow-y: auto;
+  border-right: 2px solid #ddd;
+}
+
+#flyer-wp-content #right {
+  position: absolute;
+  left: 50%;
+  width: 50%;
+  bottom: 0;
+  top: 0;
+  overflow-y: auto;
+}
+
+.rounded {
+  background-color: #333333;
+  border-radius: 15px !important;
+}
+
+.rounded_flat {
+  border-radius: 15px !important;
+}
+
+
+.customized {
+  padding-right: 7px;
+  padding-left: 7px;
+}
+
+.dark {
+  color: #333333;
+}
+
+input[type=checkbox] {
+    width: 15px;
+    height: 15px;
+}
