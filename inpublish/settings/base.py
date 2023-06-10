@@ -31,7 +31,7 @@ class Base(Configuration):
     # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
     # SECURITY WARNING: keep the secret key used in production secret!
-    SECRET_KEY = os.getenv("SECRET_KEY_BASE")
+    SECRET_KEY = "#5+u!&1&scb0jo3q6woow_0oyn1@q+kn1vm$1n=m9t5q6#@lw6"
 
     # SECURITY WARNING: don't run with debug turned on in production!
     DEBUG = True
