@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-
 import pymysql
 from configurations import Configuration
 from django.utils.translation import ugettext_lazy as _
@@ -32,7 +31,7 @@ class Base(Configuration):
     # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
     # SECURITY WARNING: keep the secret key used in production secret!
-    SECRET_KEY = "#5+u!&1&scb0jo3q6woow_0oyn1@q+kn1vm$1n=m9t5q6#@lw6"
+    SECRET_KEY = os.getenv("SECRET_KEY_BASE")
 
     # SECURITY WARNING: don't run with debug turned on in production!
     DEBUG = True
@@ -280,10 +279,10 @@ class Base(Configuration):
     # DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
     # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-    AWS_ACCESS_KEY_ID = "AWS_ACCESS_KEY_ID"
-    AWS_SECRET_ACCESS_KEY = "AWS_SECRET_ACCESS_KEY"
-    AWS_STORAGE_BUCKET_NAME = "AWS_STORAGE_BUCKET_NAME"
-    # AWS_S3_ENDPOINT_URL = "AWS_S3_ENDPOINT_URL"
+    AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+    AWS_STORAGE_BUCKET_NAME = "interattivo"
+    # AWS_S3_ENDPOINT_URL = "https://r1-it.storage.cloud.it"
 
     AWS_DEFAULT_ACL = "public-read"
     AWS_QUERYSTRING_AUTH = False

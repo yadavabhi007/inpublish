@@ -37,8 +37,8 @@ class Docker(Base):
     DEBUG = os.getenv("DEBUG") == "True"
     MEDIA_URL = f'{os.getenv("ABSOLUTE_URL", "")}/media/'
 
-    AWS_ACCESS_KEY_ID = "AKIA5HHRFLCRGM7QFJXD"
-    AWS_SECRET_ACCESS_KEY = "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"
+    AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
     AWS_STORAGE_BUCKET_NAME = "interattivo-dev"
 
     PRE_SALT = os.getenv("PRE_SALT")
